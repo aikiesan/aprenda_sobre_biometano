@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Executivo: Especial Jéssica 🎉</title>
+  
+  <!-- Open Graph & Meta Tags for Social Sharing -->
+  <meta name="description" content="Bistrô & Consultoria JE Corp - Cardápio de Alta Performance • Edição Aniversário Jéssica" />
+  <meta property="og:title" content="Menu Executivo: Especial Jéssica 🎉" />
+  <meta property="og:description" content="Cardápio Corporativo-Gourmet & Mimo VIP: Caso Bizarro no Teatro YouTube!" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#f97316" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    @keyframes subtle-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    .ticket-pulse { animation: subtle-pulse 3s ease-in-out infinite; }
+
+    /* Custom Toast Animation */
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .toast-animate {
+      animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-100 min-h-screen font-sans text-stone-800 antialiased p-4 pb-14 flex justify-center">
+
+  <main class="w-full max-w-md mx-auto space-y-4">
+
+    <!-- Cabeçalho Institucional / Restaurante Monks -->
+    <header class="bg-white/90 backdrop-blur rounded-3xl p-6 shadow-sm border border-orange-100 text-center relative overflow-hidden">
+      <div class="absolute -right-6 -top-6 w-24 h-24 bg-orange-200/40 rounded-full blur-xl pointer-events-none"></div>
+      <div class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+        <span>🌱</span> 100% Vegano • 0% Cogumelo
+      </div>
+      <h1 class="text-2xl font-black tracking-tight text-stone-900">
+        BISTRO & CONSULTORIA JE CORP
+      </h1>
+      <p class="text-xs text-stone-500 mt-1 uppercase tracking-widest font-semibold">
+        Cardápio de Alta Performance • Edição Aniversário
+      </p>
+      <p class="text-xs text-stone-600 mt-2 italic">
+        "Alinhando entregas na Monks, batendo PR na academia e enxergando metas em resolução 8K."
+      </p>
+    </header>
+
+    <!-- O MENU EXECUTIVO -->
+    <section class="bg-white rounded-3xl p-5 shadow-sm border border-orange-100 space-y-4">
+      <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+        <h2 class="text-sm font-bold tracking-wide uppercase text-rose-600 flex items-center gap-2">
+          <span>📋</span> Degustação Corporativo-Gourmet
+        </h2>
+        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">Menu 5 Estrelas</span>
+      </div>
+
+      <!-- Item 1: Entrada -->
+      <div class="space-y-1">
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-bold text-sm text-stone-800">🍢 Kaftas & Smash Plant-Based da Jé</h3>
+          <span class="text-xs font-semibold text-emerald-600">Alta Proteína</span>
+        </div>
+        <p class="text-xs text-stone-500 leading-relaxed">
+          Kafta artesanal perfeitamente temperada e hambúrguer vegano suculento. Acompanha petiscos gourmets inspecionados e aprovados pela dupla Fred & Dalila.
+        </p>
+      </div>
+
+      <div class="border-t border-dashed border-stone-100"></div>
+
+      <!-- Item 2: Prato Principal -->
+      <div class="space-y-1">
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-bold text-sm text-stone-800">🚫🍄 O Antídoto "Sem Fungos"</h3>
+          <span class="text-xs font-semibold text-rose-600">Alerta Máximo</span>
+        </div>
+        <p class="text-xs text-stone-500 leading-relaxed">
+          Strogonoff cremoso de grão-de-bico com batata palha finíssima. Certificado com selo internacional de <b>TOLERÂNCIA ZERO A QUALQUER COGUMELO</b> (shimeji aqui passa longe!).
+        </p>
+      </div>
+
+      <div class="border-t border-dashed border-stone-100"></div>
+
+      <!-- Item 3: Acompanhamento -->
+      <div class="space-y-1">
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-bold text-sm text-stone-800">👜 Estilo Haute Couture</h3>
+          <span class="text-xs font-semibold text-amber-600">Exclusividade</span>
+        </div>
+        <p class="text-xs text-stone-500 leading-relaxed">
+          Servido com bolsa artesanal exclusiva feita pela mãe da Jé — forte o bastante para carregar livros grossos, snacks pro cinema e a dignidade do RH intacta.
+        </p>
+      </div>
+
+      <div class="border-t border-dashed border-stone-100"></div>
+
+      <!-- Item 4: Sobremesa de Resiliência -->
+      <div class="space-y-1">
+        <div class="flex justify-between items-baseline">
+          <h3 class="font-bold text-sm text-stone-800">💪 Sorbet Fibro-Power & Visão Laser</h3>
+          <span class="text-xs font-semibold text-indigo-600">Suplementação</span>
+        </div>
+        <p class="text-xs text-stone-500 leading-relaxed">
+          Para quem não deixa a fibromialgia atrapalhar a rotina de treinos e ainda enxerga qualquer microdetalhe pós-cirurgia sem precisar de óculos.
+        </p>
+      </div>
+    </section>
+
+    <!-- INGRESSO / TICKET ESPECIAL: CASO BIZARRO -->
+    <section class="bg-gradient-to-r from-purple-950 via-slate-900 to-stone-900 text-white rounded-3xl p-5 shadow-lg border border-purple-800/50 ticket-pulse relative overflow-hidden">
+      <!-- Decorativo de Ticket -->
+      <div class="absolute -right-5 -top-5 w-24 h-24 bg-purple-500/10 rounded-full blur-xl pointer-events-none"></div>
+
+      <!-- Tag / Badge -->
+      <div class="flex items-center justify-between mb-3">
+        <span class="bg-purple-600/30 text-purple-300 border border-purple-500/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+          Mimo VIP Confirmado 🎟️
+        </span>
+        <span class="text-xs text-stone-400">Teatro YouTube • SP</span>
+      </div>
+
+      <div class="space-y-1">
+        <p class="text-[11px] text-purple-300 font-semibold uppercase tracking-wider">Matando Matheus a Grito Apresenta:</p>
+        <h3 class="text-lg font-black text-white leading-tight">
+          "CASO BIZARRO" COM MABÊ
+        </h3>
+        <p class="text-xs text-stone-300">
+          Com Matheus, Guigo & Mabê reunidos no palco!
+        </p>
+      </div>
+
+      <!-- Dados do Evento -->
+      <div class="mt-4 bg-white/10 rounded-2xl p-3 grid grid-cols-2 gap-2 text-xs border border-white/5">
+        <div>
+          <span class="text-stone-400 block text-[10px] uppercase">Data</span>
+          <span class="font-bold text-stone-100">29 de Outubro</span>
+        </div>
+        <div>
+          <span class="text-stone-400 block text-[10px] uppercase">Horário</span>
+          <span class="font-bold text-stone-100">Quinta-feira, 20:00</span>
+        </div>
+        <div class="col-span-2 pt-1 border-t border-white/10 flex items-center justify-between text-[11px]">
+          <span class="text-stone-300">Companhia de plateia:</span>
+          <span class="font-bold text-amber-300">Lucas & Carol 🎬🍿</span>
+        </div>
+      </div>
+
+      <!-- Botão de Confirmação no Ingresso -->
+      <div class="mt-3">
+        <button 
+          id="confirmTicketBtn"
+          class="w-full bg-purple-600/40 hover:bg-purple-600/60 active:scale-[0.98] border border-purple-400/40 transition-all text-purple-200 hover:text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
+          <span id="ticketStatusIcon">🎫</span>
+          <span id="ticketStatusText">Confirmar Presença no Show</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Botão Interativo Principal -->
+    <div class="pt-2">
+      <button 
+        id="celebrateBtn"
+        class="w-full bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 active:scale-95 transition-all text-white font-black py-4 px-6 rounded-2xl shadow-lg shadow-rose-200/50 flex items-center justify-center gap-2 text-sm tracking-wide uppercase cursor-pointer">
+        <span>Aclamar Aniversariante & Reagir 📢</span>
+        <span>🎉</span>
+      </button>
+    </div>
+
+    <!-- Toast de Feedback Dinâmico -->
+    <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-stone-900 text-white text-xs font-semibold py-3 px-5 rounded-2xl shadow-2xl border border-stone-700 flex items-center gap-2.5 max-w-xs text-center toast-animate">
+      <span id="toastIcon">✨</span>
+      <span id="toastText">Presença confirmadíssima! Prepara a pipoca! 🍿</span>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="text-center pt-2 text-xs text-stone-400 space-y-1">
+      <p>Com amor, Lucas & Carol ❤️</p>
+      <p>Monks BP • Masterchef • Mãe de Pet • Parceiraça de Cinema</p>
+    </footer>
+
+  </main>
+
+  <!-- Script dos Confetes e Interatividade -->
+  <script>
+    let isConfirmed = false;
+
+    function triggerConfetti() {
+      // Efeito estourando dos dois lados da tela
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { x: 0.1, y: 0.7 },
+        colors: ['#f43f5e', '#fb923c', '#a855f7', '#10b981']
+      });
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { x: 0.9, y: 0.7 },
+        colors: ['#f43f5e', '#fb923c', '#a855f7', '#10b981']
+      });
+    }
+
+    function triggerSuperConfetti() {
+      // Efeito festivo especial
+      triggerConfetti();
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          spread: 100,
+          origin: { x: 0.5, y: 0.5 },
+          colors: ['#e11d48', '#f59e0b', '#8b5cf6', '#06b6d4', '#10b981']
+        });
+      }, 250);
+    }
+
+    function showToast(text, icon = '🎉') {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toastText');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastText.textContent = text;
+      toastIcon.textContent = icon;
+      toast.classList.remove('hidden');
+
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    function confirmPresence() {
+      isConfirmed = true;
+      const ticketBtn = document.getElementById('confirmTicketBtn');
+      const ticketStatusText = document.getElementById('ticketStatusText');
+      const ticketStatusIcon = document.getElementById('ticketStatusIcon');
+
+      ticketBtn.classList.remove('bg-purple-600/40', 'border-purple-400/40', 'text-purple-200');
+      ticketBtn.classList.add('bg-emerald-600/80', 'border-emerald-400', 'text-white');
+      ticketStatusText.textContent = 'Presença VIP Confirmadíssima! ✅';
+      ticketStatusIcon.textContent = '🥂';
+
+      triggerSuperConfetti();
+      showToast('Presença confirmadíssima! O Caso Bizarro nos espera! 🍿🎟️', '🎟️');
+    }
+
+    // Dispara assim que abre no celular
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(triggerConfetti, 400);
+    });
+
+    // Clique no botão principal de comemoração
+    document.getElementById('celebrateBtn').addEventListener('click', () => {
+      triggerSuperConfetti();
+      showToast('Parabéns Jé! Que seu novo ano seja incrível! 💖✨', '🥳');
+    });
+
+    // Clique no botão de confirmar presença
+    document.getElementById('confirmTicketBtn').addEventListener('click', () => {
+      confirmPresence();
+    });
+  </script>
+</body>
+</html>
