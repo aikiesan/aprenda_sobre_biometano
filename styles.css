@@ -1,56 +1,109 @@
-/* ==========================================================================
-   BioGames SP — Design System Mobile-First (Estilo New York Times Games)
-   CP2B / NIPE-UNICAMP
-   Layout nativo para celular: Cards compactos em grade, sem botões de Play,
-   Mini Cruzadinha da Biomassa de SP e Calculadora Cidadã em destaque.
+﻿/* ==========================================================================
+   BioGames SP — Design System Oficial CP2B (NIPE-UNICAMP / FAPESP)
+   Centro Paulista de Estudos em Biogás e Bioprodutos
+   Layout Mobile-First Convidativo, Amigável e Científico.
    ========================================================================== */
 
-:root {
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-nyt: 'NYTImperial', Georgia, 'Times New Roman', serif;
-  --font-mono: 'JetBrains Mono', monospace;
+/* Fontes Oficiais CP2B */
+@font-face {
+  font-family: 'Neulis Sans';
+  src: url('assets/fonts/Neulis_Sans_Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
-  /* Paleta Oficial CP2B & NYT */
+@font-face {
+  font-family: 'Neulis Sans';
+  src: url('assets/fonts/Neulis_Sans_Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis Sans';
+  src: url('assets/fonts/Neulis_Sans_Semi_Bold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis Sans';
+  src: url('assets/fonts/Neulis_Sans_Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neulis Neue';
+  src: url('assets/fonts/Neulis_Neue_Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: 'Neulis Sans', 'Verdana', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Neulis Neue', 'Neulis Sans', 'Verdana', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Paleta Oficial CP2B */
   --cp2b-petroleo: #1E3E4C;
   --cp2b-escuro: #00573A;
   --cp2b-verde: #5CA032;
-  --cp2b-verde-hover: #4d8729;
+  --cp2b-verde-hover: #4D8729;
   --cp2b-lima: #B6E03B;
   --cp2b-ambar: #D37402;
 
-  /* Cores Conexões */
-  --conn-yellow: #f59e0b;
-  --conn-green: #10b981;
+  /* Categorias do Conexões */
+  --conn-yellow: #d97706;
+  --conn-green: #059669;
   --conn-blue: #0284c7;
-  --conn-purple: #8b5cf6;
+  --conn-purple: #7c3aed;
 
-  /* Superfícies & Cores Neutras NYT */
-  --bg-page: #f7f7f8;
-  --bg-card: #ffffff;
-  --bg-input: #f0f2f5;
-  --border-light: #e5e7eb;
-  --border-dark: #111827;
+  /* Superfícies Acolhedoras e Vivas (Modo Claro) */
+  --bg-page: #F3F7F4;
+  --bg-card: #FFFFFF;
+  --bg-card-warm: #F8FBF8;
+  --bg-input: #E9F1EC;
+  --border-light: #E0EBE2;
+  --border-card: #D1E2D4;
+  --border-dark: #1E3E4C;
 
-  --text-main: #111827;
-  --text-muted: #4b5563;
-  --text-dim: #9ca3af;
+  --text-main: #142832;
+  --text-muted: #3D5A6C;
+  --text-dim: #7B99A8;
 
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 8px rgba(0, 40, 25, 0.05);
+  --shadow-md: 0 4px 16px rgba(0, 40, 25, 0.08);
+  --shadow-glow: 0 4px 20px rgba(92, 160, 50, 0.15);
 }
 
 /* Modo Escuro */
 body.dark-mode {
-  --bg-page: #121212;
-  --bg-card: #1e1e1e;
-  --bg-input: #2a2a2a;
-  --border-light: #333333;
-  --border-dark: #ffffff;
-  --text-main: #f9fafb;
-  --text-muted: #9ca3af;
-  --text-dim: #6b7280;
+  --bg-page: #0D181F;
+  --bg-card: #15242E;
+  --bg-card-warm: #1A2D39;
+  --bg-input: #1F3644;
+  --border-light: #243E4E;
+  --border-card: #2B485A;
+  --border-dark: #B6E03B;
+
+  --text-main: #F3F8FB;
+  --text-muted: #A1BFCE;
+  --text-dim: #6E8B9C;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 4px 20px rgba(182, 224, 59, 0.12);
 }
 
 /* Reset Global Sem Quebras Mobile */
@@ -76,7 +129,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Container Mobile (Nativo no Celular, Centrado no Desktop) */
+/* Container Mobile */
 .mobile-app {
   width: 100%;
   max-width: 440px;
@@ -91,67 +144,80 @@ body {
 
 @media (min-width: 601px) {
   body {
-    background-color: #0b1118;
+    background-color: #0b1419;
   }
   .mobile-app {
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   }
 }
 
 /* ==========================================================================
-   Header Limpo (Estilo NYT Games)
+   Header Oficial CP2B
    ========================================================================== */
-.nyt-header {
-  height: 56px;
+.cp2b-header {
+  height: 62px;
   padding: 0 1rem;
-  background-color: var(--bg-card);
-  border-bottom: 1.5px solid var(--border-light);
+  background: linear-gradient(135deg, var(--cp2b-petroleo) 0%, var(--cp2b-escuro) 100%);
+  border-bottom: 2px solid rgba(182, 224, 59, 0.4);
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 3px 12px rgba(0, 30, 20, 0.2);
 }
 
-.nyt-header-title {
-  font-family: var(--font-nyt);
-  font-size: 1.25rem;
-  font-weight: 900;
-  letter-spacing: -0.5px;
+.cp2b-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+}
+
+.cp2b-header-logo {
+  height: 28px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+.cp2b-header-badge {
+  background: rgba(182, 224, 59, 0.2);
+  color: var(--cp2b-lima);
+  border: 1px solid rgba(182, 224, 59, 0.5);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.cp2b-header-actions {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  cursor: pointer;
-  color: var(--text-main);
 }
 
-.nyt-header-title span {
-  color: var(--cp2b-verde);
-}
-
-.nyt-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.btn-icon-nyt {
-  width: 38px;
-  height: 38px;
+.btn-icon-cp2b {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--border-light);
-  background: transparent;
-  color: var(--text-main);
-  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
-.btn-icon-nyt:active {
-  background: var(--bg-input);
+.btn-icon-cp2b:active {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0.92);
 }
 
 /* ==========================================================================
@@ -169,104 +235,223 @@ body {
 }
 
 /* ==========================================================================
-   TELA INICIAL: GRADE DE CARDS COMPACTOS (Mobile Grid 2 Colunas)
+   TELA INICIAL: HUB CONVIDATIVO & CARDS COMPACTOS
    ========================================================================== */
-.hub-masthead {
-  text-align: center;
-  padding: 0.5rem 0 1rem;
-  border-bottom: 2px solid var(--border-dark);
+
+/* Banner de Boas-Vindas Caloroso */
+.hub-welcome-banner {
+  background: linear-gradient(145deg, #eef7f0 0%, #f9fbf9 55%, #fffbf2 100%);
+  border: 1.5px solid #d2e6d6;
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1rem;
   margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 87, 58, 0.06);
 }
 
-.hub-date {
-  font-size: 0.7rem;
+body.dark-mode .hub-welcome-banner {
+  background: linear-gradient(145deg, #162833 0%, #11222c 55%, #1f2e27 100%);
+  border-color: #254456;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.banner-tag-row {
+  margin-bottom: 0.35rem;
+}
+
+.banner-inst-tag {
+  font-size: 0.63rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text-muted);
+  letter-spacing: 0.6px;
+  color: var(--cp2b-escuro);
+  background: rgba(92, 160, 50, 0.15);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  display: inline-block;
 }
 
-.hub-main-headline {
-  font-family: var(--font-nyt);
-  font-size: 1.65rem;
-  font-weight: 900;
-  line-height: 1.15;
-  margin: 0.15rem 0;
+body.dark-mode .banner-inst-tag {
+  color: var(--cp2b-lima);
+  background: rgba(182, 224, 59, 0.15);
 }
 
-.hub-sub {
+.banner-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.18;
+  color: var(--cp2b-petroleo);
+  margin: 0.3rem 0 0.15rem;
+}
+
+body.dark-mode .banner-title {
+  color: #ffffff;
+}
+
+.banner-slogan {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cp2b-verde);
+  margin-bottom: 0.45rem;
+  font-style: italic;
+}
+
+body.dark-mode .banner-slogan {
+  color: var(--cp2b-lima);
+}
+
+.banner-desc {
   font-size: 0.82rem;
+  line-height: 1.45;
   color: var(--text-muted);
+  margin-bottom: 0.75rem;
 }
 
-/* Grade de Cards Pequenos */
+.banner-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.banner-chip {
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  padding: 3px 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+body.dark-mode .banner-chip {
+  background: var(--bg-input);
+}
+
+/* Grade de Cards Pequenos (2 Colunas Aprovadas) */
 .hub-cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  margin-bottom: 1.25rem;
 }
 
-/* Card Hero (Calculadora Cidadã) ocupa 2 colunas */
+/* Card Hero: Calculadora Cidadã (Destaque em 2 colunas) */
 .hub-card-hero {
   grid-column: span 2;
-  background: linear-gradient(135deg, rgba(92, 160, 50, 0.1), rgba(182, 224, 59, 0.18));
+  background: linear-gradient(135deg, #eaf7ea 0%, #f6faf1 50%, #fff8ea 100%);
   border: 2px solid var(--cp2b-verde);
   border-radius: var(--radius-md);
-  padding: 1rem 1.15rem;
+  padding: 1.1rem 1rem;
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.6rem;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(92, 160, 50, 0.12);
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+
+body.dark-mode .hub-card-hero {
+  background: linear-gradient(135deg, #182e22 0%, #142832 60%, #2b2a1a 100%);
+  border-color: var(--cp2b-lima);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .hub-card-hero:active {
   transform: scale(0.98);
 }
 
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-card-badge {
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--cp2b-verde);
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+
+body.dark-mode .hero-card-badge {
+  background: var(--cp2b-lima);
+  color: var(--cp2b-petroleo);
+}
+
+.hero-card-action {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--cp2b-escuro);
+}
+
+body.dark-mode .hero-card-action {
+  color: var(--cp2b-lima);
+}
+
+.hero-card-content {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
 .hero-card-icon {
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .hero-card-body h2 {
   font-size: 1.15rem;
-  font-weight: 900;
-  color: var(--cp2b-escuro);
+  font-weight: 800;
+  color: var(--cp2b-petroleo);
   line-height: 1.2;
 }
 
 body.dark-mode .hero-card-body h2 {
-  color: var(--cp2b-lima);
+  color: #ffffff;
 }
 
 .hero-card-body p {
   font-size: 0.78rem;
   color: var(--text-muted);
   margin-top: 0.2rem;
-  font-weight: 600;
+  line-height: 1.35;
 }
 
 /* Cards Quadrados / Compactos (1 por coluna) */
 .hub-mini-card {
   background: var(--bg-card);
-  border: 1.5px solid var(--border-light);
+  border: 1.5px solid var(--border-card);
   border-radius: var(--radius-md);
-  padding: 1rem 0.85rem;
+  padding: 0.95rem 0.85rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 125px;
+  min-height: 135px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.1s ease, border-color 0.15s ease;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.12s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+body.dark-mode .hub-mini-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .hub-mini-card:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
   border-color: var(--cp2b-verde);
-  background-color: var(--bg-input);
+  background-color: var(--bg-card-warm);
 }
 
 .mini-card-top {
@@ -277,30 +462,107 @@ body.dark-mode .hero-card-body h2 {
 }
 
 .mini-card-icon {
-  font-size: 1.7rem;
+  font-size: 1.75rem;
 }
 
 .mini-card-badge {
-  font-size: 0.62rem;
-  font-weight: 900;
+  font-size: 0.6rem;
+  font-weight: 800;
   text-transform: uppercase;
-  padding: 0.15rem 0.45rem;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
   border-radius: var(--radius-full);
   background: var(--bg-input);
-  color: var(--text-muted);
+  color: var(--cp2b-escuro);
+  border: 1px solid var(--border-light);
+}
+
+body.dark-mode .mini-card-badge {
+  color: var(--cp2b-lima);
 }
 
 .mini-card-title {
   font-size: 0.98rem;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1.2;
   margin-bottom: 0.2rem;
+  color: var(--cp2b-petroleo);
+}
+
+body.dark-mode .mini-card-title {
+  color: #ffffff;
 }
 
 .mini-card-desc {
   font-size: 0.72rem;
   color: var(--text-muted);
-  line-height: 1.25;
+  line-height: 1.3;
+}
+
+/* Rodapé Institucional do Hub */
+.hub-footer {
+  margin-top: auto;
+  padding: 1.1rem 0 0.5rem;
+  border-top: 1.5px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-avatar {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-inst {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--cp2b-escuro);
+}
+
+body.dark-mode .footer-inst {
+  color: var(--cp2b-lima);
+}
+
+.footer-copy {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.btn-footer-link {
+  display: block;
+  text-align: center;
+  background: var(--bg-input);
+  color: var(--cp2b-petroleo);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+body.dark-mode .btn-footer-link {
+  color: #ffffff;
+  background: var(--bg-card-warm);
+}
+
+.btn-footer-link:active {
+  background: var(--cp2b-lima);
+  color: var(--cp2b-petroleo);
 }
 
 /* ==========================================================================
@@ -312,7 +574,7 @@ body.dark-mode .hero-card-body h2 {
   justify-content: space-between;
   padding-bottom: 0.75rem;
   margin-bottom: 0.85rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1.5px solid var(--border-light);
 }
 
 .btn-game-back {
@@ -320,12 +582,13 @@ body.dark-mode .hero-card-body h2 {
   background: transparent;
   font-size: 0.92rem;
   font-weight: 800;
-  color: var(--cp2b-petroleo);
+  color: var(--cp2b-escuro);
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   cursor: pointer;
   padding: 0.3rem 0;
+  transition: color 0.15s ease;
 }
 
 body.dark-mode .btn-game-back {
@@ -333,44 +596,50 @@ body.dark-mode .btn-game-back {
 }
 
 .game-header-title {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 900;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
+  color: var(--cp2b-petroleo);
+}
+
+body.dark-mode .game-header-title {
+  color: #ffffff;
 }
 
 /* ==========================================================================
-   JOGO: MINI CRUZADINHA DA BIOMASSA (NYT Mini Crossword)
+   JOGO: MINI CRUZADINHA DA BIOMASSA
    ========================================================================== */
 .crossword-clue-banner {
-  background: var(--cp2b-petroleo);
+  background: linear-gradient(135deg, var(--cp2b-petroleo) 0%, var(--cp2b-escuro) 100%);
   color: #ffffff;
-  border-radius: var(--radius-sm);
-  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-md);
+  padding: 0.8rem 0.95rem;
   margin-bottom: 0.85rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  box-shadow: 0 3px 10px rgba(0, 40, 25, 0.15);
 }
 
 .clue-nav-btn {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .clue-nav-btn:active {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .clue-content {
@@ -387,7 +656,7 @@ body.dark-mode .btn-game-back {
 }
 
 .clue-text {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 700;
   line-height: 1.25;
   margin-top: 0.15rem;
@@ -404,17 +673,22 @@ body.dark-mode .btn-game-back {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 3px;
-  background: #111827;
-  padding: 3px;
+  background: var(--cp2b-petroleo);
+  padding: 4px;
   border-radius: var(--radius-sm);
   max-width: 290px;
   width: 100%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+body.dark-mode .crossword-grid {
+  background: #000000;
 }
 
 .crossword-cell {
   aspect-ratio: 1 / 1;
   background: var(--bg-card);
-  border-radius: 2px;
+  border-radius: 3px;
   position: relative;
   display: flex;
   align-items: center;
@@ -424,11 +698,16 @@ body.dark-mode .btn-game-back {
   text-transform: uppercase;
   cursor: pointer;
   user-select: none;
+  color: var(--text-main);
 }
 
 .crossword-cell.black {
-  background: #111827;
+  background: var(--cp2b-petroleo);
   cursor: default;
+}
+
+body.dark-mode .crossword-cell.black {
+  background: #091217;
 }
 
 .crossword-cell.highlighted {
@@ -438,6 +717,7 @@ body.dark-mode .btn-game-back {
 .crossword-cell.active-focus {
   background: var(--cp2b-lima);
   color: var(--cp2b-petroleo);
+  box-shadow: inset 0 0 0 2px var(--cp2b-verde);
 }
 
 .crossword-cell.solved-word {
@@ -473,7 +753,7 @@ body.dark-mode .btn-game-back {
   height: 44px;
   flex: 1;
   min-width: 26px;
-  border: none;
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   background: var(--bg-input);
   color: var(--text-main);
@@ -493,12 +773,12 @@ body.dark-mode .btn-game-back {
 
 .cw-key.wide {
   flex: 1.5;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   background: var(--border-light);
 }
 
 /* ==========================================================================
-   JOGO: CONEXÕES DA BIOMASSA (NYT Connections)
+   JOGO: CONEXÕES DA BIOMASSA
    ========================================================================== */
 .conn-prompt {
   text-align: center;
@@ -545,7 +825,7 @@ body.dark-mode .btn-game-back {
 
 .conn-tile-btn {
   background: var(--bg-input);
-  border: 1px solid var(--border-light);
+  border: 1.5px solid var(--border-light);
   border-radius: var(--radius-sm);
   min-height: 60px;
   display: flex;
@@ -560,6 +840,7 @@ body.dark-mode .btn-game-back {
   cursor: pointer;
   user-select: none;
   transition: all 0.1s ease;
+  color: var(--text-main);
 }
 
 .conn-tile-btn:active {
@@ -570,6 +851,11 @@ body.dark-mode .btn-game-back {
   background: var(--cp2b-petroleo);
   color: #ffffff;
   border-color: var(--cp2b-petroleo);
+}
+
+body.dark-mode .conn-tile-btn.selected {
+  background: var(--cp2b-escuro);
+  border-color: var(--cp2b-lima);
 }
 
 .conn-status-bar {
@@ -586,28 +872,40 @@ body.dark-mode .btn-game-back {
   justify-content: center;
 }
 
-.btn-nyt-secondary {
+.btn-cp2b-secondary {
   height: 44px;
   padding: 0 1rem;
   border-radius: var(--radius-full);
-  border: 1.5px solid var(--border-dark);
+  border: 1.5px solid var(--cp2b-petroleo);
   background: transparent;
-  color: var(--text-main);
+  color: var(--cp2b-petroleo);
   font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
 }
 
-.btn-nyt-primary {
+body.dark-mode .btn-cp2b-secondary {
+  border-color: var(--cp2b-lima);
+  color: var(--cp2b-lima);
+}
+
+.btn-cp2b-primary {
   height: 44px;
   padding: 0 1.4rem;
   border-radius: var(--radius-full);
   border: none;
-  background: var(--cp2b-petroleo);
+  background: var(--cp2b-verde);
   color: #ffffff;
   font-size: 0.85rem;
   font-weight: 900;
   cursor: pointer;
+  box-shadow: 0 3px 10px rgba(92, 160, 50, 0.25);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.btn-cp2b-primary:active {
+  background: var(--cp2b-verde-hover);
+  transform: scale(0.96);
 }
 
 /* ==========================================================================
@@ -622,24 +920,32 @@ body.dark-mode .btn-game-back {
 }
 
 .myth-box {
-  background: var(--bg-input);
+  background: var(--bg-card-warm);
+  border: 1.5px solid var(--border-card);
   border-radius: var(--radius-lg);
   padding: 1.5rem 1.15rem;
   text-align: center;
+  box-shadow: var(--shadow-sm);
 }
 
 .myth-counter {
   font-size: 0.72rem;
   font-weight: 900;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--cp2b-escuro);
+  letter-spacing: 0.5px;
+}
+
+body.dark-mode .myth-counter {
+  color: var(--cp2b-lima);
 }
 
 .myth-text {
   font-size: 1.25rem;
-  font-weight: 900;
+  font-weight: 800;
   margin: 0.85rem 0;
   line-height: 1.35;
+  color: var(--text-main);
 }
 
 .myth-answer-status {
@@ -662,6 +968,7 @@ body.dark-mode .btn-game-back {
   font-size: 1.05rem;
   font-weight: 900;
   cursor: pointer;
+  transition: transform 0.1s ease;
 }
 
 .btn-myth-action:active {
@@ -690,9 +997,11 @@ body.dark-mode .btn-game-back {
 }
 
 .calc-stepper-card {
-  background: var(--bg-input);
+  background: var(--bg-card-warm);
+  border: 1.5px solid var(--border-card);
   border-radius: var(--radius-md);
   padding: 1rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .calc-stepper-label {
@@ -707,8 +1016,12 @@ body.dark-mode .btn-game-back {
 .calc-stepper-val {
   font-family: var(--font-mono);
   font-weight: 900;
-  color: var(--cp2b-verde);
+  color: var(--cp2b-escuro);
   font-size: 1rem;
+}
+
+body.dark-mode .calc-stepper-val {
+  color: var(--cp2b-lima);
 }
 
 .calc-stepper-controls {
@@ -721,9 +1034,9 @@ body.dark-mode .btn-game-back {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1.5px solid var(--border-light);
+  border: 1.5px solid var(--border-card);
   background: var(--bg-card);
-  color: var(--text-main);
+  color: var(--cp2b-escuro);
   font-size: 1.25rem;
   font-weight: 900;
   display: flex;
@@ -731,11 +1044,18 @@ body.dark-mode .btn-game-back {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+body.dark-mode .btn-step-circle {
+  color: #ffffff;
 }
 
 .btn-step-circle:active {
   background: var(--cp2b-lima);
   color: var(--cp2b-petroleo);
+  transform: scale(0.92);
 }
 
 .range-stepper {
@@ -751,7 +1071,7 @@ body.dark-mode .btn-game-back {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  margin-top: 0.5rem;
+  margin-top: 0.65rem;
 }
 
 .result-row-card {
@@ -762,6 +1082,7 @@ body.dark-mode .btn-game-back {
   display: flex;
   align-items: center;
   gap: 0.85rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .result-row-icon {
@@ -793,26 +1114,31 @@ body.dark-mode .result-row-number {
 }
 
 /* ==========================================================================
-   Tela de Vitória Modal
+   Modais de Resultado
    ========================================================================== */
-.nyt-result-modal {
+.cp2b-result-modal {
   display: none;
-  background: var(--bg-input);
+  background: var(--bg-card-warm);
   border: 2px solid var(--cp2b-verde);
   border-radius: var(--radius-md);
   padding: 1.35rem;
   text-align: center;
   margin-top: 1rem;
+  box-shadow: var(--shadow-glow);
 }
 
-.nyt-result-modal h3 {
+.cp2b-result-modal h3 {
   font-size: 1.2rem;
   font-weight: 900;
-  color: var(--cp2b-verde);
+  color: var(--cp2b-escuro);
   margin-bottom: 0.35rem;
 }
 
-.nyt-result-modal p {
+body.dark-mode .cp2b-result-modal h3 {
+  color: var(--cp2b-lima);
+}
+
+.cp2b-result-modal p {
   font-size: 0.85rem;
   color: var(--text-muted);
   margin-bottom: 0.85rem;
