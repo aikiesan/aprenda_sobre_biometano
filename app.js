@@ -1,13 +1,13 @@
 /**
- * BioGames SP — Lógica Mobile-First (Estilo NY Times Games)
- * CP2B (Centro Paulista de Estudos em Biogás e Bioprodutos - UNICAMP)
- * Jogos independentes, sem acúmulo de XP, foco em ensino científico e Calculadora Cidadã.
+ * BioGames SP — Motor Nativo Mobile (Estilo NY Times Games)
+ * CP2B / NIPE-UNICAMP
+ * Experiência limpa, sem travamentos, sem excessos e 100% responsiva.
  */
 
 // =============================================================================
-// 1. ÁUDIO SUTIL (Web Audio API)
+// 1. ÁUDIO SUTIL
 // =============================================================================
-class MobileAudio {
+class NYTAudio {
   constructor() {
     this.ctx = null;
     this.muted = false;
@@ -15,8 +15,8 @@ class MobileAudio {
 
   init() {
     if (!this.ctx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioContext();
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AudioCtx();
     }
   }
 
@@ -25,303 +25,272 @@ class MobileAudio {
     return this.muted;
   }
 
-  playTap() {
+  tap() {
     if (this.muted) return;
     this.init();
     if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.frequency.setValueAtTime(450, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(200, this.ctx.currentTime + 0.05);
-    gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
+    const g = this.ctx.createGain();
+    osc.frequency.setValueAtTime(380, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, this.ctx.currentTime + 0.04);
+    g.gain.setValueAtTime(0.08, this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+    osc.connect(g);
+    g.connect(this.ctx.destination);
     osc.start();
-    osc.stop(this.ctx.currentTime + 0.05);
+    osc.stop(this.ctx.currentTime + 0.04);
   }
 
-  playDing() {
+  ding() {
     if (this.muted) return;
     this.init();
     if (!this.ctx) return;
-    const notes = [523.25, 659.25];
-    notes.forEach((f, i) => {
+    [523.25, 659.25].forEach((f, i) => {
       const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      const start = this.ctx.currentTime + i * 0.06;
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(f, start);
-      gain.gain.setValueAtTime(0.1, start);
-      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.2);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(start);
-      osc.stop(start + 0.2);
+      const g = this.ctx.createGain();
+      const st = this.ctx.currentTime + i * 0.06;
+      osc.frequency.setValueAtTime(f, st);
+      g.gain.setValueAtTime(0.1, st);
+      g.gain.exponentialRampToValueAtTime(0.001, st + 0.18);
+      osc.connect(g);
+      g.connect(this.ctx.destination);
+      osc.start(st);
+      osc.stop(st + 0.18);
     });
   }
 
-  playFanfare() {
+  fanfare() {
     if (this.muted) return;
     this.init();
     if (!this.ctx) return;
-    const notes = [523.25, 659.25, 783.99, 1046.50];
-    notes.forEach((f, i) => {
+    [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
       const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      const start = this.ctx.currentTime + i * 0.08;
+      const g = this.ctx.createGain();
+      const st = this.ctx.currentTime + i * 0.08;
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(f, start);
-      gain.gain.setValueAtTime(0.14, start);
-      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.3);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(start);
-      osc.stop(start + 0.3);
+      osc.frequency.setValueAtTime(f, st);
+      g.gain.setValueAtTime(0.12, st);
+      g.gain.exponentialRampToValueAtTime(0.001, st + 0.3);
+      osc.connect(g);
+      g.connect(this.ctx.destination);
+      osc.start(st);
+      osc.stop(st + 0.3);
     });
   }
 
-  playError() {
+  error() {
     if (this.muted) return;
     this.init();
     if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    const g = this.ctx.createGain();
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(150, this.ctx.currentTime);
-    osc.frequency.linearRampToValueAtTime(90, this.ctx.currentTime + 0.18);
-    gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.18);
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
+    osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(80, this.ctx.currentTime + 0.15);
+    g.gain.setValueAtTime(0.08, this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+    osc.connect(g);
+    g.connect(this.ctx.destination);
     osc.start();
-    osc.stop(this.ctx.currentTime + 0.18);
+    osc.stop(this.ctx.currentTime + 0.15);
   }
 }
 
-const audio = new MobileAudio();
+const sfx = new NYTAudio();
 
 // =============================================================================
-// 2. NAVEGAÇÃO ENTRE TELAS E ABAS
+// 2. NAVEGAÇÃO ENTRE TELAS
 // =============================================================================
-function navigateTo(screenId) {
+function showScreen(screenId) {
   const screens = document.querySelectorAll('.view-screen');
   screens.forEach(s => s.classList.remove('active'));
 
   const target = document.getElementById(screenId);
   if (target) target.classList.add('active');
 
-  // Atualizar botões da barra inferior
-  const navBtns = document.querySelectorAll('.nav-tab-btn');
-  navBtns.forEach(btn => {
-    btn.classList.remove('active');
-    if (
-      (screenId === 'screen-hub' && btn.textContent.includes('Jogos')) ||
-      (screenId === 'screen-calculator' && btn.textContent.includes('Calculadora')) ||
-      (screenId === 'screen-about' && btn.textContent.includes('CP2B'))
-    ) {
-      btn.classList.add('active');
-    }
-  });
-
-  audio.playTap();
+  sfx.tap();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function openGame(gameId) {
-  navigateTo(gameId);
-
-  // Inicializações sob demanda
+  showScreen(gameId);
   if (gameId === 'screen-connections') initConnections();
   if (gameId === 'screen-wordle') initWordle();
   if (gameId === 'screen-myths') initMyths();
-  if (gameId === 'screen-reactor') startReactorGame();
 }
 
 // =============================================================================
-// 3. JOGO 1: CONEXÕES DA BIOMASSA (NYT Connections Style)
+// 3. JOGO 1: CONEXÕES DA BIOMASSA (NYT Connections)
 // =============================================================================
-const connectionsCategories = [
+const connCategories = [
   {
     id: "cana",
     title: "Resíduos da Cana em SP",
-    class: "cat-yellow",
-    explanation: "Subprodutos gerados nas usinas sucroalcooleiras paulistas com alto poder de geração de biometano.",
+    class: "yellow",
     items: ["VINHAÇA", "TORTA DE FILTRO", "BAGAÇO", "PALHA"]
   },
   {
     id: "gases",
     title: "Gases da Biodigestão",
-    class: "cat-green",
-    explanation: "Compostos químicos presentes na mistura gasosa bruta do biodigestor.",
+    class: "green",
     items: ["METANO (CH₄)", "GÁS CARBÔNICO", "GÁS SULFÍDRICO", "VAPOR D'ÁGUA"]
   },
   {
     id: "upgrading",
-    title: "Tecnologias de Refino (Upgrading)",
-    class: "cat-blue",
-    explanation: "Processos industriais para purificar o biogás e transformá-lo em biometano >95% puro.",
-    items: ["MEMBRANAS", "PSA (ADSORÇÃO)", "LAVAGEM COM ÁGUA", "AMINAS"]
+    title: "Tecnologias de Refino",
+    class: "blue",
+    items: ["MEMBRANAS", "PSA (ADSORÇÃO)", "LAVAGEM DE GÁS", "AMINAS"]
   },
   {
     id: "destinos",
     title: "Destinos do Biometano",
-    class: "cat-purple",
-    explanation: "Aplicações práticas do biometano limpo substituindo combustíveis fósseis.",
-    items: ["CAMINHÕES PESADOS", "GASODUTO COMGÁS", "CALDEIRAS", "TRATORES A GÁS"]
+    class: "purple",
+    items: ["CAMINHÕES SCANIA", "GASODUTO COMGÁS", "CALDEIRAS", "TRATORES A GÁS"]
   }
 ];
 
-let connCurrentTiles = [];
-let connSelectedTiles = [];
-let connMistakesRemaining = 4;
-let connSolvedCategories = [];
+let connTiles = [];
+let connSelected = [];
+let connMistakes = 4;
+let connSolved = [];
 
 function initConnections() {
-  connSolvedCategories = [];
-  connMistakesRemaining = 4;
-  connSelectedTiles = [];
+  connSolved = [];
+  connMistakes = 4;
+  connSelected = [];
 
-  // Planificar todos os 16 itens
-  connCurrentTiles = [];
-  connectionsCategories.forEach(cat => {
+  connTiles = [];
+  connCategories.forEach(cat => {
     cat.items.forEach(item => {
-      connCurrentTiles.push({ text: item, catId: cat.id });
+      connTiles.push({ text: item, catId: cat.id });
     });
   });
 
-  shuffleArray(connCurrentTiles);
-  renderConnectionsUI();
+  shuffle(connTiles);
+  renderConnections();
 }
 
-function renderConnectionsUI() {
-  const grid = document.getElementById('conn-grid');
-  const solvedContainer = document.getElementById('conn-solved-container');
+function renderConnections() {
+  const grid = document.getElementById('conn-board');
+  const solved = document.getElementById('conn-solved-container');
+  const submitBtn = document.getElementById('btn-submit-conn');
   const modal = document.getElementById('conn-result-modal');
+  const mistakesSpan = document.getElementById('conn-mistakes-display');
 
   if (modal) modal.style.display = 'none';
 
-  // Renderizar categorias resolvidas
-  if (solvedContainer) {
-    solvedContainer.innerHTML = connSolvedCategories.map(cat => `
-      <div class="solved-card ${cat.class}">
+  if (submitBtn) {
+    submitBtn.textContent = `Enviar (${connSelected.length}/4)`;
+  }
+
+  if (mistakesSpan) {
+    mistakesSpan.textContent = '• '.repeat(connMistakes).trim() || 'Nenhuma';
+  }
+
+  // Grupos resolvidos
+  if (solved) {
+    solved.innerHTML = connSolved.map(cat => `
+      <div class="conn-solved-box ${cat.class}">
         <div>${cat.title}</div>
-        <div class="solved-items">${cat.items.join(' • ')}</div>
+        <div class="conn-solved-items">${cat.items.join(' • ')}</div>
       </div>
     `).join('');
   }
 
-  // Renderizar bolinhas de erros
-  for (let i = 1; i <= 4; i++) {
-    const dot = document.getElementById(`dot-1`);
-    const dotEl = document.getElementById(`dot-${i}`);
-    if (dotEl) {
-      dotEl.className = i <= connMistakesRemaining ? 'dot' : 'dot lost';
-    }
-  }
-
-  // Renderizar grade
+  // Grade 4x4
   if (grid) {
     grid.innerHTML = '';
-    connCurrentTiles.forEach(tile => {
-      const tileDiv = document.createElement('div');
-      tileDiv.className = 'conn-tile';
-      if (connSelectedTiles.includes(tile.text)) tileDiv.classList.add('selected');
-      tileDiv.textContent = tile.text;
+    connTiles.forEach(tile => {
+      const btn = document.createElement('button');
+      btn.className = 'conn-tile-btn';
+      if (connSelected.includes(tile.text)) btn.classList.add('selected');
+      btn.textContent = tile.text;
 
-      tileDiv.addEventListener('click', () => {
-        toggleConnectionTile(tile.text);
+      btn.addEventListener('click', () => {
+        toggleConnTile(tile.text);
       });
 
-      grid.appendChild(tileDiv);
+      grid.appendChild(btn);
     });
   }
 }
 
-function toggleConnectionTile(text) {
-  const index = connSelectedTiles.indexOf(text);
-  if (index > -1) {
-    connSelectedTiles.splice(index, 1);
-    audio.playTap();
+function toggleConnTile(text) {
+  const idx = connSelected.indexOf(text);
+  if (idx > -1) {
+    connSelected.splice(idx, 1);
+    sfx.tap();
   } else {
-    if (connSelectedTiles.length < 4) {
-      connSelectedTiles.push(text);
-      audio.playTap();
+    if (connSelected.length < 4) {
+      connSelected.push(text);
+      sfx.tap();
     }
   }
-  renderConnectionsUI();
+  renderConnections();
 }
 
 function deselectAllConnections() {
-  connSelectedTiles = [];
-  audio.playTap();
-  renderConnectionsUI();
+  connSelected = [];
+  sfx.tap();
+  renderConnections();
 }
 
 function shuffleConnections() {
-  shuffleArray(connCurrentTiles);
-  audio.playTap();
-  renderConnectionsUI();
+  shuffle(connTiles);
+  sfx.tap();
+  renderConnections();
 }
 
 function submitConnections() {
-  if (connSelectedTiles.length !== 4) {
+  if (connSelected.length !== 4) {
     alert("Selecione 4 palavras para enviar!");
     return;
   }
 
-  // Checar se as 4 pertencem à mesma categoria
-  const firstItem = connCurrentTiles.find(t => t.text === connSelectedTiles[0]);
-  const targetCatId = firstItem.catId;
-  const allMatch = connSelectedTiles.every(t => {
-    const found = connCurrentTiles.find(x => x.text === t);
-    return found && found.catId === targetCatId;
+  const first = connTiles.find(t => t.text === connSelected[0]);
+  const catId = first.catId;
+  const match = connSelected.every(t => {
+    const item = connTiles.find(x => x.text === t);
+    return item && item.catId === catId;
   });
 
-  if (allMatch) {
-    // Categoria resolvida!
-    const matchedCategory = connectionsCategories.find(c => c.id === targetCatId);
-    connSolvedCategories.push(matchedCategory);
+  if (match) {
+    const solvedCat = connCategories.find(c => c.id === catId);
+    connSolved.push(solvedCat);
+    connTiles = connTiles.filter(t => t.catId !== catId);
+    connSelected = [];
+    sfx.ding();
 
-    // Remover itens da grade
-    connCurrentTiles = connCurrentTiles.filter(t => t.catId !== targetCatId);
-    connSelectedTiles = [];
-
-    audio.playDing();
-
-    if (connSolvedCategories.length === 4) {
-      // Venceu o jogo!
-      renderConnectionsUI();
-      audio.playFanfare();
+    if (connSolved.length === 4) {
+      renderConnections();
+      sfx.fanfare();
       if (window.confetti) window.confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
       const modal = document.getElementById('conn-result-modal');
       if (modal) modal.style.display = 'block';
       return;
     }
   } else {
-    // Errou
-    connMistakesRemaining--;
-    audio.playError();
+    connMistakes--;
+    sfx.error();
 
-    // Checar se estava a 1 de distância (3 de 4 certos)
-    const countsByCat = {};
-    connSelectedTiles.forEach(t => {
-      const tile = connCurrentTiles.find(x => x.text === t);
-      if (tile) countsByCat[tile.catId] = (countsByCat[tile.catId] || 0) + 1;
+    // Checar se faltava apenas 1
+    const counts = {};
+    connSelected.forEach(t => {
+      const tile = connTiles.find(x => x.text === t);
+      if (tile) counts[tile.catId] = (counts[tile.catId] || 0) + 1;
     });
-    const hasThree = Object.values(countsByCat).some(v => v === 3);
-    if (hasThree) {
-      alert("Por pouco! 3 de 4 estão corretos.");
+    if (Object.values(counts).some(v => v === 3)) {
+      alert("Quase! 3 de 4 estão certos.");
     }
 
-    if (connMistakesRemaining <= 0) {
-      alert("Fim das tentativas! Mas não desanime, toque em 'Jogar Novamente' para tentar outra vez.");
+    if (connMistakes <= 0) {
+      alert("Tentativas esgotadas! Tente novamente.");
       initConnections();
       return;
     }
   }
 
-  renderConnectionsUI();
+  renderConnections();
 }
 
 function restartConnections() {
@@ -329,138 +298,134 @@ function restartConnections() {
 }
 
 // =============================================================================
-// 4. JOGO 2: TERMO DO BIOGÁS (Wordle / Termo Style)
+// 4. JOGO 2: TERMO DO BIOGÁS (Wordle)
 // =============================================================================
-const wordleSecret = "METANO";
-const wordleMaxTries = 6;
-let wordleGuesses = [];
-let wordleCurrentGuess = "";
-let wordleGameOver = false;
+const wordleTarget = "METANO";
+const wordleTries = 6;
+let guesses = [];
+let currentGuess = "";
+let wordleDone = false;
 
 function initWordle() {
-  wordleGuesses = [];
-  wordleCurrentGuess = "";
-  wordleGameOver = false;
+  guesses = [];
+  currentGuess = "";
+  wordleDone = false;
 
   const modal = document.getElementById('wordle-result-modal');
   if (modal) modal.style.display = 'none';
 
-  renderWordleBoard();
-  renderWordleKeyboard();
+  renderWordle();
+  renderKeyboard();
 }
 
-function renderWordleBoard() {
-  const board = document.getElementById('wordle-board');
-  if (!board) return;
+function renderWordle() {
+  const grid = document.getElementById('wordle-grid');
+  if (!grid) return;
 
-  board.innerHTML = '';
-  for (let r = 0; r < wordleMaxTries; r++) {
+  grid.innerHTML = '';
+  for (let r = 0; r < wordleTries; r++) {
     const row = document.createElement('div');
-    row.className = 'wordle-row';
-
-    const guess = wordleGuesses[r];
-    const isCurrentRow = (r === wordleGuesses.length);
+    row.className = 'wordle-grid-row';
+    const guess = guesses[r];
+    const isCurrent = (r === guesses.length);
 
     for (let c = 0; c < 6; c++) {
-      const cell = document.createElement('div');
-      cell.className = 'wordle-cell';
+      const box = document.createElement('div');
+      box.className = 'wordle-box';
 
       if (guess) {
-        // Palpite já submetido
         const letter = guess[c];
-        cell.textContent = letter;
-
-        if (letter === wordleSecret[c]) {
-          cell.classList.add('correct');
-        } else if (wordleSecret.includes(letter)) {
-          cell.classList.add('present');
+        box.textContent = letter;
+        if (letter === wordleTarget[c]) {
+          box.classList.add('correct');
+        } else if (wordleTarget.includes(letter)) {
+          box.classList.add('present');
         } else {
-          cell.classList.add('absent');
+          box.classList.add('absent');
         }
-      } else if (isCurrentRow) {
-        // Linha em digitação
-        cell.textContent = wordleCurrentGuess[c] || '';
+      } else if (isCurrent) {
+        box.textContent = currentGuess[c] || '';
       }
 
-      row.appendChild(cell);
+      row.appendChild(box);
     }
-    board.appendChild(row);
+    grid.appendChild(row);
   }
 }
 
-function renderWordleKeyboard() {
-  const kbContainer = document.getElementById('keyboard-mobile');
-  if (!kbContainer) return;
+function renderKeyboard() {
+  const container = document.getElementById('wordle-keyboard');
+  if (!container) return;
 
-  const rows = [
+  const layout = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
     ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"]
   ];
 
-  kbContainer.innerHTML = rows.map(r => `
-    <div class="keyboard-row">
-      ${r.map(k => {
-        let cls = 'key-btn';
-        if (k === 'ENTER' || k === '⌫') cls += ' key-action';
-        return `<button class="${cls}" onclick="handleWordleKey('${k}')">${k}</button>`;
+  container.innerHTML = layout.map(row => `
+    <div class="kb-row">
+      ${row.map(k => {
+        let cls = 'kb-key';
+        if (k === 'ENTER' || k === '⌫') cls += ' wide';
+        return `<button class="${cls}" onclick="pressKey('${k}')">${k}</button>`;
       }).join('')}
     </div>
   `).join('');
 }
 
-window.handleWordleKey = function(key) {
-  if (wordleGameOver) return;
+window.pressKey = function(k) {
+  if (wordleDone) return;
 
-  if (key === '⌫') {
-    if (wordleCurrentGuess.length > 0) {
-      wordleCurrentGuess = wordleCurrentGuess.slice(0, -1);
-      audio.playTap();
-      renderWordleBoard();
+  if (k === '⌫') {
+    if (currentGuess.length > 0) {
+      currentGuess = currentGuess.slice(0, -1);
+      sfx.tap();
+      renderWordle();
     }
-  } else if (key === 'ENTER') {
-    if (wordleCurrentGuess.length === 6) {
-      submitWordleGuess();
+  } else if (k === 'ENTER') {
+    if (currentGuess.length === 6) {
+      submitWordle();
     } else {
-      alert("A palavra deve ter 6 letras!");
+      alert("A palavra precisa ter 6 letras!");
     }
   } else {
-    if (wordleCurrentGuess.length < 6) {
-      wordleCurrentGuess += key;
-      audio.playTap();
-      renderWordleBoard();
+    if (currentGuess.length < 6) {
+      currentGuess += k;
+      sfx.tap();
+      renderWordle();
     }
   }
 };
 
-function submitWordleGuess() {
-  wordleGuesses.push(wordleCurrentGuess);
-  const isWin = (wordleCurrentGuess === wordleSecret);
-  wordleCurrentGuess = "";
+function submitWordle() {
+  guesses.push(currentGuess);
+  const win = (currentGuess === wordleTarget);
+  currentGuess = "";
 
-  renderWordleBoard();
+  renderWordle();
 
-  if (isWin) {
-    wordleGameOver = true;
-    audio.playFanfare();
+  if (win) {
+    wordleDone = true;
+    sfx.fanfare();
     if (window.confetti) window.confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
     const modal = document.getElementById('wordle-result-modal');
     if (modal) {
-      document.getElementById('wordle-result-title').textContent = "Acertou em cheio! 🎯";
-      document.getElementById('wordle-result-desc').innerHTML = `A palavra secreta era <strong>${wordleSecret}</strong>. A molécula CH₄ é o coração da transição energética!`;
+      document.getElementById('wordle-result-title').textContent = "Você Acertou! 🎯";
+      document.getElementById('wordle-result-desc').innerHTML = `A palavra era <strong>${wordleTarget}</strong> — a molécula CH₄ da energia limpa!`;
       modal.style.display = 'block';
     }
-  } else if (wordleGuesses.length >= wordleMaxTries) {
-    wordleGameOver = true;
-    audio.playError();
+  } else if (guesses.length >= wordleTries) {
+    wordleDone = true;
+    sfx.error();
     const modal = document.getElementById('wordle-result-modal');
     if (modal) {
-      document.getElementById('wordle-result-title').textContent = "Quase lá!";
-      document.getElementById('wordle-result-desc').innerHTML = `A palavra secreta era <strong>${wordleSecret}</strong>. Tente novamente para dominar o vocabulário!`;
+      document.getElementById('wordle-result-title').textContent = "Fim de Jogo!";
+      document.getElementById('wordle-result-desc').innerHTML = `A palavra era <strong>${wordleTarget}</strong>.`;
       modal.style.display = 'block';
     }
   } else {
-    audio.playDing();
+    sfx.ding();
   }
 }
 
@@ -469,80 +434,76 @@ function restartWordle() {
 }
 
 // =============================================================================
-// 5. JOGO 3: FATO OU MITO?
+// 5. JOGO 3: VERDADE OU MENTIRA (Fato ou Mito)
 // =============================================================================
-const mythsData = [
+const myths = [
   {
-    statement: "O biometano tem cheiro ruim de lixo no escapamento do caminhão.",
+    text: "O biometano tem cheiro ruim de lixo no escapamento do caminhão.",
     isFact: false,
-    explanation: "MITO! No processo de refino (upgrading), o enxofre (H₂S) que dá cheiro de ovo podre é 100% removido. O biometano queima limpinho, sem odor e sem fumaça preta!"
+    reason: "MENTIRA! No refino, 100% do enxofre é retirado. Ele queima sem cheiro e sem fumaça preta!"
   },
   {
-    statement: "A vinhaça de cana de São Paulo pode substituir quase 40% do diesel dos caminhões do Estado.",
+    text: "A vinhaça de cana em São Paulo pode substituir quase 40% do diesel dos caminhões do Estado.",
     isFact: true,
-    explanation: "FATO! Estudos oficiais do CP2B / PILAR-2b mostram que o potencial da cana paulista é gigantesco, equivalente a bilhões de litros de diesel fóssil por ano."
+    reason: "VERDADE! A pesquisa científica do CP2B / PILAR-2b comprova o enorme potencial da cana paulista."
   },
   {
-    statement: "O que sobra no fundo do reator (digestato) é um lixo tóxico que deve ser jogado fora.",
+    text: "O digestato que sobra no fundo do reator é um lixo tóxico que deve ser enterrado.",
     isFact: false,
-    explanation: "MITO! O digestato é um super biofertilizante orgânico de alto valor, rico em Nitrogênio, Fósforo e Potássio (NPK), que substitui adubos químicos na lavoura!"
+    reason: "MENTIRA! O digestato é um super adubo orgânico com NPK para nutrir as lavouras sem químicos caros."
   }
 ];
 
-let mythIndex = 0;
+let mythIdx = 0;
 let mythScore = 0;
 
 function initMyths() {
-  mythIndex = 0;
+  mythIdx = 0;
   mythScore = 0;
   const modal = document.getElementById('myth-result-modal');
   if (modal) modal.style.display = 'none';
-
-  renderMythCard();
+  renderMyth();
 }
 
-function renderMythCard() {
-  if (mythIndex >= mythsData.length) {
+function renderMyth() {
+  if (mythIdx >= myths.length) {
     const modal = document.getElementById('myth-result-modal');
-    const scoreElem = document.getElementById('myth-final-score');
-    if (scoreElem) scoreElem.textContent = `Você acertou ${mythScore} de ${mythsData.length} afirmações científicas!`;
+    const summ = document.getElementById('myth-score-summary');
+    if (summ) summ.textContent = `Você acertou ${mythScore} de ${myths.length} afirmativas!`;
     if (modal) modal.style.display = 'block';
-    audio.playFanfare();
+    sfx.fanfare();
     if (window.confetti) window.confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
     return;
   }
 
-  const data = mythsData[mythIndex];
-  const stepElem = document.getElementById('myth-step-text');
-  const stmtElem = document.getElementById('myth-statement-text');
-  const feedElem = document.getElementById('myth-feedback-text');
+  const m = myths[mythIdx];
+  const countEl = document.getElementById('myth-counter-text');
+  const textEl = document.getElementById('myth-text-content');
+  const statusEl = document.getElementById('myth-status-msg');
 
-  if (stepElem) stepElem.textContent = `Afirmação ${mythIndex + 1} de ${mythsData.length}`;
-  if (stmtElem) stmtElem.textContent = `"${data.statement}"`;
-  if (feedElem) feedElem.textContent = "Toque em FATO ou MITO para responder!";
+  if (countEl) countEl.textContent = `Pergunta ${mythIdx + 1} de ${myths.length}`;
+  if (textEl) textEl.textContent = `"${m.text}"`;
+  if (statusEl) statusEl.textContent = "Toque para responder:";
 }
 
-window.answerMyth = function(userChoice) {
-  if (mythIndex >= mythsData.length) return;
-  const data = mythsData[mythIndex];
-  const isCorrect = (userChoice === data.isFact);
+window.answerMyth = function(choice) {
+  if (mythIdx >= myths.length) return;
+  const m = myths[mythIdx];
+  const statusEl = document.getElementById('myth-status-msg');
 
-  const feedElem = document.getElementById('myth-feedback-text');
-
-  if (isCorrect) {
+  if (choice === m.isFact) {
     mythScore++;
-    audio.playDing();
-    if (feedElem) feedElem.innerHTML = `<span style="color:var(--cp2b-verde); font-weight:800;">✅ Certa resposta!</span> ${data.explanation}`;
+    sfx.ding();
+    if (statusEl) statusEl.innerHTML = `<span style="color:#16a34a; font-weight:900;">✅ Certo!</span> ${m.reason}`;
   } else {
-    audio.playError();
-    if (feedElem) feedElem.innerHTML = `<span style="color:#ef4444; font-weight:800;">❌ Incorreto!</span> ${data.explanation}`;
+    sfx.error();
+    if (statusEl) statusEl.innerHTML = `<span style="color:#dc2626; font-weight:900;">❌ Incorreto!</span> ${m.reason}`;
   }
 
-  // Avançar após breve pausa para leitura
   setTimeout(() => {
-    mythIndex++;
-    renderMythCard();
-  }, 3200);
+    mythIdx++;
+    renderMyth();
+  }, 2800);
 };
 
 function restartMyths() {
@@ -550,101 +511,34 @@ function restartMyths() {
 }
 
 // =============================================================================
-// 6. JOGO 4: EQUILÍBRIO DO REATOR (Desafio 20s)
+// 6. CALCULADORA CIDADÃ (Favorita!)
 // =============================================================================
-let reactorTimerInterval;
-let reactorTime = 20;
-let reactorSolved = false;
+function initCalculator() {
+  const sPop = document.getElementById('calc-slider-pop');
+  const sVin = document.getElementById('calc-slider-vinasse');
+  const sCat = document.getElementById('calc-slider-cattle');
 
-function startReactorGame() {
-  clearInterval(reactorTimerInterval);
-  reactorTime = 20;
-  reactorSolved = false;
+  if (sPop) sPop.addEventListener('input', updateCalcResults);
+  if (sVin) sVin.addEventListener('input', updateCalcResults);
+  if (sCat) sCat.addEventListener('input', updateCalcResults);
 
-  const modal = document.getElementById('reactor-result-modal');
-  if (modal) modal.style.display = 'none';
-
-  const timerElem = document.getElementById('reactor-timer');
-  if (timerElem) timerElem.textContent = `${reactorTime}s`;
-
-  // Sliders
-  const sTemp = document.getElementById('slider-reactor-temp');
-  const sPH = document.getElementById('slider-reactor-ph');
-  const sMix = document.getElementById('slider-reactor-mix');
-
-  if (sTemp) sTemp.value = 24;
-  if (sPH) sPH.value = 5.8;
-  if (sMix) sMix.value = 30;
-
-  updateReactorSliderLabels();
-
-  reactorTimerInterval = setInterval(() => {
-    reactorTime--;
-    if (timerElem) timerElem.textContent = `${reactorTime}s`;
-
-    checkReactorBalance();
-
-    if (reactorTime <= 0 && !reactorSolved) {
-      clearInterval(reactorTimerInterval);
-      audio.playError();
-      alert("O tempo esgotou! O reator esfriou antes da metanogênese. Tente novamente!");
-      startReactorGame();
-    }
-  }, 1000);
+  updateCalcResults();
 }
 
-function updateReactorSliderLabels() {
-  const sTemp = document.getElementById('slider-reactor-temp');
-  const sPH = document.getElementById('slider-reactor-ph');
-  const sMix = document.getElementById('slider-reactor-mix');
+window.stepCalculator = function(type, delta) {
+  let slider;
+  if (type === 'pop') slider = document.getElementById('calc-slider-pop');
+  if (type === 'vinasse') slider = document.getElementById('calc-slider-vinasse');
+  if (type === 'cattle') slider = document.getElementById('calc-slider-cattle');
 
-  const vTemp = document.getElementById('val-reactor-temp');
-  const vPH = document.getElementById('val-reactor-ph');
-  const vMix = document.getElementById('val-reactor-mix');
-
-  if (vTemp && sTemp) vTemp.textContent = `${sTemp.value}°C`;
-  if (vPH && sPH) vPH.textContent = parseFloat(sPH.value).toFixed(1);
-  if (vMix && sMix) vMix.textContent = `${sMix.value}%`;
-}
-
-function checkReactorBalance() {
-  const sTemp = parseFloat(document.getElementById('slider-reactor-temp')?.value || 0);
-  const sPH = parseFloat(document.getElementById('slider-reactor-ph')?.value || 0);
-  const sMix = parseFloat(document.getElementById('slider-reactor-mix')?.value || 0);
-
-  // Faixa ótima: Temp 35-39°C, pH 6.9-7.5, Agitação 60-80%
-  const tempOk = (sTemp >= 35 && sTemp <= 39);
-  const phOk = (sPH >= 6.9 && sPH <= 7.5);
-  const mixOk = (sMix >= 60 && sMix <= 80);
-
-  const statusBox = document.getElementById('reactor-status-box');
-
-  if (tempOk && phOk && mixOk) {
-    if (!reactorSolved) {
-      reactorSolved = true;
-      clearInterval(reactorTimerInterval);
-      audio.playFanfare();
-      if (window.confetti) window.confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
-      const modal = document.getElementById('reactor-result-modal');
-      if (modal) modal.style.display = 'block';
-    }
-  } else {
-    if (statusBox) {
-      if (!tempOk) statusBox.textContent = "Ajuste a temperatura para ~37°C (mesofílica)!";
-      else if (!phOk) statusBox.textContent = "Equilibre o pH para ~7.2 para não azedar!";
-      else if (!mixOk) statusBox.textContent = "Ajuste a agitação mecânica para ~70%!";
-    }
+  if (slider) {
+    slider.value = parseInt(slider.value) + delta;
+    updateCalcResults();
+    sfx.tap();
   }
-}
+};
 
-function restartReactorGame() {
-  startReactorGame();
-}
-
-// =============================================================================
-// 7. TELA 2: CALCULADORA CIDADÃ (O Destaque Amado!)
-// =============================================================================
-function initCalculatorScreen() {
+function updateCalcResults() {
   const sPop = document.getElementById('calc-slider-pop');
   const sVin = document.getElementById('calc-slider-vinasse');
   const sCat = document.getElementById('calc-slider-cattle');
@@ -657,55 +551,29 @@ function initCalculatorScreen() {
   const mHouses = document.getElementById('metric-houses');
   const mTrees = document.getElementById('metric-trees');
 
-  function updateCitizenMetrics() {
-    const pop = parseInt(sPop?.value || '50000');
-    const vin = parseInt(sVin?.value || '50000');
-    const cat = parseInt(sCat?.value || '2000');
+  const pop = parseInt(sPop?.value || '50000');
+  const vin = parseInt(sVin?.value || '50000');
+  const cat = parseInt(sCat?.value || '2000');
 
-    if (vPop) vPop.textContent = `${pop.toLocaleString('pt-BR')} hab`;
-    if (vVin) vVin.textContent = `${vin.toLocaleString('pt-BR')} L/dia`;
-    if (vCat) vCat.textContent = `${cat.toLocaleString('pt-BR')} animais`;
+  if (vPop) vPop.textContent = pop.toLocaleString('pt-BR');
+  if (vVin) vVin.textContent = `${vin.toLocaleString('pt-BR')} L/dia`;
+  if (vCat) vCat.textContent = cat.toLocaleString('pt-BR');
 
-    // Metano gerado por dia:
-    // Cidadão urbano (esgoto + RSU): ~0.035 m³ biometano
-    // Vinhaça de cana: ~0.012 m³ biometano / litro
-    // Pecuária: ~0.55 m³ biometano / animal
-    const dailyM3 = (pop * 0.035) + (vin * 0.012) + (cat * 0.55);
+  // Metano diário gerado
+  const dailyM3 = (pop * 0.035) + (vin * 0.012) + (cat * 0.55);
+  const buses = Math.max(1, Math.round(dailyM3 / 90));
+  const houses = Math.max(50, Math.round((dailyM3 * 3.6) / 5));
+  const trees = Math.round(buses * 280);
 
-    // 1 ônibus urbano consome ~90 m³ para rodar a linha toda o dia
-    const buses = Math.max(1, Math.round(dailyM3 / 90));
-
-    // 1 casa gasta ~5 kWh/dia (1 m³ gera ~3.6 kWh elétricos)
-    const houses = Math.max(50, Math.round((dailyM3 * 3.6) / 5));
-
-    // Árvores equivalentes em fumaça fóssil evitada
-    const trees = Math.round(buses * 280);
-
-    if (mBuses) mBuses.textContent = buses.toLocaleString('pt-BR');
-    if (mHouses) mHouses.textContent = houses.toLocaleString('pt-BR');
-    if (mTrees) mTrees.textContent = trees.toLocaleString('pt-BR');
-  }
-
-  if (sPop) sPop.addEventListener('input', updateCitizenMetrics);
-  if (sVin) sVin.addEventListener('input', updateCitizenMetrics);
-  if (sCat) sCat.addEventListener('input', updateCitizenMetrics);
-
-  updateCitizenMetrics();
-
-  // Listeners para os sliders do reator também
-  const rTemp = document.getElementById('slider-reactor-temp');
-  const rPH = document.getElementById('slider-reactor-ph');
-  const rMix = document.getElementById('slider-reactor-mix');
-
-  if (rTemp) rTemp.addEventListener('input', () => { updateReactorSliderLabels(); checkReactorBalance(); });
-  if (rPH) rPH.addEventListener('input', () => { updateReactorSliderLabels(); checkReactorBalance(); });
-  if (rMix) rMix.addEventListener('input', () => { updateReactorSliderLabels(); checkReactorBalance(); });
+  if (mBuses) mBuses.textContent = buses.toLocaleString('pt-BR');
+  if (mHouses) mHouses.textContent = houses.toLocaleString('pt-BR');
+  if (mTrees) mTrees.textContent = trees.toLocaleString('pt-BR');
 }
 
 // =============================================================================
-// 8. INICIALIZAÇÃO GERAL
+// 7. UTILITÁRIOS & INICIALIZAÇÃO
 // =============================================================================
-function shuffleArray(arr) {
+function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -713,18 +581,16 @@ function shuffleArray(arr) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Controle de Som
   const soundBtn = document.getElementById('btn-sound');
   const soundIcon = document.getElementById('sound-icon');
   if (soundBtn) {
     soundBtn.addEventListener('click', () => {
-      const isMuted = audio.toggle();
+      const isMuted = sfx.toggle();
       if (soundIcon) soundIcon.textContent = isMuted ? '🔇' : '🔊';
-      if (!isMuted) audio.playDing();
+      if (!isMuted) sfx.ding();
     });
   }
 
-  // Controle de Tema
   const themeBtn = document.getElementById('btn-theme');
   const themeIcon = document.getElementById('theme-icon');
   if (themeBtn) {
@@ -732,9 +598,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.toggle('dark-mode');
       const isDark = document.body.classList.contains('dark-mode');
       if (themeIcon) themeIcon.textContent = isDark ? '☀️' : '🌙';
-      audio.playTap();
+      sfx.tap();
     });
   }
 
-  initCalculatorScreen();
+  initCalculator();
 });

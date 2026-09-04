@@ -1,70 +1,59 @@
 /* ==========================================================================
-   BioMetano Mobile Games Hub — CP2B (NIPE-UNICAMP)
-   100% Mobile-First • Ergonomia de Toque • Estilo New York Times Games
+   BioGames SP — Design System Mobile-First (Estilo New York Times Games)
+   CP2B / NIPE-UNICAMP
+   Layout nativo para celular: 100% largura no smartphone, zero overflow,
+   botões táteis confortáveis e estética limpa, elegante e intuitiva.
    ========================================================================== */
 
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-nyt: 'NYTImperial', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Paleta Oficial CP2B */
-  --cp2b-azul-petroleo: #1E3E4C;
-  --cp2b-verde-escuro: #00573A;
+  /* Paleta Oficial CP2B & NYT */
+  --cp2b-petroleo: #1E3E4C;
+  --cp2b-escuro: #00573A;
   --cp2b-verde: #5CA032;
   --cp2b-verde-hover: #4d8729;
   --cp2b-lima: #B6E03B;
-  --cp2b-lima-dark: #8cb524;
   --cp2b-ambar: #D37402;
 
-  /* Cores Temáticas do Connections (Ajustadas para paleta CP2B) */
-  --conn-yellow: #f59e0b; /* Resíduos da Cana */
-  --conn-green: #10b981;  /* Gases do Biogás */
-  --conn-blue: #0284c7;   /* Tecnologias Upgrading */
-  --conn-purple: #7c3aed; /* Destinos do Biometano */
+  /* Cores Conexões */
+  --conn-yellow: #f59e0b;
+  --conn-green: #10b981;
+  --conn-blue: #0284c7;
+  --conn-purple: #8b5cf6;
 
-  /* Cores Wordle / Termo */
-  --wordle-correct: #5CA032;
-  --wordle-present: #D37402;
-  --wordle-absent: #475569;
-
-  /* Neutros & Superfícies */
-  --bg-desktop: #0b131b;
-  --bg-app: #f8fafc;
-  --bg-surface: #ffffff;
+  /* Superfícies & Cores Neutras NYT */
+  --bg-page: #f7f7f8;
   --bg-card: #ffffff;
-  --bg-muted: #f1f5f9;
-  
-  --border-default: #e2e8f0;
-  --border-strong: #cbd5e1;
+  --bg-input: #f0f2f5;
+  --border-light: #e5e7eb;
+  --border-dark: #111827;
 
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #94a3b8;
+  --text-main: #111827;
+  --text-muted: #4b5563;
+  --text-dim: #9ca3af;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
   --radius-full: 9999px;
-
-  --shadow-card: 0 4px 14px rgba(30, 62, 76, 0.08);
-  --shadow-btn: 0 3px 0 rgba(0, 0, 0, 0.15);
 }
 
 /* Modo Escuro */
 body.dark-mode {
-  --bg-desktop: #05080c;
-  --bg-app: #0f172a;
-  --bg-surface: #1e293b;
-  --bg-card: #1e293b;
-  --bg-muted: #182234;
-  --border-default: #334155;
-  --border-strong: #475569;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --bg-page: #121212;
+  --bg-card: #1e1e1e;
+  --bg-input: #2a2a2a;
+  --border-light: #333333;
+  --border-dark: #ffffff;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
 }
 
-/* Reset Global & Ergonomia Mobile */
+/* Reset Global Sem Quebras Mobile */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -72,354 +61,311 @@ body.dark-mode {
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html {
+  font-size: 16px;
+}
+
+body {
   width: 100%;
-  height: 100%;
-  background-color: var(--bg-desktop);
-  font-family: var(--font-sans);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-page);
   color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.45;
   overflow-x: hidden;
 }
 
-/* Container Mobile Centrado (Fit Perfeito) */
-.mobile-viewport {
-  max-width: 450px;
+/* ==========================================================================
+   Container Mobile (Nativo no Celular, Centrado no Desktop)
+   ========================================================================== */
+.mobile-app {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
-  background-color: var(--bg-app);
+  background-color: var(--bg-card);
   display: flex;
   flex-direction: column;
   position: relative;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+@media (min-width: 601px) {
+  body {
+    background-color: #0b1118;
+  }
+  .mobile-app {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  }
 }
 
 /* ==========================================================================
-   Header Mobile
+   Header Limpo e Elegante (Estilo NYT Games)
    ========================================================================== */
-.app-header {
-  height: 60px;
-  background-color: var(--cp2b-azul-petroleo);
-  color: #ffffff;
+.nyt-header {
+  height: 56px;
+  padding: 0 1rem;
+  background-color: var(--bg-card);
+  border-bottom: 1.5px solid var(--border-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 3px solid var(--cp2b-lima);
 }
 
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-}
-
-.header-logo {
-  height: 32px;
-  width: auto;
-}
-
-.header-title-box {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.header-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-}
-
-.header-title span {
-  color: var(--cp2b-lima);
-}
-
-.header-sub {
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.75);
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.header-tools {
+.nyt-header-title {
+  font-family: var(--font-nyt);
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
   display: flex;
   align-items: center;
   gap: 0.4rem;
-}
-
-.icon-btn-header {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.1s ease;
+  color: var(--text-main);
 }
 
-.icon-btn-header:active {
-  transform: scale(0.92);
-}
-
-/* ==========================================================================
-   Navegação Inferior Mobile (Bottom Navigation Bar)
-   ========================================================================== */
-.bottom-nav {
-  height: 64px;
-  background-color: var(--bg-surface);
-  border-top: 1px solid var(--border-default);
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  position: sticky;
-  bottom: 0;
-  z-index: 90;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.nav-tab-btn {
-  flex: 1;
-  height: 100%;
-  border: none;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.nav-tab-btn .tab-icon {
-  font-size: 1.3rem;
-}
-
-.nav-tab-btn.active {
+.nyt-header-title span {
   color: var(--cp2b-verde);
 }
 
-.nav-tab-btn.active .tab-icon {
-  transform: translateY(-2px);
+.nyt-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-icon-nyt {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-main);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-icon-nyt:active {
+  background: var(--bg-input);
 }
 
 /* ==========================================================================
-   Área de Conteúdo (Telas / Views)
+   Telas (Views)
    ========================================================================== */
-.content-area {
-  flex: 1;
-  padding: 1.1rem;
-  display: flex;
-  flex-direction: column;
-}
-
 .view-screen {
   display: none;
-  animation: fadeIn 0.25s ease forwards;
+  padding: 1rem;
+  flex: 1;
+  flex-direction: column;
 }
 
 .view-screen.active {
   display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================
-   TELA 1: HUB DE JOGOS (Cards Estilo NY Times Games)
+   TELA INICIAL: HUB DE JOGOS DO JORNAL
    ========================================================================== */
-.hub-greeting {
+.hub-masthead {
+  text-align: center;
+  padding: 0.5rem 0 1.25rem;
+  border-bottom: 2px solid var(--border-dark);
   margin-bottom: 1.25rem;
 }
 
-.hub-greeting-tag {
+.hub-date {
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--cp2b-verde-escuro);
-  background: rgba(182, 224, 59, 0.25);
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-full);
-  display: inline-block;
-  margin-bottom: 0.35rem;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
 }
 
-body.dark-mode .hub-greeting-tag {
-  color: var(--cp2b-lima);
+.hub-main-headline {
+  font-family: var(--font-nyt);
+  font-size: 1.75rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin: 0.2rem 0;
 }
 
-.hub-title {
-  font-size: 1.45rem;
+.hub-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Feed de Jogos em Cards Grandes e Táteis */
+.nyt-games-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.nyt-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.nyt-card:active {
+  transform: scale(0.98);
+  border-color: var(--cp2b-verde);
+  background-color: var(--bg-input);
+}
+
+.nyt-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  border: 1px solid var(--border-light);
+}
+
+.nyt-card-body {
+  flex: 1;
+}
+
+.nyt-card-badge {
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--cp2b-verde);
+}
+
+.nyt-card-title {
+  font-size: 1.15rem;
   font-weight: 900;
   line-height: 1.2;
 }
 
-.hub-desc {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  margin-top: 0.2rem;
-}
-
-/* Lista de Cartões de Jogos do NY Times */
-.games-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.game-card-nyt {
-  background: var(--bg-surface);
-  border: 1.5px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: 1.15rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-card);
-  min-height: 84px;
-}
-
-.game-card-nyt:active {
-  transform: scale(0.98);
-  border-color: var(--cp2b-verde);
-}
-
-.game-card-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.game-card-badge {
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.2rem;
-}
-
-.game-card-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-}
-
-.game-card-sub {
+.nyt-card-desc {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-top: 0.15rem;
+  line-height: 1.3;
 }
 
-.game-play-btn {
-  width: 48px;
-  height: 48px;
+.nyt-card-play {
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: none;
-  background: var(--cp2b-verde);
+  background: var(--cp2b-petroleo);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 900;
   flex-shrink: 0;
-  box-shadow: 0 4px 10px rgba(92, 160, 50, 0.3);
 }
 
 /* ==========================================================================
-   TELA DO JOGO 1: CONEXÕES DA BIOMASSA (NYT Connections)
+   Barra Superior de Cada Jogo (Botão Voltar)
    ========================================================================== */
-.game-top-bar {
+.game-header-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 0.85rem;
   margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.btn-back-hub {
+.btn-game-back {
   border: none;
   background: transparent;
-  color: var(--cp2b-verde);
-  font-size: 0.9rem;
-  font-weight: 700;
-  display: flex;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--cp2b-petroleo);
+  display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   cursor: pointer;
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
 }
 
-.connections-instruction {
+body.dark-mode .btn-game-back {
+  color: var(--cp2b-lima);
+}
+
+.game-header-title {
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   JOGO 1: CONEXÕES DA BIOMASSA (NYT Connections)
+   ========================================================================== */
+.conn-prompt {
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
-/* Categorias Resolvidas */
-.solved-categories {
+.conn-solved-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
   margin-bottom: 0.75rem;
 }
 
-.solved-card {
+.conn-solved-box {
   border-radius: var(--radius-sm);
-  padding: 0.75rem 1rem;
+  padding: 0.75rem;
   text-align: center;
   color: #ffffff;
+  font-weight: 900;
   font-size: 0.85rem;
-  font-weight: 800;
-  animation: popIn 0.3s ease;
 }
 
-@keyframes popIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+.conn-solved-box.yellow { background: var(--conn-yellow); }
+.conn-solved-box.green { background: var(--conn-green); }
+.conn-solved-box.blue { background: var(--conn-blue); }
+.conn-solved-box.purple { background: var(--conn-purple); }
 
-.solved-card.cat-yellow { background-color: var(--conn-yellow); }
-.solved-card.cat-green { background-color: var(--conn-green); }
-.solved-card.cat-blue { background-color: var(--conn-blue); }
-.solved-card.cat-purple { background-color: var(--conn-purple); }
-
-.solved-items {
-  font-size: 0.75rem;
+.conn-solved-items {
+  font-size: 0.72rem;
   font-weight: 600;
   opacity: 0.95;
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
 }
 
-/* Grade 4x4 de Palavras */
-.connections-grid {
+/* Grade 4x4 */
+.conn-board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
   margin-bottom: 1.25rem;
 }
 
-.conn-tile {
-  background-color: var(--bg-surface);
-  border: 1.5px solid var(--border-default);
+.conn-tile-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
-  height: 64px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -431,168 +377,139 @@ body.dark-mode .hub-greeting-tag {
   padding: 4px;
   cursor: pointer;
   user-select: none;
-  transition: all 0.15s ease;
+  transition: all 0.1s ease;
 }
 
-.conn-tile:active {
-  transform: scale(0.95);
+.conn-tile-btn:active {
+  transform: scale(0.94);
 }
 
-.conn-tile.selected {
-  background-color: var(--cp2b-azul-petroleo);
+.conn-tile-btn.selected {
+  background: var(--cp2b-petroleo);
   color: #ffffff;
-  border-color: var(--cp2b-azul-petroleo);
+  border-color: var(--cp2b-petroleo);
 }
 
-/* Ações do Connections */
-.conn-mistakes {
+.conn-status-bar {
   text-align: center;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
+  font-weight: 700;
   margin-bottom: 1rem;
 }
 
-.mistake-dots {
-  display: inline-flex;
-  gap: 5px;
-  vertical-align: middle;
-  margin-left: 4px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--cp2b-azul-petroleo);
-}
-
-.dot.lost {
-  background-color: var(--border-default);
-}
-
-.conn-controls {
+.conn-actions-bar {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.5rem;
   justify-content: center;
 }
 
-.btn-mobile-secondary {
+.btn-nyt-secondary {
   height: 48px;
-  padding: 0 1.25rem;
+  padding: 0 1.1rem;
   border-radius: var(--radius-full);
-  border: 1.5px solid var(--border-strong);
-  background: var(--bg-surface);
+  border: 1.5px solid var(--border-dark);
+  background: transparent;
   color: var(--text-main);
   font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.btn-mobile-primary {
-  height: 48px;
-  padding: 0 1.5rem;
-  border-radius: var(--radius-full);
-  border: none;
-  background: var(--cp2b-verde);
-  color: #ffffff;
-  font-size: 0.88rem;
   font-weight: 800;
   cursor: pointer;
 }
 
+.btn-nyt-primary {
+  height: 48px;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--cp2b-petroleo);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
 /* ==========================================================================
-   TELA DO JOGO 2: TERMO DO BIOGÁS (Wordle Style)
+   JOGO 2: TERMO DO BIOGÁS (Wordle)
    ========================================================================== */
-.wordle-board {
+.wordle-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wordle-grid {
   display: flex;
   flex-direction: column;
   gap: 6px;
   align-items: center;
-  margin: 0.5rem 0 1.25rem;
+  margin-bottom: 1rem;
 }
 
-.wordle-row {
+.wordle-grid-row {
   display: flex;
   gap: 6px;
 }
 
-.wordle-cell {
-  width: 48px;
+.wordle-box {
+  width: 46px;
   height: 48px;
-  border: 2px solid var(--border-strong);
+  border: 2px solid var(--border-light);
   border-radius: var(--radius-sm);
-  background: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.35rem;
   font-weight: 900;
   text-transform: uppercase;
-  transition: all 0.2s;
 }
 
-.wordle-cell.correct {
-  background-color: var(--wordle-correct);
-  color: #ffffff;
-  border-color: var(--wordle-correct);
-}
+.wordle-box.correct { background: var(--cp2b-verde); color: #fff; border-color: var(--cp2b-verde); }
+.wordle-box.present { background: var(--cp2b-ambar); color: #fff; border-color: var(--cp2b-ambar); }
+.wordle-box.absent { background: #6b7280; color: #fff; border-color: #6b7280; }
 
-.wordle-cell.present {
-  background-color: var(--wordle-present);
-  color: #ffffff;
-  border-color: var(--wordle-present);
-}
-
-.wordle-cell.absent {
-  background-color: var(--wordle-absent);
-  color: #ffffff;
-  border-color: var(--wordle-absent);
-}
-
-/* Teclado Virtual Mobile */
-.keyboard-mobile {
+.wordle-keyboard {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: auto;
+  gap: 5px;
 }
 
-.keyboard-row {
+.kb-row {
   display: flex;
   gap: 4px;
   justify-content: center;
 }
 
-.key-btn {
+.kb-key {
   height: 48px;
-  min-width: 32px;
   flex: 1;
+  min-width: 28px;
   border: none;
   border-radius: var(--radius-sm);
-  background: var(--bg-muted);
+  background: var(--bg-input);
   color: var(--text-main);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 800;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   user-select: none;
 }
 
-.key-btn.key-action {
+.kb-key:active {
+  background: var(--border-light);
+}
+
+.kb-key.wide {
   flex: 1.5;
   font-size: 0.8rem;
 }
 
-.key-btn.correct { background: var(--wordle-correct); color: #fff; }
-.key-btn.present { background: var(--wordle-present); color: #fff; }
-.key-btn.absent { background: var(--wordle-absent); color: #fff; opacity: 0.6; }
-
 /* ==========================================================================
-   TELA DO JOGO 3: FATO OU MITO?
+   JOGO 3: VERDADE OU MENTIRA (Fato ou Mito)
    ========================================================================== */
-.myth-card-container {
+.myths-flow {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -600,217 +517,199 @@ body.dark-mode .hub-greeting-tag {
   gap: 1.5rem;
 }
 
-.myth-question-card {
-  background: var(--bg-surface);
-  border: 2px solid var(--border-default);
+.myth-box {
+  background: var(--bg-input);
   border-radius: var(--radius-lg);
   padding: 1.75rem 1.25rem;
   text-align: center;
-  box-shadow: var(--shadow-card);
 }
 
-.myth-card-step {
+.myth-counter {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 
-.myth-statement {
-  font-size: 1.25rem;
-  font-weight: 800;
+.myth-text {
+  font-size: 1.3rem;
+  font-weight: 900;
   margin: 1rem 0;
   line-height: 1.35;
 }
 
-.myth-actions {
+.myth-answer-status {
+  min-height: 48px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.myth-choice-btns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.btn-myth-choice {
-  height: 56px;
+.btn-myth-action {
+  height: 58px;
   border-radius: var(--radius-md);
   border: none;
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 1.1rem;
+  font-weight: 900;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  transition: transform 0.1s ease;
 }
 
-.btn-myth-choice:active {
+.btn-myth-action:active {
   transform: scale(0.96);
 }
 
-.btn-choice-false {
+.btn-myth-false {
   background: #fee2e2;
   color: #b91c1c;
   border: 2px solid #ef4444;
 }
 
-.btn-choice-true {
+.btn-myth-true {
   background: #dcfce7;
   color: #15803d;
   border: 2px solid #22c55e;
 }
 
 /* ==========================================================================
-   TELA 2: CALCULADORA CIDADÃ (O Destaque Favorito!)
+   TELA: CALCULADORA CIDADÃ (O Destaque Central!)
    ========================================================================== */
-.calc-screen-header {
-  margin-bottom: 1.25rem;
-}
-
-.calc-card-mobile {
-  background: var(--bg-surface);
-  border: 2px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  box-shadow: var(--shadow-card);
-}
-
-.slider-group-mobile {
-  margin-bottom: 1.25rem;
-}
-
-.slider-group-mobile:last-child {
-  margin-bottom: 0;
-}
-
-.slider-label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.88rem;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-}
-
-.slider-live-value {
-  color: var(--cp2b-verde);
-  font-family: var(--font-mono);
-  font-weight: 800;
-}
-
-.mobile-slider {
-  width: 100%;
-  height: 12px;
-  border-radius: 6px;
-  background: var(--bg-muted);
-  outline: none;
-  accent-color: var(--cp2b-verde);
-  cursor: pointer;
-}
-
-/* Resultados Rápidos & Visuais */
-.calc-metrics-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-}
-
-.metric-pill-card {
-  background: linear-gradient(135deg, rgba(92, 160, 50, 0.08), rgba(182, 224, 59, 0.12));
-  border: 1.5px solid var(--cp2b-verde);
-  border-radius: var(--radius-md);
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-
-.metric-pill-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--bg-surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-
-.metric-pill-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.metric-pill-number {
-  font-size: 1.35rem;
-  font-weight: 900;
-  color: var(--cp2b-verde-escuro);
-  line-height: 1.1;
-}
-
-body.dark-mode .metric-pill-number {
-  color: var(--cp2b-lima);
-}
-
-.metric-pill-desc {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   TELA 3: HUB CIENTÍFICO CP2B & PILAR-2b
-   ========================================================================== */
-.cp2b-info-screen {
+.calc-card-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.cp2b-hero-card {
-  background: linear-gradient(135deg, var(--cp2b-azul-petroleo), #0e1e26);
-  color: #ffffff;
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  border: 2px solid var(--cp2b-verde);
+.calc-stepper-card {
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
 }
 
-.cp2b-hero-logo {
-  height: 42px;
-  margin-bottom: 0.75rem;
+.calc-stepper-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-bottom: 0.6rem;
 }
 
-.btn-external-link {
-  height: 48px;
-  background: var(--cp2b-lima);
-  color: var(--cp2b-azul-petroleo);
-  border-radius: var(--radius-full);
+.calc-stepper-val {
+  font-family: var(--font-mono);
+  font-weight: 900;
+  color: var(--cp2b-verde);
+  font-size: 1.05rem;
+}
+
+.calc-stepper-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-step-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-light);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 1.3rem;
+  font-weight: 900;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 800;
-  text-decoration: none;
-  margin-top: 1rem;
-  box-shadow: 0 4px 12px rgba(182, 224, 59, 0.3);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-/* Modal / Tela de Vitória de Cada Mini-Jogo */
-.game-result-modal {
+.btn-step-circle:active {
+  background: var(--cp2b-lima);
+  color: var(--cp2b-petroleo);
+}
+
+.range-stepper {
+  flex: 1;
+  height: 12px;
+  border-radius: 6px;
+  accent-color: var(--cp2b-verde);
+  cursor: pointer;
+}
+
+/* Métricas da Cidade */
+.calc-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.result-row-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.result-row-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.result-row-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-row-number {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--cp2b-escuro);
+  line-height: 1.1;
+}
+
+body.dark-mode .result-row-number {
+  color: var(--cp2b-lima);
+}
+
+.result-row-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* ==========================================================================
+   Tela de Vitória Modal
+   ========================================================================== */
+.nyt-result-modal {
   display: none;
-  background: var(--bg-surface);
+  background: var(--bg-input);
   border: 2px solid var(--cp2b-verde);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   text-align: center;
-  margin-top: 1.5rem;
-  animation: popIn 0.3s ease;
+  margin-top: 1rem;
 }
 
-.result-trophy {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+.nyt-result-modal h3 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--cp2b-verde);
+  margin-bottom: 0.35rem;
+}
+
+.nyt-result-modal p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
 }
