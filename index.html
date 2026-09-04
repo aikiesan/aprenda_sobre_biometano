@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>BioGames SP — Biogás & Biometano | CP2B</title>
-  <meta name="description" content="Mini-jogos e calculadora cidadã sobre biogás, biometano e biomassa no Estado de São Paulo. Plataforma PILAR-2b / CP2B (NIPE-UNICAMP / FAPESP).">
+  <meta name="description" content="Mini-jogos e calculadora cidadã sobre biogás, biometano e biomassa no Estado de São Paulo. Centro Paulista de Estudos em Biogás e Bioprodutos - CP2B (NIPE-UNICAMP / FAPESP).">
   <meta name="theme-color" content="#1E3E4C">
 
   <!-- Favicon oficial CP2B -->
-  <link rel="icon" type="image/svg+xml" href="assets/logos/cp2b-avatar-gradient.svg">
+  <link rel="icon" type="image/png" href="assets/logos/cp2b-avatar-color.png">
+
+  <!-- Fonte Calibri / Carlito (métrica compatível) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,13 +22,15 @@
   <!-- App Mobile Nativo -->
   <div class="mobile-app">
 
-    <!-- Header Oficial CP2B -->
+    <!-- Header Oficial CP2B com Logo Colorido Oficial -->
     <header class="cp2b-header">
       <div class="cp2b-header-brand" onclick="showScreen('screen-hub')">
-        <img src="assets/logos/cp2b-logo-negative-white.svg" alt="CP2B - Centro Paulista de Estudos em Biogás e Bioprodutos" class="cp2b-header-logo">
-        <span class="cp2b-header-badge">PILAR-2b</span>
+        <img src="assets/logos/cp2b-logo-color.png" alt="CP2B - Centro Paulista de Estudos em Biogás e Bioprodutos" class="cp2b-header-logo">
       </div>
       <div class="cp2b-header-actions">
+        <a href="https://cp2b.unicamp.br/" target="_blank" rel="noopener noreferrer" class="cp2b-header-site-btn" title="Site oficial CP2B">
+          cp2b.unicamp.br ↗
+        </a>
         <button id="btn-sound" class="btn-icon-cp2b" title="Alternar som" aria-label="Som">
           <span id="sound-icon">🔊</span>
         </button>
@@ -40,28 +47,30 @@
       <!-- Banner Acolhedor de Boas-Vindas -->
       <div class="hub-welcome-banner">
         <div class="banner-tag-row">
-          <span class="banner-inst-tag">CENTRO PAULISTA DE ESTUDOS EM BIOGÁS &amp; BIOPRODUTOS</span>
+          <span class="banner-inst-tag">CP2B • NIPE-UNICAMP • FAPESP</span>
         </div>
         <h1 class="banner-title">Aprenda sobre Biogás &amp; Biometano</h1>
         <p class="banner-slogan">"Energia viva, ciência que transforma."</p>
         <p class="banner-desc">
-          Descubra como o lixo das cidades, a vinhaça e os resíduos do agro paulista viram energia limpa para casas e ônibus que não emitem fumaça fóssil!
+          Veja como a vinhaça, o lixo das cidades e os resíduos do agro paulista viram energia limpa para abastecer casas e veículos pesados que não poluem!
         </p>
         <div class="banner-chips">
-          <span class="banner-chip">🌱 Gás 100% Verde</span>
-          <span class="banner-chip">🚜 Agro Paulista</span>
-          <span class="banner-chip">🚌 Mobilidade Limpa</span>
-          <span class="banner-chip">🔬 NIPE-UNICAMP • FAPESP</span>
+          <span class="banner-chip">🌱 Gás Renovável</span>
+          <span class="banner-chip">🚜 Agro SP</span>
+          <span class="banner-chip">🚌 Menos Diesel</span>
+          <a href="https://cp2b.unicamp.br/" target="_blank" rel="noopener noreferrer" class="banner-chip-link">
+            cp2b.unicamp.br ↗
+          </a>
         </div>
       </div>
 
-      <!-- Grade de Cards Compactos (Mobile Grid 2 Colunas) -->
+      <!-- Grade de Cards Compactos (2 Colunas Alinhadas) -->
       <div class="hub-cards-grid">
         <!-- 1. Card Hero: Calculadora Cidadã -->
         <div class="hub-card-hero" onclick="showScreen('screen-calculator')">
           <div class="hero-card-header">
-            <span class="hero-card-badge">⭐ Destaque Cidadão</span>
-            <span class="hero-card-action">Calcular Agora →</span>
+            <span class="hero-card-badge">⭐ Calculadora Cidadã</span>
+            <span class="hero-card-action">Simular Agora →</span>
           </div>
           <div class="hero-card-content">
             <div class="hero-card-icon">⚡🧮</div>
@@ -76,11 +85,11 @@
         <div class="hub-mini-card" onclick="openGame('screen-crossword')">
           <div class="mini-card-top">
             <span class="mini-card-icon">📝</span>
-            <span class="mini-card-badge">🌾 Agro &amp; SP</span>
+            <span class="mini-card-badge">🌾 Agro SP</span>
           </div>
           <div>
             <h3 class="mini-card-title">Cruzadinha</h3>
-            <p class="mini-card-desc">Palavras cruzadas sobre agricultura, cana e biometano de SP com dicas.</p>
+            <p class="mini-card-desc">Palavras cruzadas da cana e biomassa de SP com dicas fáceis.</p>
           </div>
         </div>
 
@@ -88,11 +97,11 @@
         <div class="hub-mini-card" onclick="openGame('screen-connections')">
           <div class="mini-card-top">
             <span class="mini-card-icon">🔀</span>
-            <span class="mini-card-badge">🧩 4 Grupos</span>
+            <span class="mini-card-badge">🧩 Grupos</span>
           </div>
           <div>
             <h3 class="mini-card-title">Conexões</h3>
-            <p class="mini-card-desc">Agrupe 16 palavras da cana, gases e refino em 4 temas científicos.</p>
+            <p class="mini-card-desc">Agrupe 16 termos em 4 temas científicos da biomassa.</p>
           </div>
         </div>
 
@@ -104,7 +113,7 @@
           </div>
           <div>
             <h3 class="mini-card-title">Fato ou Mito?</h3>
-            <p class="mini-card-desc">Descubra se o biometano tem cheiro e se gera fumaça.</p>
+            <p class="mini-card-desc">Mitos e verdades sobre o cheiro e fumaça do gás limpo.</p>
           </div>
         </div>
 
@@ -116,22 +125,22 @@
           </div>
           <div>
             <h3 class="mini-card-title">Sobre o CP2B</h3>
-            <p class="mini-card-desc">A plataforma PILAR-2b e o mapa dos 645 municípios paulistas.</p>
+            <p class="mini-card-desc">Pesquisas, dados e o mapa dos 645 municípios de SP.</p>
           </div>
         </div>
       </div>
 
-      <!-- Rodapé Institucional -->
+      <!-- Rodapé Institucional com Link Direto para o Site CP2B -->
       <footer class="hub-footer">
-        <div class="footer-logos">
-          <img src="assets/logos/cp2b-avatar-gradient.svg" alt="CP2B" class="footer-avatar">
+        <div class="footer-info-row">
+          <img src="assets/logos/cp2b-avatar-color.png" alt="CP2B" class="footer-avatar">
           <div class="footer-info">
             <span class="footer-inst">CP2B • NIPE-UNICAMP • FAPESP</span>
             <span class="footer-copy">Centro Paulista de Estudos em Biogás e Bioprodutos</span>
           </div>
         </div>
-        <a href="https://cp2b.unicamp.br/pilar2b/pt-BR" target="_blank" rel="noopener noreferrer" class="btn-footer-link">
-          Conhecer Mapa PILAR-2b (645 municípios) ➔
+        <a href="https://cp2b.unicamp.br/" target="_blank" rel="noopener noreferrer" class="btn-footer-link">
+          Visitar site oficial: cp2b.unicamp.br ➔
         </a>
       </footer>
     </main>
@@ -147,11 +156,11 @@
         <span class="game-header-title">Calculadora Cidadã</span>
       </div>
 
-      <div style="margin-bottom:0.85rem;">
-        <h2 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; line-height:1.2; color:var(--cp2b-petroleo);">
+      <div style="margin-bottom:0.75rem;">
+        <h2 style="font-size:1.25rem; font-weight:700; line-height:1.2; color:var(--cp2b-petroleo);">
           E se a Sua Cidade Produzisse Biometano?
         </h2>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem;">
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.2rem;">
           Toque nos botões <strong>[-]</strong> e <strong>[+]</strong> para simular o potencial de energia limpa da sua região:
         </p>
       </div>
@@ -203,7 +212,7 @@
           <div class="result-row-icon">🚌</div>
           <div class="result-row-text">
             <span class="result-row-number" id="metric-buses">18</span>
-            <span class="result-row-desc">Ônibus ou caminhões pesados rodando 100% a gás verde todo santo dia</span>
+            <span class="result-row-desc">Ônibus ou caminhões rodando 100% a gás verde todo santo dia</span>
           </div>
         </div>
 
@@ -226,7 +235,7 @@
     </section>
 
     <!-- ====================================================================
-         JOGO: MINI CRUZADINHA DA BIOMASSA (NYT Mini Crossword Style)
+         JOGO: MINI CRUZADINHA DA BIOMASSA (Estilo Mini Crossword)
          ==================================================================== -->
     <section id="screen-crossword" class="view-screen">
       <div class="game-header-bar">
@@ -236,7 +245,7 @@
         <span class="game-header-title">Mini Cruzadinha</span>
       </div>
 
-      <!-- Banner de Dica Atual com Navegação < e > -->
+      <!-- Banner de Dica Atual -->
       <div class="crossword-clue-banner">
         <button class="clue-nav-btn" onclick="prevClue()">‹</button>
         <div class="clue-content" onclick="toggleClueOrientation()">
@@ -256,7 +265,7 @@
 
       <!-- Modal de Vitória da Cruzadinha -->
       <div id="crossword-result-modal" class="cp2b-result-modal">
-        <div style="font-size:2.8rem; margin-bottom:0.25rem;">🎉</div>
+        <div style="font-size:2.5rem; margin-bottom:0.25rem;">🎉</div>
         <h3>Cruzadinha Completa!</h3>
         <p>Você dominou as palavras da cana, da vinhaça, do bagaço e do metano de São Paulo!</p>
         <button class="btn-cp2b-primary" onclick="restartCrossword()">Jogar Novamente</button>
@@ -264,7 +273,7 @@
     </section>
 
     <!-- ====================================================================
-         JOGO: CONEXÕES DA BIOMASSA (NYT Connections Style)
+         JOGO: CONEXÕES DA BIOMASSA (Estilo Connections)
          ==================================================================== -->
     <section id="screen-connections" class="view-screen">
       <div class="game-header-bar">
@@ -290,7 +299,7 @@
 
       <!-- Modal de Resultado do Conexões -->
       <div id="conn-result-modal" class="cp2b-result-modal">
-        <div id="conn-result-icon" style="font-size:2.8rem; margin-bottom:0.25rem;">🎉</div>
+        <div id="conn-result-icon" style="font-size:2.5rem; margin-bottom:0.25rem;">🎉</div>
         <h3 id="conn-result-title">Parabéns!</h3>
         <p id="conn-result-desc">Você conectou todos os resíduos, gases e tecnologias da biomassa paulista!</p>
         <button class="btn-cp2b-primary" onclick="restartConnections()">Jogar Novamente</button>
@@ -327,7 +336,7 @@
 
       <!-- Modal de Resultado -->
       <div id="myths-result-modal" class="cp2b-result-modal">
-        <div style="font-size:2.8rem; margin-bottom:0.25rem;">🏆</div>
+        <div style="font-size:2.5rem; margin-bottom:0.25rem;">🏆</div>
         <h3>Desafio Concluído!</h3>
         <p id="myth-score-summary">Você acertou todas as afirmativas científicas!</p>
         <button class="btn-cp2b-primary" onclick="restartMyths()">Jogar Novamente</button>
@@ -345,36 +354,41 @@
         <span class="game-header-title">Sobre o CP2B</span>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:0.85rem;">
-        <div class="calc-stepper-card" style="background:linear-gradient(135deg, var(--cp2b-petroleo) 0%, var(--cp2b-escuro) 100%); color:#ffffff;">
-          <img src="assets/logos/cp2b-logo-negative-white.svg" alt="CP2B" style="height:36px; margin-bottom:0.6rem;">
-          <h2 style="font-size:1.15rem; font-weight:800; margin-bottom:0.35rem;">
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div class="calc-stepper-card" style="background:var(--bg-card-warm); border:1.5px solid var(--cp2b-verde);">
+          <img src="assets/logos/cp2b-logo-color.png" alt="CP2B" style="height:44px; margin-bottom:0.6rem; object-fit:contain;">
+          <h2 style="font-size:1.15rem; font-weight:700; margin-bottom:0.35rem; color:var(--cp2b-petroleo);">
             Centro Paulista de Estudos em Biogás e Bioprodutos
           </h2>
-          <p style="font-size:0.85rem; line-height:1.5; opacity:0.95;">
+          <p style="font-size:0.85rem; line-height:1.45; color:var(--text-muted);">
             Financiado pela <strong>FAPESP</strong> e sediado no <strong>NIPE - UNICAMP</strong>, o CP2B é o principal centro de referência científica para a transição energética sustentável e a economia circular do biometano no Brasil.
           </p>
-          <a href="https://cp2b.unicamp.br/pilar2b/pt-BR" target="_blank" rel="noopener noreferrer" 
-             style="display:inline-block; margin-top:0.85rem; background:var(--cp2b-lima); color:var(--cp2b-petroleo); font-weight:900; font-size:0.85rem; padding:0.6rem 1.1rem; border-radius:var(--radius-full); text-decoration:none;">
-            Acessar Plataforma PILAR-2b ➔
+          <a href="https://cp2b.unicamp.br/" target="_blank" rel="noopener noreferrer" 
+             class="btn-cp2b-primary"
+             style="display:inline-block; margin-top:0.75rem; text-decoration:none; text-align:center; padding:0.6rem 1rem;">
+            Visitar site oficial: cp2b.unicamp.br ➔
           </a>
         </div>
 
         <div class="calc-stepper-card">
-          <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:0.35rem; color:var(--cp2b-escuro);">
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.3rem; color:var(--cp2b-escuro);">
             O que é a Plataforma PILAR-2b?
           </h3>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.45;">
-            A <strong>PILAR-2b</strong> (Plataforma Inteligente de Localização e Aproveitamento de Resíduos) mapeia georreferenciadamente o potencial de biogás e biometano em todos os <strong>645 municípios</strong> do Estado de São Paulo, conectando usinas sucroalcooleiras, aterros sanitários, pecuária e gasodutos.
+          <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.4;">
+            A <strong>PILAR-2b</strong> mapeia o potencial de biogás e biometano em todos os <strong>645 municípios</strong> do Estado de São Paulo, conectando usinas sucroalcooleiras, aterros sanitários, pecuária e gasodutos.
           </p>
+          <a href="https://cp2b.unicamp.br/pilar2b/pt-BR" target="_blank" rel="noopener noreferrer" 
+             style="display:inline-block; margin-top:0.5rem; font-size:0.8rem; font-weight:700; color:var(--cp2b-verde); text-decoration:none;">
+            Acessar Mapa PILAR-2b ➔
+          </a>
         </div>
 
         <div class="calc-stepper-card">
-          <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:0.35rem; color:var(--cp2b-escuro);">
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.3rem; color:var(--cp2b-escuro);">
             Por que o Biometano é Crucial para SP?
           </h3>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.45;">
-            São Paulo produz mais da metade de toda a cana-de-açúcar do Brasil. Cada litro de etanol produz cerca de 12 litros de vinhaça. Se toda essa vinhaça for convertida em biometano, o estado pode substituir milhões de litros de óleo diesel fóssil importado por combustível verde 100% renovável.
+          <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.4;">
+            São Paulo produz mais da metade de toda a cana-de-açúcar do Brasil. Se a vinhaça do etanol for convertida em biometano, o estado pode substituir milhões de litros de óleo diesel fóssil por combustível verde 100% renovável.
           </p>
         </div>
       </div>
