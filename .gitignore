@@ -1,0 +1,8 @@
+# Ignorar arquivos pesados de trabalho local e design system de referência
+PILAR-2b Design System/
+node_modules/
+*.mp4
+*.zip
+*.pptx
+.DS_Store
+Thumbs.db

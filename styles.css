@@ -1,0 +1,964 @@
+/* ==========================================================================
+   BioMetano Explorer — Edição Paulistana & CP2B Design System
+   Gamificado estilo Duolingo: Acessível, intuitivo, tátil e vibrante!
+   Cores Oficiais CP2B (Centro Paulista de Estudos em Biogás e Bioprodutos)
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Paleta Oficial CP2B */
+  --cp2b-azul-petroleo: #1E3E4C;
+  --cp2b-verde-escuro: #00573A;
+  --cp2b-verde: #5CA032;
+  --cp2b-verde-hover: #4b8528;
+  --cp2b-verde-shadow: #3b6b1f;
+  
+  --cp2b-lima: #B6E03B;
+  --cp2b-lima-dark: #8fb824;
+  --cp2b-lima-light: rgba(182, 224, 59, 0.2);
+
+  --cp2b-ambar: #D37402;
+  --cp2b-ambar-shadow: #a15800;
+
+  /* Cores de Biomassa CP2B */
+  --biomass-agricola: #4CAF50; /* Cana & Vinhaça */
+  --biomass-pecuaria: #FF9800; /* Dejetos bovinos/suínos */
+  --biomass-urbano: #2196F3;   /* Aterros e Sabesp */
+
+  /* Gamificação Estilo Duolingo */
+  --duo-green: #58cc02;
+  --duo-green-shadow: #46a302;
+  --duo-blue: #1cb0f6;
+  --duo-blue-shadow: #1899d6;
+  --duo-yellow: #ffc800;
+  --duo-yellow-shadow: #e5a400;
+  --duo-red: #ff4b4b;
+  --duo-red-shadow: #ea2b2b;
+
+  /* Superfícies & Neutros (Modo Claro Padrão CP2B) */
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-input: #f1f5f9;
+  --border-default: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --text-main: #1e293b;
+  --text-muted: #475569;
+  --text-dim: #94a3b8;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 8px rgba(30, 62, 76, 0.06);
+  --shadow-md: 0 8px 24px rgba(30, 62, 76, 0.1);
+  --shadow-lg: 0 16px 36px rgba(30, 62, 76, 0.14);
+}
+
+/* Modo Escuro */
+body.dark-mode {
+  --bg-page: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-card: #1e293b;
+  --bg-card-hover: #273549;
+  --bg-input: #0f172a;
+  --border-default: #334155;
+  --border-strong: #475569;
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.5);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   Barra Superior de Gamificação (HUD Estilo Duolingo)
+   ========================================================================== */
+.gamified-topbar {
+  background: var(--cp2b-azul-petroleo);
+  color: #ffffff;
+  padding: 0.6rem 1.25rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.topbar-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.brand-logo-img {
+  height: 38px;
+  width: auto;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.brand-text-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.brand-title span {
+  color: var(--cp2b-lima);
+}
+
+.brand-subtitle {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+}
+
+/* HUD Badges: XP, Streak, Vidas */
+.hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hud-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.hud-pill:hover {
+  transform: scale(1.05);
+}
+
+.hud-pill.xp-pill {
+  color: var(--cp2b-lima);
+  border-color: rgba(182, 224, 59, 0.4);
+}
+
+.hud-pill.streak-pill {
+  color: #ffa116;
+}
+
+.hud-pill.hearts-pill {
+  color: #ff4b4b;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-icon-hud {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+
+.btn-icon-hud:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Barra de Progresso do Curso (Duolingo Style) */
+.course-progress-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  width: 100%;
+}
+
+.course-progress-fill {
+  height: 100%;
+  width: 12%;
+  background: linear-gradient(90deg, var(--cp2b-lima), #58cc02);
+  transition: width 0.4s ease;
+}
+
+/* ==========================================================================
+   Banner com o Mascote "Biozinho"
+   ========================================================================== */
+.mascot-banner {
+  max-width: 1300px;
+  margin: 1.25rem auto 0;
+  padding: 0 1.25rem;
+}
+
+.mascot-card {
+  background: linear-gradient(135deg, var(--cp2b-azul-petroleo), #0f2733);
+  color: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.mascot-avatar {
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+  position: relative;
+  animation: floatMascot 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatMascot {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-8px) rotate(2deg); }
+}
+
+.mascot-speech {
+  flex: 1;
+}
+
+.mascot-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: var(--cp2b-lima);
+  color: var(--cp2b-azul-petroleo);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.4rem;
+}
+
+.mascot-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.mascot-text strong {
+  color: var(--cp2b-lima);
+}
+
+/* ==========================================================================
+   Navegação por Abas (Trilhas de Aprendizado)
+   ========================================================================== */
+.tabs-wrapper {
+  max-width: 1300px;
+  margin: 1.25rem auto 0;
+  padding: 0 1.25rem;
+  position: sticky;
+  top: 56px;
+  z-index: 100;
+}
+
+.tabs-track {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 0.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-pill-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 0.65rem 1.15rem;
+  border-radius: var(--radius-lg);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.tab-pill-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--cp2b-verde);
+}
+
+.tab-pill-btn.active {
+  background: var(--cp2b-verde);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(92, 160, 50, 0.35);
+}
+
+.tab-pill-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 4px;
+  background: var(--cp2b-lima);
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Área Principal & Cards Estilo Duolingo
+   ========================================================================== */
+.main-wrapper {
+  max-width: 1300px;
+  margin: 1.5rem auto 4rem;
+  padding: 0 1.25rem;
+}
+
+.tab-section {
+  display: none;
+  animation: slideFade 0.3s ease forwards;
+}
+
+.tab-section.active {
+  display: block;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header de Seção */
+.section-headline {
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.section-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--cp2b-verde-escuro);
+  background: var(--cp2b-lima-light);
+  border: 1px solid var(--cp2b-lima);
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.6rem;
+}
+
+body.dark-mode .section-badge-pill {
+  color: var(--cp2b-lima);
+}
+
+.section-headline h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.section-headline p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Cards Táteis (Hover lift + borda verde CP2B) */
+.duo-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.duo-card:hover {
+  border-color: var(--cp2b-verde);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.duo-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.duo-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--cp2b-lima-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.duo-card-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   Botões Táteis Estilo Duolingo (3D Press Effect)
+   ========================================================================== */
+.btn-duo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s ease, filter 0.2s ease;
+  user-select: none;
+  text-decoration: none;
+}
+
+.btn-duo:active {
+  transform: translateY(3px) !important;
+}
+
+/* Verde CP2B */
+.btn-duo-green {
+  background: var(--cp2b-verde);
+  color: #ffffff;
+  box-shadow: 0 4px 0 var(--cp2b-verde-shadow);
+}
+.btn-duo-green:hover {
+  filter: brightness(1.08);
+}
+.btn-duo-green:active {
+  box-shadow: 0 1px 0 var(--cp2b-verde-shadow);
+}
+
+/* Lima Vibrante */
+.btn-duo-lime {
+  background: var(--cp2b-lima);
+  color: var(--cp2b-azul-petroleo);
+  box-shadow: 0 4px 0 var(--cp2b-lima-dark);
+}
+.btn-duo-lime:hover {
+  filter: brightness(1.06);
+}
+.btn-duo-lime:active {
+  box-shadow: 0 1px 0 var(--cp2b-lima-dark);
+}
+
+/* Azul Petróleo CP2B */
+.btn-duo-blue {
+  background: var(--cp2b-azul-petroleo);
+  color: #ffffff;
+  box-shadow: 0 4px 0 #12252e;
+}
+.btn-duo-blue:hover {
+  filter: brightness(1.12);
+}
+.btn-duo-blue:active {
+  box-shadow: 0 1px 0 #12252e;
+}
+
+/* Âmbar Energia */
+.btn-duo-amber {
+  background: var(--cp2b-ambar);
+  color: #ffffff;
+  box-shadow: 0 4px 0 var(--cp2b-ambar-shadow);
+}
+.btn-duo-amber:hover {
+  filter: brightness(1.08);
+}
+.btn-duo-amber:active {
+  box-shadow: 0 1px 0 var(--cp2b-ambar-shadow);
+}
+
+/* ==========================================================================
+   Componentes de Interação Rápida
+   ========================================================================== */
+
+/* 1. Arena de Estourar Bolhas de Biogás */
+.bubble-arena {
+  background: radial-gradient(circle at 50% 100%, rgba(92, 160, 50, 0.15), var(--bg-surface));
+  border: 2px dashed var(--cp2b-verde);
+  border-radius: var(--radius-xl);
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0;
+  cursor: crosshair;
+}
+
+.floating-bubble {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(92, 160, 50, 0.7));
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 15px rgba(92, 160, 50, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+  animation: floatUp 4s linear infinite;
+}
+
+.floating-bubble:hover {
+  transform: scale(1.15);
+}
+
+.floating-bubble.co2-bubble {
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(100, 116, 139, 0.7));
+  box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(220px) scale(0.8); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-30px) scale(1.1); opacity: 0; }
+}
+
+/* 2. Duelo de Cards: Biometano vs Diesel */
+.battle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .battle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.battle-card {
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  border: 2px solid var(--border-default);
+  background: var(--bg-surface);
+  position: relative;
+}
+
+.battle-card.winner {
+  border-color: var(--cp2b-verde);
+  box-shadow: 0 8px 24px rgba(92, 160, 50, 0.2);
+}
+
+.battle-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.badge-win {
+  background: var(--cp2b-lima);
+  color: var(--cp2b-azul-petroleo);
+}
+
+.badge-lose {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.battle-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.battle-metric-row:last-child {
+  border-bottom: none;
+}
+
+/* 3. Mapa Interativo dos Polos de São Paulo */
+.sp-map-interactive {
+  background: linear-gradient(135deg, var(--bg-surface), var(--bg-card-hover));
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  margin: 1.5rem 0;
+}
+
+.sp-poles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.sp-pole-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.sp-pole-card:hover, .sp-pole-card.active {
+  border-color: var(--cp2b-verde);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.sp-pole-card.active {
+  background: var(--cp2b-lima-light);
+}
+
+.pole-sector-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+  color: #ffffff;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.badge-agricola { background: var(--biomass-agricola); }
+.badge-pecuaria { background: var(--biomass-pecuaria); }
+.badge-urbano { background: var(--biomass-urbano); }
+
+/* 4. Alavanca / Filtro de Upgrading Deslizante */
+.purify-slider-box {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.flame-container-duo {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.duo-flame {
+  width: 60px;
+  height: 100px;
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  animation: flickerDuo 0.5s infinite alternate ease-in-out;
+  transition: all 0.4s ease;
+}
+
+@keyframes flickerDuo {
+  0% { transform: scale(1) rotate(-1deg); }
+  100% { transform: scale(1.08) rotate(1.5deg); }
+}
+
+.flame-dirty {
+  background: linear-gradient(to top, #3b82f6, #f59e0b, #ef4444);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+}
+
+.flame-pure {
+  background: linear-gradient(to top, #1d4ed8, #06b6d4, #b6e03b);
+  box-shadow: 0 0 35px rgba(182, 224, 59, 0.6);
+  height: 125px;
+}
+
+/* 5. Calculadora Amigável "E na sua cidade?" */
+.calc-friendly-box {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  margin: 1.5rem 0;
+}
+
+.calc-slider-item {
+  margin-bottom: 1.5rem;
+}
+
+.calc-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.duo-range {
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  background: #e2e8f0;
+  outline: none;
+  accent-color: var(--cp2b-verde);
+  cursor: pointer;
+}
+
+.friendly-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.friendly-res-card {
+  background: linear-gradient(135deg, rgba(92, 160, 50, 0.1), rgba(182, 224, 59, 0.15));
+  border: 2px solid var(--cp2b-verde);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.friendly-res-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.friendly-res-number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--cp2b-verde-escuro);
+  line-height: 1.1;
+}
+
+body.dark-mode .friendly-res-number {
+  color: var(--cp2b-lima);
+}
+
+.friendly-res-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* 6. Quiz estilo Duolingo */
+.duo-quiz-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  max-width: 750px;
+  margin: 1.5rem auto;
+}
+
+.quiz-option-duo {
+  width: 100%;
+  text-align: left;
+  background: var(--bg-card);
+  border: 2px solid var(--border-default);
+  box-shadow: 0 4px 0 var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: all 0.1s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.quiz-option-duo:hover:not(:disabled) {
+  border-color: var(--cp2b-verde);
+  background: var(--cp2b-lima-light);
+  transform: translateY(-2px);
+}
+
+.quiz-option-duo:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--border-strong);
+}
+
+.quiz-option-duo.correct {
+  background: rgba(88, 204, 2, 0.15) !important;
+  border-color: #58cc02 !important;
+  box-shadow: 0 4px 0 #46a302 !important;
+  color: #1e6b00 !important;
+}
+
+.quiz-option-duo.wrong {
+  background: rgba(255, 75, 75, 0.15) !important;
+  border-color: #ff4b4b !important;
+  box-shadow: 0 4px 0 #ea2b2b !important;
+  color: #b91c1c !important;
+}
+
+/* ==========================================================================
+   Popup Flutuante de XP (+15 XP!)
+   ========================================================================== */
+.xp-popup {
+  position: fixed;
+  pointer-events: none;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--cp2b-lima);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  animation: floatUpFade 1.2s ease forwards;
+  z-index: 1000;
+}
+
+@keyframes floatUpFade {
+  0% { transform: translateY(0) scale(0.8); opacity: 1; }
+  100% { transform: translateY(-50px) scale(1.3); opacity: 0; }
+}
+
+/* Footer Institucional CP2B */
+.site-footer-cp2b {
+  background: var(--cp2b-azul-petroleo);
+  color: #ffffff;
+  padding: 3rem 1.25rem 2rem;
+  border-top: 4px solid var(--cp2b-lima);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-logos img {
+  height: 40px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-slogan {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cp2b-lima);
+}
+
+.footer-copy {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-copy a {
+  color: var(--cp2b-lima);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.footer-copy a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .brand-title {
+    font-size: 1rem;
+  }
+  .hud-stats {
+    gap: 0.4rem;
+  }
+  .hud-pill {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}

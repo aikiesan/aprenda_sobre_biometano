@@ -1,497 +1,606 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="h-full overflow-hidden">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Jéssica Day • Edição Limitada 🎂</title>
-  
-  <!-- Open Graph & Meta Tags -->
-  <meta name="description" content="Jéssica Day • Stories Interativos • JESS BP • Rosto de Menina • Visão 8K • Inimiga da Carne e do Leite" />
-  <meta property="og:title" content="Jéssica Day • Edição Limitada 🎂" />
-  <meta property="og:description" content="Habla mesmo, Jéssica! JESS BP, Mimo Caso Bizarro e Zero Lactose/Carne." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#064e3b" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprenda Biometano — O Guia Divertido da Energia Limpa | CP2B & PILAR-2b</title>
+  <meta name="description" content="Aprenda sobre Biogás e Biometano de forma simples, interativa e divertida no estilo Duolingo. Conheça o poder da transição energética no Estado de São Paulo com o CP2B e PILAR-2b.">
+  <meta name="theme-color" content="#1E3E4C">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Canvas Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Favicon SVG oficial CP2B -->
+  <link rel="icon" type="image/svg+xml" href="assets/logos/cp2b-avatar-gradient.svg">
 
-  <style>
-    /* Tipografia Estritamente Corporativa: Calibri */
-    *, body, button, input, select, textarea, h1, h2, h3, h4, p, span, div, a {
-      font-family: Calibri, Candara, 'Segoe UI', Segoe, Optima, Arial, sans-serif;
-    }
+  <!-- Fonte Inter do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-    /* Container de Scroll Snap estilo TikTok / Stories */
-    .snap-container {
-      scroll-snap-type: y mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
-    }
-    .snap-container::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Edge */
-    }
-
-    .snap-slide {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      height: 100dvh;
-      width: 100%;
-    }
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(-5deg); }
-      50% { transform: rotate(5deg); }
-    }
-    .wiggle { animation: wiggle 0.3s ease-in-out infinite; }
-
-    @keyframes bounceHint {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(6px); }
-    }
-    .bounce-hint { animation: bounceHint 1.2s infinite; }
-
-    @keyframes pulseScale {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-    .pulse-scale { animation: pulseScale 3s ease-in-out infinite; }
-  </style>
+  <!-- Estilos CP2B + Duolingo -->
+  <link rel="stylesheet" href="styles.css">
 </head>
+<body>
 
-<body class="bg-stone-950 text-stone-900 h-full overflow-hidden flex justify-center selection:bg-emerald-200 select-none">
+  <!-- ========================================================================
+       1. TOPO DE GAMIFICAÇÃO (HUD Estilo Duolingo)
+       ======================================================================== -->
+  <header class="gamified-topbar">
+    <div class="topbar-content">
+      <div class="brand-section" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <img src="assets/logos/cp2b-logo-gradient.svg" alt="CP2B Logo" class="brand-logo-img">
+        <div class="brand-text-box">
+          <div class="brand-title">Aprenda <span>Biometano</span></div>
+          <div class="brand-subtitle">Edição Paulista • CP2B / PILAR-2b</div>
+        </div>
+      </div>
 
-  <!-- Container Mobile Centralizado -->
-  <div class="w-full max-w-sm h-full bg-[#FAF8F5] relative flex flex-col overflow-hidden shadow-2xl">
+      <!-- Placar de Gamificação -->
+      <div class="hud-stats">
+        <div class="hud-pill streak-pill" title="Sua ofensiva de aprendizado!">
+          <span>🔥</span> <span id="hud-streak">1 dia</span>
+        </div>
+        <div class="hud-pill xp-pill" title="Pontos de Energia Limpa acumulados">
+          <span>⚡</span> <span id="hud-xp">0 XP</span>
+        </div>
+        <div class="hud-pill hearts-pill" title="Vidas para os desafios">
+          <span>❤️</span> <span id="hud-hearts">5/5</span>
+        </div>
+      </div>
 
-    <!-- BARRA DE PROGRESSO ESTILO STORIES (7 SLIDES) -->
-    <div class="absolute top-2 left-0 right-0 z-40 px-3 flex gap-1.5 pointer-events-none">
-      <div id="bar-0" class="h-1 flex-1 rounded-full bg-emerald-600 transition-colors duration-300"></div>
-      <div id="bar-1" class="h-1 flex-1 rounded-full bg-stone-300 transition-colors duration-300"></div>
-      <div id="bar-2" class="h-1 flex-1 rounded-full bg-stone-300 transition-colors duration-300"></div>
-      <div id="bar-3" class="h-1 flex-1 rounded-full bg-stone-300 transition-colors duration-300"></div>
-      <div id="bar-4" class="h-1 flex-1 rounded-full bg-stone-300 transition-colors duration-300"></div>
-      <div id="bar-5" class="h-1 flex-1 rounded-full bg-stone-300 transition-colors duration-300"></div>
-      <div id="bar-6" class="h-1 flex-1 rounded-full bg-stone-300 transition-colors duration-300"></div>
+      <!-- Controles de Áudio e Tema -->
+      <div class="topbar-actions">
+        <button id="toggle-sound" class="btn-icon-hud" title="Ligar ou desligar som">
+          <span id="sound-icon">🔊</span> <span class="hide-mobile">Som</span>
+        </button>
+        <button id="toggle-theme" class="btn-icon-hud" title="Alternar Modo Escuro / Claro">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <!-- Indicador de Slide Atual -->
-    <div class="absolute top-5 right-4 z-40 pointer-events-none">
-      <span id="slideIndicator" class="text-[10px] font-bold uppercase tracking-wider bg-stone-900/80 text-white px-2 py-0.5 rounded">
-        1 / 7
-      </span>
-    </div>
+  <!-- Barra de Progresso Geral do Conhecimento -->
+  <div class="course-progress-bar">
+    <div id="main-progress-fill" class="course-progress-fill" style="width: 15%;"></div>
+  </div>
 
-    <!-- SCROLL CONTAINER COM SNAPPING VERTICAL -->
-    <div id="slidesContainer" class="snap-container h-full w-full overflow-y-scroll overflow-x-hidden">
-
-      <!-- ================= SLIDE 1: ABERTURA ================= -->
-      <section class="snap-slide p-5 pt-10 pb-8 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 bg-stone-900 text-stone-100 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded shadow-xs">
-            🔥 Comunicado Oficial • BP Monks
-          </span>
+  <!-- ========================================================================
+       2. MASCOTE INTERATIVO: BIOZINHO!
+       ======================================================================== -->
+  <div class="mascot-banner">
+    <div class="mascot-card">
+      <div class="mascot-avatar" id="mascot-trigger" title="Clique no Biozinho para ouvir uma dica!">
+        <!-- SVG Mascote Biozinho: Chaminha verde simpática -->
+        <svg viewBox="0 0 100 100" width="100%" height="100%">
+          <defs>
+            <linearGradient id="bioFlameGrad" x1="0%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#1E3E4C" />
+              <stop offset="35%" stop-color="#5CA032" />
+              <stop offset="75%" stop-color="#B6E03B" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Corpo de chama/gota amiga -->
+          <path d="M50,8 C50,8 80,48 80,70 A30,30 0 0,1 20,70 C20,48 50,8 50,8 Z" fill="url(#bioFlameGrad)" filter="url(#glow)" />
+          <!-- Olhos piscantes -->
+          <circle cx="42" cy="62" r="5" fill="#1E3E4C" />
+          <circle cx="58" cy="62" r="5" fill="#1E3E4C" />
+          <circle cx="40.5" cy="60" r="2" fill="#ffffff" />
+          <circle cx="56.5" cy="60" r="2" fill="#ffffff" />
+          <!-- Sorriso amigável -->
+          <path d="M42,72 Q50,80 58,72" stroke="#1E3E4C" stroke-width="3" stroke-linecap="round" fill="none" />
+          <!-- Folhinha verde no topo -->
+          <path d="M50,15 Q62,10 65,2 C56,4 52,10 50,15 Z" fill="#B6E03B" />
+        </svg>
+      </div>
+      <div class="mascot-speech">
+        <span class="mascot-tag">Dica do Biozinho</span>
+        <div class="mascot-text" id="mascot-quote">
+          "E aí, futuro mestre da energia limpa! Sabia que <strong>São Paulo tem o maior potencial de biometano do Brasil</strong>? Bora descobrir como cascas de cana e lixo viram combustível limpinho!"
         </div>
-
-        <div class="space-y-3 px-2">
-          <div class="text-6xl animate-bounce">👑</div>
-          <h1 class="text-3xl font-black tracking-tight leading-tight uppercase text-stone-900">
-            HABLA MESMO,<br/>
-            <span class="text-emerald-700 underline decoration-wavy decoration-emerald-300">JÉSSICA!</span>
-          </h1>
-          <p class="text-xs font-semibold text-stone-600 leading-relaxed max-w-xs mx-auto">
-            JESS BP • Rosto de Menina • Visão 8K • Inimiga Nº 1 da Carne & do Leite (Intolerante a Lactose 🥛🚫)
-          </p>
-          <div class="inline-block bg-white border border-stone-300 px-3 py-1.5 rounded text-xs font-bold text-stone-800 shadow-xs">
-            🎂 Edição Especial Aniversário 2026
-          </div>
-        </div>
-
-        <!-- Dica de Swipe Up -->
-        <button onclick="nextSlide()" class="bounce-hint flex flex-col items-center gap-1 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer pb-2">
-          <span class="text-[11px] font-bold tracking-wider uppercase text-stone-500">Deslize para cima</span>
-          <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </button>
-      </section>
-
-      <!-- ================= SLIDE 2: VISÃO 8K ================= -->
-      <section class="snap-slide p-5 pt-10 pb-8 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded border border-emerald-300">
-            👁️ Laudo Técnico JESS BP
-          </span>
-        </div>
-
-        <div class="w-full bg-white border border-stone-300 rounded-lg p-5 shadow-xs space-y-3">
-          <div class="text-5xl">⚡👁️</div>
-          <h2 class="text-xl font-black uppercase text-stone-900 tracking-tight">
-            Visão Biônica 20/20 (Modo 8K)
-          </h2>
-          <p class="text-xs text-stone-600 leading-relaxed">
-            Pós-cirurgia refrativa, a Jéssica aposentou os óculos e agora possui superpoderes oculares homologados pela diretoria:
-          </p>
-          <div class="space-y-2 text-left bg-stone-50 p-3 rounded border border-stone-200 text-xs text-stone-700">
-            <div class="flex items-start gap-2">
-              <span class="text-emerald-700 font-bold">✓</span>
-              <span>Enxerga fofoca interna na Monks a 3km de distância.</span>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="text-emerald-700 font-bold">✓</span>
-              <span>Detecta desalinhamento de 1 pixel em apresentações corporativas.</span>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="text-emerald-700 font-bold">✓</span>
-              <span>Identifica qualquer traço de carne, leite ou queijo no prato antes do garçom se aproximar.</span>
-            </div>
-          </div>
-        </div>
-
-        <button onclick="nextSlide()" class="bounce-hint flex flex-col items-center gap-1 text-stone-400 hover:text-stone-700 cursor-pointer pb-2">
-          <span class="text-[11px] font-bold tracking-wider uppercase text-stone-500">Próximo Card</span>
-          <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </button>
-      </section>
-
-      <!-- ================= SLIDE 3: BURGER & KAFTA KING ================= -->
-      <section class="snap-slide p-5 pt-10 pb-8 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-900 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded border border-amber-300">
-            🌱 Gastronomia de Elite
-          </span>
-        </div>
-
-        <div class="w-full bg-white border border-stone-300 rounded-lg p-5 shadow-xs space-y-3">
-          <div class="text-5xl">🍢🍔</div>
-          <h2 class="text-xl font-black uppercase text-stone-900 tracking-tight">
-            Burger & Kafta Queen
-          </h2>
-          <p class="text-xs text-stone-600 leading-relaxed">
-            Destruidora oficial do mito de que comida vegana não tem graça. Kaftas artesanais e smash burgers plant-based que dão aula!
-          </p>
-
-          <!-- Fred & Dalila Card -->
-          <div class="bg-stone-50 border border-stone-200 rounded p-3 text-left space-y-1">
-            <div class="flex items-center gap-2 font-bold text-xs text-stone-900">
-              <span>🐾🐶</span>
-              <span>Auditoria Pericial: Fred & Dalila</span>
-            </div>
-            <p class="text-[11px] text-stone-600 leading-snug">
-              Os verdadeiros donos da casa fiscalizaram a cozinha, inspecionaram os farelos no chão e autorizaram a festa mediante taxa de petiscos.
-            </p>
-          </div>
-        </div>
-
-        <button onclick="nextSlide()" class="bounce-hint flex flex-col items-center gap-1 text-stone-400 hover:text-stone-700 cursor-pointer pb-2">
-          <span class="text-[11px] font-bold tracking-wider uppercase text-stone-500">Próximo Card</span>
-          <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </button>
-      </section>
-
-      <!-- ================= SLIDE 4: ALERTA ANTI-CARNE & ANTI-LEITE ================= -->
-      <section class="snap-slide p-5 pt-10 pb-8 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 bg-rose-100 text-rose-800 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded border border-rose-300">
-            🚨 Alerta de Segurança Máxima
-          </span>
-        </div>
-
-        <div class="w-full bg-rose-50 border-2 border-rose-300 rounded-lg p-5 shadow-xs space-y-3">
-          <div class="text-6xl wiggle">🚫🥩🥛</div>
-          <h2 class="text-xl font-black uppercase text-rose-900 tracking-tight">
-            Protocolo Anti-Carne & Anti-Leite
-          </h2>
-          <p class="text-xs text-rose-950 font-medium leading-relaxed">
-            <b>INIMIGA Nº 1 DA CARNE E DO LEITE!</b><br/>
-            Intolerante à lactose convicta e 100% plant-based. Se encostar um queijo, um pingo de leite ou qualquer derivado animal no prato dela, o estômago avisa na hora e a BP da Monks entra com processo.
-          </p>
-
-          <!-- Scanner Interativo -->
-          <button 
-            id="scanSlideBtn"
-            onclick="runScan()"
-            class="w-full bg-rose-600 hover:bg-rose-700 active:scale-95 transition-all text-white font-bold py-2 px-3 rounded text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer shadow-xs">
-            <span>🔬</span> <span>Escanear Lactose & Carne</span>
-          </button>
-          <div id="scanSlideResult" class="hidden text-xs text-rose-900 bg-white p-2.5 rounded border border-rose-200 font-bold"></div>
-        </div>
-
-        <button onclick="nextSlide()" class="bounce-hint flex flex-col items-center gap-1 text-stone-400 hover:text-stone-700 cursor-pointer pb-2">
-          <span class="text-[11px] font-bold tracking-wider uppercase text-stone-500">Próximo Card</span>
-          <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </button>
-      </section>
-
-      <!-- ================= SLIDE 5: BOLSA DA MÃE & FIBRO-POWER ================= -->
-      <section class="snap-slide p-5 pt-10 pb-8 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 bg-stone-200 text-stone-800 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded border border-stone-300">
-            👜 Engenharia & Resiliência
-          </span>
-        </div>
-
-        <div class="w-full bg-white border border-stone-300 rounded-lg p-5 shadow-xs space-y-3">
-          <div class="text-5xl">👜💪</div>
-          <h2 class="text-xl font-black uppercase text-stone-900 tracking-tight">
-            A Bolsa de 40L & Fibro-Power
-          </h2>
-
-          <div class="bg-stone-50 p-3 rounded border border-stone-200 text-left space-y-1 text-xs">
-            <div class="font-bold text-stone-900">👜 A Bolsa Artesanal da Mãe:</div>
-            <p class="text-stone-600 text-[11px] leading-snug">
-              Tecido aeroespacial capaz de transportar: 3 livros de 700 páginas, 2 potes de marmita fit, lanche vegano pro cinema e a dignidade corporativa.
-            </p>
-          </div>
-
-          <div class="bg-stone-50 p-3 rounded border border-stone-200 text-left space-y-1 text-xs">
-            <div class="font-bold text-stone-900">💪 O Poder Fibro-Power:</div>
-            <p class="text-stone-600 text-[11px] leading-snug">
-              Não deixa a fibromialgia atrapalhar a rotina: bate PR na academia, pega peso e ainda carrega as entregas da Monks nas costas.
-            </p>
-          </div>
-        </div>
-
-        <button onclick="nextSlide()" class="bounce-hint flex flex-col items-center gap-1 text-stone-400 hover:text-stone-700 cursor-pointer pb-2">
-          <span class="text-[11px] font-bold tracking-wider uppercase text-stone-500">Ver Mimo VIP 🎟️</span>
-          <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </button>
-      </section>
-
-      <!-- ================= SLIDE 6: INGRESSO VIP CASO BIZARRO ================= -->
-      <section class="snap-slide p-4 pt-10 pb-8 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 bg-emerald-900 text-emerald-200 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded border border-emerald-600">
-            🎟️ Mimo VIP Confirmado
-          </span>
-        </div>
-
-        <!-- Ingresso Verde Escuro Executivo -->
-        <div class="w-full bg-gradient-to-br from-emerald-950 via-stone-900 to-black text-white rounded-lg p-5 shadow-lg border-2 border-dashed border-emerald-600/70 pulse-scale space-y-3 relative overflow-hidden">
-          <div class="flex justify-between items-center pb-2 border-b border-emerald-800/80">
-            <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-300">Rolê dos Sonhos • 2026</span>
-            <span class="text-xs font-black bg-emerald-400 text-stone-950 px-2 py-0.5 rounded">VIP</span>
-          </div>
-
-          <div class="space-y-1">
-            <p class="text-[10px] text-emerald-400 uppercase font-semibold">Matando Matheus a Grito apresenta:</p>
-            <h3 class="text-xl font-black text-white tracking-tight uppercase">"CASO BIZARRO" COM MABÊ</h3>
-            <p class="text-xs text-emerald-200 font-medium">Com Matheus, Guigo & Mabê juntinhos no palco!</p>
-          </div>
-
-          <div class="bg-white/5 rounded border border-emerald-600/30 p-3 grid grid-cols-2 gap-2 text-xs text-left">
-            <div>
-              <span class="text-[10px] text-emerald-400/80 block uppercase font-mono">Quando</span>
-              <span class="font-bold text-stone-100">29 de Outubro • 20h</span>
-            </div>
-            <div>
-              <span class="text-[10px] text-emerald-400/80 block uppercase font-mono">Onde</span>
-              <span class="font-bold text-stone-100">Teatro YouTube (SP)</span>
-            </div>
-            <div class="col-span-2 pt-2 border-t border-emerald-800/60 flex items-center justify-between text-[11px]">
-              <span class="text-stone-300">Segurança & Pipoca:</span>
-              <span class="font-bold text-amber-300">Lucas & Carol 🎬🍿</span>
-            </div>
-          </div>
-
-          <p class="text-[10px] text-center text-emerald-300/80 italic">
-            *Setor auditado: zero carne, zero lactose e cabe o lanche na bolsa da mãe.
-          </p>
-
-          <!-- Botão de Confirmação no Ingresso -->
-          <button 
-            id="ticketRsvpBtn"
-            onclick="confirmTicket()"
-            class="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition-all text-stone-950 font-black py-2.5 px-4 rounded text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-sm">
-            <span id="ticketIcon">🎫</span>
-            <span id="ticketText">Confirmar Presença no Show</span>
-          </button>
-        </div>
-
-        <button onclick="nextSlide()" class="bounce-hint flex flex-col items-center gap-1 text-stone-400 hover:text-stone-700 cursor-pointer pb-2">
-          <span class="text-[11px] font-bold tracking-wider uppercase text-stone-500">Última Etapa 🎉</span>
-          <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </button>
-      </section>
-
-      <!-- ================= SLIDE 7: ACLAMAÇÃO DA JÉ & REAÇÕES ================= -->
-      <section class="snap-slide p-5 pt-10 pb-6 flex flex-col justify-between items-center text-center">
-        <div>
-          <span class="inline-flex items-center gap-1.5 bg-stone-900 text-stone-100 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded">
-            👑 Grand Finale
-          </span>
-        </div>
-
-        <div class="w-full space-y-3">
-          <h2 class="text-2xl font-black uppercase text-stone-900 tracking-tight">
-            ACLAMAÇÃO DA JÉSSICA
-          </h2>
-          <p class="text-xs text-stone-600">
-            Toque no botão quantas vezes quiser para reagir e comemorar!
-          </p>
-
-          <!-- Botão de Aclamação Principal -->
-          <button 
-            id="reactBtn"
-            onclick="celebrateClick()"
-            class="w-full bg-stone-900 hover:bg-black active:scale-95 transition-transform text-white font-black py-4 px-6 rounded-lg shadow-xl flex flex-col items-center justify-center gap-0.5 text-sm uppercase tracking-wide cursor-pointer border border-stone-700">
-            <div class="flex items-center gap-2">
-              <span>ACLAMAÇÃO DA JÉ</span>
-              <span id="clickCounter" class="bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded font-bold">0</span>
-            </div>
-            <span class="text-[10px] text-stone-400 lowercase font-normal">toque quantas vezes quiser 🎉</span>
-          </button>
-          
-          <!-- Frase de React Dinâmica -->
-          <div class="h-8 flex items-center justify-center">
-            <p id="funQuote" class="text-xs font-bold text-emerald-800 transition-all opacity-0"></p>
-          </div>
-        </div>
-
-        <footer class="text-center pt-2 text-xs text-stone-500">
-          Feito com muito amor por <b>Lucas & Carol</b> ❤️
-        </footer>
-      </section>
-
+      </div>
     </div>
   </div>
 
-  <!-- Script dos Confetes, Áudio e Navegação Snapping -->
-  <script>
-    const container = document.getElementById('slidesContainer');
-    const totalSlides = 7;
-    let currentSlideIndex = 0;
+  <!-- ========================================================================
+       3. NAVEGAÇÃO DE ABAS / TRILHAS DE CONHECIMENTO
+       ======================================================================== -->
+  <nav class="tabs-wrapper" aria-label="Navegação de Módulos">
+    <div class="tabs-track">
+      <button class="tab-pill-btn active" data-tab="tab-intro">
+        <span>💡</span> O que é Biogás?
+      </button>
+      <button class="tab-pill-btn" data-tab="tab-sp">
+        <span>🚀</span> O Poder de SP
+      </button>
+      <button class="tab-pill-btn" data-tab="tab-bacteria">
+        <span>🦠</span> A Cozinha das Bactérias
+      </button>
+      <button class="tab-pill-btn" data-tab="tab-filter">
+        <span>🧪</span> O Filtro Mágico
+      </button>
+      <button class="tab-pill-btn" data-tab="tab-truck">
+        <span>🚛</span> Caminhão a Gás
+      </button>
+      <button class="tab-pill-btn" data-tab="tab-calc">
+        <span>🧮</span> E na Sua Cidade?
+      </button>
+      <button class="tab-pill-btn" data-tab="tab-games">
+        <span>🎮</span> Desafios Duolingo
+      </button>
+      <button class="tab-pill-btn" data-tab="tab-glossary">
+        <span>📚</span> Dicionário Fácil
+      </button>
+    </div>
+  </nav>
 
-    // Atualiza barra de progresso no scroll
-    container.addEventListener('scroll', () => {
-      const slideH = container.clientHeight;
-      const index = Math.round(container.scrollTop / slideH);
-      if (index !== currentSlideIndex && index >= 0 && index < totalSlides) {
-        currentSlideIndex = index;
-        updateProgress(index);
-      }
-    });
+  <!-- ========================================================================
+       4. CONTEÚDO PRINCIPAL (MÓDULOS DE APRENDIZADO)
+       ======================================================================== -->
+  <main class="main-wrapper">
 
-    function updateProgress(activeIndex) {
-      document.getElementById('slideIndicator').textContent = (activeIndex + 1) + ' / ' + totalSlides;
-      for (let i = 0; i < totalSlides; i++) {
-        const bar = document.getElementById('bar-' + i);
-        if (i <= activeIndex) {
-          bar.classList.add('bg-emerald-600');
-          bar.classList.remove('bg-stone-300');
-        } else {
-          bar.classList.remove('bg-emerald-600');
-          bar.classList.add('bg-stone-300');
-        }
-      }
-    }
+    <!-- ====================================================================
+         ABA 1: O Que é Esse Tal de Biogás?
+         ==================================================================== -->
+    <section id="tab-intro" class="tab-section active">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 1 • Conceito Básico</div>
+        <h2>O Que é Esse Tal de Biogás?</h2>
+        <p>Parece mágica, mas é pura natureza: restos de comida, esterco de fazenda e caldo de cana virando combustível limpo que substitui a gasolina e o diesel!</p>
+      </div>
 
-    function nextSlide() {
-      container.scrollBy({ top: container.clientHeight, behavior: 'smooth' });
-    }
+      <!-- Mini-Interação: Estourar as bolhas -->
+      <div class="duo-card" style="margin-bottom: 2rem;">
+        <div class="duo-card-header">
+          <div class="duo-card-icon">🫧</div>
+          <div>
+            <h3 class="duo-card-title">Micro-Missão: Estoure as Bolhas de Biogás!</h3>
+            <p style="color:var(--text-muted); font-size: 0.95rem;">Clique nas bolhinhas de gás saindo do biodigestor para ver o que tem dentro delas e faturar XP!</p>
+          </div>
+        </div>
 
-    // Web Audio sintetizado nativo
-    function playTone(freq = 523.25, type = 'triangle', duration = 0.25) {
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        gain.gain.setValueAtTime(0.18, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + duration);
-      } catch (e) {}
-    }
+        <div class="bubble-arena" id="bubble-arena">
+          <div style="color:var(--text-dim); font-weight:700; pointer-events:none;">
+            👆 Toque nas bolhas para estourar! (+5 XP cada)
+          </div>
+        </div>
 
-    function burstConfetti() {
-      confetti({
-        particleCount: 60,
-        spread: 70,
-        origin: { y: 0.75 },
-        colors: ['#059669', '#10b981', '#f59e0b', '#f43f5e', '#34d399']
-      });
-    }
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div style="font-size: 0.9rem; font-weight:700;">
+            Bolhas estouradas: <span id="popped-count" style="color:var(--cp2b-verde); font-size:1.2rem;">0</span>
+          </div>
+          <button class="btn-duo btn-duo-green" id="btn-spawn-bubbles">
+            🫧 Soltar Mais Bolhas
+          </button>
+        </div>
+      </div>
 
-    // Dispara confetes ao abrir
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(burstConfetti, 400);
-    });
+      <!-- Duelo de Cards: Biometano vs Diesel Fóssil -->
+      <div class="section-headline" style="margin-top: 2.5rem;">
+        <h3>Quem Vence o Duelo dos Combustíveis?</h3>
+        <p>Veja a disputa direta entre o novo Biometano verde e o velho Diesel fóssil:</p>
+      </div>
 
-    // Scanner no Slide 4
-    let scanTaps = 0;
-    const scanMsgs = [
-      "🔍 0% carne e 0% lactose num raio de 50km! Estômago em paz e consciência 100% tranquila.",
-      "🚨 ALERTA: Suspeita de queijo tradicional avistada! Substituição imediata por opção vegana efetuada!",
-      "🛡️ Certificado Vegano & Zero Lactose homologado pela JESS BP com louvor!"
-    ];
-    function runScan() {
-      const el = document.getElementById('scanSlideResult');
-      el.classList.remove('hidden');
-      el.textContent = scanMsgs[scanTaps % scanMsgs.length];
-      scanTaps++;
-      playTone(659.25);
-    }
+      <div class="battle-grid">
+        <!-- Card Biometano -->
+        <div class="battle-card winner">
+          <span class="battle-badge badge-win">🏆 Campeão Verde</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌱</div>
+          <h4 style="font-size: 1.4rem; font-weight: 800; color: var(--cp2b-verde);">Biometano Paulista</h4>
+          <p style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Feito de vinhaça de cana e lixo orgânico em São Paulo.</p>
 
-    // Confirmação no Ingresso
-    function confirmTicket() {
-      const btn = document.getElementById('ticketRsvpBtn');
-      const txt = document.getElementById('ticketText');
-      const icon = document.getElementById('ticketIcon');
-      btn.classList.remove('bg-emerald-600');
-      btn.classList.add('bg-emerald-400');
-      txt.textContent = 'Presença Confirmada! Pipoca Garantida ✅';
-      icon.textContent = '🥂';
-      burstConfetti();
-      playTone(783.99, 'triangle', 0.4);
-    }
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Fumaça Preta no Ar:</span>
+            <span style="color:var(--cp2b-verde); font-weight:800;">ZERO (100% limpo)</span>
+          </div>
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Impacto Climático:</span>
+            <span style="color:var(--cp2b-verde); font-weight:800;">Negativo ou Neutro</span>
+          </div>
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Origem:</span>
+            <span style="font-weight:700;">100% Paulista / Renovável</span>
+          </div>
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Barulho no Motor:</span>
+            <span style="color:var(--cp2b-verde); font-weight:800;">50% Mais Silencioso</span>
+          </div>
+        </div>
 
-    // Aclamação e Quotes no Slide 7
-    let tapCount = 0;
-    const quotes = [
-      "HABLA MESMO! 🗣️",
-      "Visão 20/20 ativada em 8K! 👁️⚡",
-      "Kafta de planta sem defeitos! 🍢🌱",
-      "100% vegetal e zero lactose! 🥛🚫",
-      "Fred & Dalila latindo parabéns! 🐶🐶",
-      "Inimiga nº 1 da carne e do leite! 🚫🥩",
-      "Matheus, Guigo & Mabê mandaram um abraço! 💅",
-      "A JESS BP mais querida e eficiente da Monks! 💼👑",
-      "A bolsa da mãe aguenta mais 20kg de livro! 👜",
-      "Caso Bizarro no Teatro YouTube confirmado! 🎟️🍿",
-      "Lucas & Carol já compraram a pipoca vegana! ❤️"
-    ];
+        <!-- Card Diesel Fóssil -->
+        <div class="battle-card">
+          <span class="battle-badge badge-lose">❌ Poluente</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛢️</div>
+          <h4 style="font-size: 1.4rem; font-weight: 800; color: #b91c1c;">Diesel Tradicional</h4>
+          <p style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Extraído do petróleo fóssil do subsolo marinho.</p>
 
-    function celebrateClick() {
-      tapCount++;
-      document.getElementById('clickCounter').textContent = tapCount;
-      burstConfetti();
-      playTone(523.25 + (tapCount % 5) * 80);
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Fumaça Preta no Ar:</span>
+            <span style="color:#b91c1c; font-weight:800;">Pesada (fuligem tóxica)</span>
+          </div>
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Impacto Climático:</span>
+            <span style="color:#b91c1c; font-weight:800;">Altas emissões de CO₂</span>
+          </div>
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Origem:</span>
+            <span style="font-weight:700;">Fóssil e Importado</span>
+          </div>
+          <div class="battle-metric-row">
+            <span style="font-weight:700;">Barulho no Motor:</span>
+            <span style="color:#b91c1c; font-weight:800;">Ruidoso e vibratório</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      const quoteEl = document.getElementById('funQuote');
-      quoteEl.textContent = quotes[tapCount % quotes.length];
-      quoteEl.style.opacity = '1';
+    <!-- ====================================================================
+         ABA 2: O Super Poder de São Paulo (PILAR-2b)
+         ==================================================================== -->
+    <section id="tab-sp" class="tab-section">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 2 • Dados de São Paulo (CP2B)</div>
+        <h2>Por Que São Paulo é a "Arábia Saudita Verde"?</h2>
+        <p>São Paulo produz a maior quantidade de cana-de-açúcar do mundo. Mas você sabia que a sobra do etanol é um oceano de energia para abastecer caminhões?</p>
+      </div>
 
-      clearTimeout(window.quoteTimer);
-      window.quoteTimer = setTimeout(() => {
-        quoteEl.style.opacity = '0';
-      }, 2200);
-    }
-  </script>
+      <div class="sp-map-interactive">
+        <div class="duo-card-header">
+          <div class="duo-card-icon">🗺️</div>
+          <div>
+            <h3 class="duo-card-title">Explore os 3 Grandes Polos de Energia de SP</h3>
+            <p style="color:var(--text-muted); font-size: 0.95rem;">Clique em um polo paulista para ver de onde vem o gás e quanto combustível ele gera:</p>
+          </div>
+        </div>
+
+        <div class="sp-poles-grid">
+          <div class="sp-pole-card active" data-pole="cana">
+            <span class="pole-sector-badge badge-agricola">Agrícola • Cana</span>
+            <h4 style="font-weight:800; font-size:1.15rem; margin-bottom:0.25rem;">Corredor da Cana</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Ribeirão Preto, Sertãozinho, Piracicaba e Araçatuba.</p>
+          </div>
+
+          <div class="sp-pole-card" data-pole="urbano">
+            <span class="pole-sector-badge badge-urbano">Urbano • Cidades</span>
+            <h4 style="font-weight:800; font-size:1.15rem; margin-bottom:0.25rem;">Cinturão das Cidades</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Grande SP, Campinas, Sorocaba e Vale do Paraíba.</p>
+          </div>
+
+          <div class="sp-pole-card" data-pole="pecuaria">
+            <span class="pole-sector-badge badge-pecuaria">Pecuária • Animais</span>
+            <h4 style="font-weight:800; font-size:1.15rem; margin-bottom:0.25rem;">Interior Produtor</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Presidente Prudente, Barretos, São José do Rio Preto.</p>
+          </div>
+        </div>
+
+        <!-- Painel Detalhado do Polo Selecionado -->
+        <div id="sp-pole-detail" class="duo-card" style="margin-top:1.5rem; background:var(--bg-surface);">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
+            <span id="pole-icon" style="font-size: 2rem;">🌾</span>
+            <div>
+              <h4 id="pole-title" style="font-size:1.3rem; font-weight:800; color:var(--cp2b-verde);">Corredor da Cana e Vinhaça</h4>
+              <span id="pole-tagline" style="font-size:0.85rem; color:var(--text-muted);">O maior tesouro energético do interior paulista</span>
+            </div>
+          </div>
+          <p id="pole-desc" style="font-size:1rem; margin-bottom:1rem; line-height:1.5;">
+            Para cada 1 litro de etanol produzido para abastecer carros, sobram <strong>12 litros de vinhaça líquida</strong>. Em vez de descartar, as usinas paulistas colocam a vinhaça em biodigestores gigantes para produzir biometano e rodar suas próprias frotas de caminhões pesados!
+          </p>
+          <div style="background:var(--cp2b-lima-light); border-left:4px solid var(--cp2b-verde); padding:0.85rem 1.25rem; border-radius:var(--radius-sm);">
+            <strong style="color:var(--cp2b-azul-petroleo);">💡 Fato PILAR-2b / CP2B:</strong>
+            <span id="pole-fact" style="font-size:0.9rem; color:var(--text-main);">O potencial de biometano da cana em SP equivale a quase 40% de todo o diesel que os caminhões consomem no Estado!</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ABA 3: A Cozinha das Bactérias (4 Passos Fáceis)
+         ==================================================================== -->
+    <section id="tab-bacteria" class="tab-section">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 3 • Ciência Descomplicada</div>
+        <h2>A Cozinha das Bactérias Invisíveis</h2>
+        <p>Não precisa ser cientista para entender! O biodigestor funciona exatamente como uma cozinha super eficiente que trabalha sem oxigênio em 4 passos:</p>
+      </div>
+
+      <div class="duo-card" style="margin-bottom: 2rem;">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">
+          <div class="duo-card" style="border-color:var(--biomass-urbano);">
+            <div style="font-size:2rem; margin-bottom:0.4rem;">✂️ 1. Picadinho</div>
+            <h4 style="font-weight:800;">Hidrólise</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">Bactérias cozinheiras cortam pedaços grandes de comida em pedacinhos microscópicos fáceis de mastigar.</p>
+          </div>
+
+          <div class="duo-card" style="border-color:var(--cp2b-ambar);">
+            <div style="font-size:2rem; margin-bottom:0.4rem;">🍋 2. O Caldinho</div>
+            <h4 style="font-weight:800;">Acidogênese</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">Outro grupo de bactérias transforma os pedacinhos num caldo ácido cheio de energia fermentada.</p>
+          </div>
+
+          <div class="duo-card" style="border-color:var(--biomass-pecuaria);">
+            <div style="font-size:2rem; margin-bottom:0.4rem;">🥗 3. O Vinagrete</div>
+            <h4 style="font-weight:800;">Acetogênese</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">O caldinho vira acetato — que tem a mesma base do vinagre da sua salada! Agora a mesa está posta.</p>
+          </div>
+
+          <div class="duo-card" style="border-color:var(--cp2b-verde);">
+            <div style="font-size:2rem; margin-bottom:0.4rem;">🫧 4. A Fábrica de Gás</div>
+            <h4 style="font-weight:800;">Metanogênese</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">As arqueias devoram o banquete e liberam as preciosas bolhas de gás Metano (CH₄)!</p>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top: 2rem; padding:1.5rem; background:var(--bg-input); border-radius:var(--radius-lg);">
+          <h4 style="font-size:1.2rem; font-weight:800; margin-bottom:0.5rem;">🍽️ Que tal alimentar as bactérias agora?</h4>
+          <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1rem;">Clique no botão abaixo para dosar comida orgânica no biodigestor e gerar gás!</p>
+          
+          <button class="btn-duo btn-duo-lime" id="btn-feed-bacteria" style="font-size:1.1rem; padding:1rem 2rem;">
+            🥕 Alimentar o Biodigestor! (+10 XP)
+          </button>
+
+          <div id="feed-feedback" style="margin-top:1rem; font-weight:700; color:var(--cp2b-verde); min-height:24px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ABA 4: O Filtro Mágico (Biogás ➔ Biometano)
+         ==================================================================== -->
+    <section id="tab-filter" class="tab-section">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 4 • A Mágica da Tecnologia</div>
+        <h2>O Filtro Mágico: Do Biogás ao Biometano</h2>
+        <p>Sabe quando você coa o café para a borra não passar? No biogás é parecido: tiramos o CO₂ e a umidade para sobrar apenas o <strong>Biometano 97% puro</strong>!</p>
+      </div>
+
+      <div class="purify-slider-box">
+        <h3 style="font-size:1.4rem; font-weight:800;">🎛️ Deslize para Purificar o Gás</h3>
+        <p style="color:var(--text-muted); font-size:0.95rem;">Arraste a alavanca e observe como a chama do fogão muda de cor e fica mais quente e limpa:</p>
+
+        <!-- Visualização da Chama -->
+        <div class="flame-container-duo">
+          <div id="duo-flame" class="duo-flame flame-dirty"></div>
+        </div>
+
+        <div style="max-width:500px; margin: 0 auto 1.5rem;">
+          <input type="range" id="duo-purify-range" min="50" max="98" value="60" class="duo-range">
+          <div style="display:flex; justify-content:space-between; margin-top:0.5rem; font-weight:800;">
+            <span style="color:#b91c1c;">50% (Biogás Bruto)</span>
+            <span id="duo-ch4-display" style="color:var(--cp2b-verde); font-size:1.4rem;">60% Metano</span>
+            <span style="color:var(--cp2b-verde);">98% (Biometano Puro)</span>
+          </div>
+        </div>
+
+        <div id="duo-flame-status" class="duo-card" style="display:inline-block; max-width:600px; padding:1rem 1.5rem; background:var(--bg-input);">
+          <strong style="color:var(--cp2b-ambar);">🔥 Biogás Cru:</strong>
+          <span id="duo-status-text">Chama fraca e alaranjada, cheia de gás carbônico. Ainda não pode ir para os caminhões!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ABA 5: O Caminhão a Gás na Rodovia
+         ==================================================================== -->
+    <section id="tab-truck" class="tab-section">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 5 • Mobilidade Sustentável</div>
+        <h2>O Caminhão Verde na Rodovia Anhanguera</h2>
+        <p>Caminhões gigantes da Scania, Iveco e Volvo já rodam pelas estradas paulistas usando Biometano no lugar do diesel!</p>
+      </div>
+
+      <div class="duo-card">
+        <div class="duo-card-header">
+          <div class="duo-card-icon">🚛</div>
+          <div>
+            <h3 class="duo-card-title">Clique nas partes do caminhão para inspecionar:</h3>
+            <p style="color:var(--text-muted); font-size:0.95rem;">Descubra como a tecnologia substitui o diesel sem perder força:</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin-top:1.5rem;">
+          <!-- Cilindros -->
+          <div class="duo-card" onclick="playTruckSound('tank')" style="cursor:pointer;">
+            <div style="font-size:2rem; margin-bottom:0.3rem;">🛢️ Cilindros a 200 bar</div>
+            <h4 style="font-weight:800; color:var(--cp2b-verde);">Tanques de Alta Pressão</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.4rem;">Tubos super seguros de aço e fibra de carbono embaixo do caminhão guardam biometano para rodar até 500 km direto!</p>
+          </div>
+
+          <!-- Motor -->
+          <div class="duo-card" onclick="playTruckSound('engine')" style="cursor:pointer;">
+            <div style="font-size:2rem; margin-bottom:0.3rem;">⚙️ Motor Ciclo Otto</div>
+            <h4 style="font-weight:800; color:var(--cp2b-verde);">Potência com Silêncio</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.4rem;">Até 460 cavalos de força! Tem a mesma força para puxar 50 toneladas, mas com metade do barulho de um motor a diesel.</p>
+          </div>
+
+          <!-- Escapamento -->
+          <div class="duo-card" onclick="playTruckSound('exhaust')" style="cursor:pointer;">
+            <div style="font-size:2rem; margin-bottom:0.3rem;">💨 Escapamento Limpinho</div>
+            <h4 style="font-weight:800; color:var(--cp2b-verde);">Zero Fumaça Preta</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.4rem;">Não solta aquela fumaça preta sufocante nas cidades. Reduz em 90% os gases que atacam a saúde humana!</p>
+          </div>
+        </div>
+
+        <!-- E o outro presente: Biofertilizante -->
+        <div style="margin-top:2rem; padding:1.5rem; background:linear-gradient(135deg, rgba(92, 160, 50, 0.1), rgba(182, 224, 59, 0.15)); border:2px solid var(--cp2b-verde); border-radius:var(--radius-lg);">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
+            <span style="font-size:2rem;">🌱</span>
+            <h4 style="font-size:1.25rem; font-weight:800; color:var(--cp2b-verde-escuro);">E tem mais: O Tesouro do Biofertilizante!</h4>
+          </div>
+          <p style="font-size:0.95rem; color:var(--text-main); line-height:1.5;">
+            Quando o biogás sai pelo topo do biodigestor, o que sobra no fundo é o <strong>Digestato</strong>: um adubo orgânico de primeira linha, cheio de Nitrogênio, Fósforo e Potássio (NPK) para voltar para a terra e alimentar a próxima safra sem precisar de agrotóxicos químicos caros!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ABA 6: E se Fosse na Sua Cidade? (Simulador Rápido)
+         ==================================================================== -->
+    <section id="tab-calc" class="tab-section">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 6 • Calculadora Cidadã</div>
+        <h2>E se a Sua Cidade Produzisse Biometano?</h2>
+        <p>Mova as barras abaixo com o tamanho da sua cidade ou fazenda e veja quanta energia limpa daria para gerar todo santo dia!</p>
+      </div>
+
+      <div class="calc-friendly-box">
+        <!-- Habitantes da Cidade -->
+        <div class="calc-slider-item">
+          <div class="calc-slider-header">
+            <span>🏙️ População da Sua Cidade:</span>
+            <span id="display-pop" style="color:var(--cp2b-verde); font-family:var(--font-mono);">50.000 habitantes</span>
+          </div>
+          <input type="range" id="slider-pop" min="5000" max="1000000" step="5000" value="50000" class="duo-range">
+        </div>
+
+        <!-- Cana ou Fazenda -->
+        <div class="calc-slider-item">
+          <div class="calc-slider-header">
+            <span>🌾 Usina de Cana da Região (litros de vinhaça/dia):</span>
+            <span id="display-vinasse" style="color:var(--cp2b-verde); font-family:var(--font-mono);">50.000 litros</span>
+          </div>
+          <input type="range" id="slider-vinasse" min="0" max="500000" step="10000" value="50000" class="duo-range">
+        </div>
+
+        <!-- Animais / Bovinos -->
+        <div class="calc-slider-item">
+          <div class="calc-slider-header">
+            <span>🐄 Cabeças de Gado ou Suínos nas Fazendas:</span>
+            <span id="display-cattle" style="color:var(--cp2b-verde); font-family:var(--font-mono);">2.000 animais</span>
+          </div>
+          <input type="range" id="slider-cattle" min="0" max="20000" step="500" value="2000" class="duo-range">
+        </div>
+
+        <!-- Resultados Amigáveis -->
+        <div class="friendly-results-grid">
+          <div class="friendly-res-card">
+            <div class="friendly-res-icon">🚌</div>
+            <div id="res-friendly-buses" class="friendly-res-number">18</div>
+            <div class="friendly-res-label">Ônibus ou Caminhões Rodando 100% a Gás Verde Todo Dia</div>
+          </div>
+
+          <div class="friendly-res-card">
+            <div class="friendly-res-icon">🏡</div>
+            <div id="res-friendly-houses" class="friendly-res-number">1.250</div>
+            <div class="friendly-res-label">Casas Iluminadas com Energia Elétrica Renovável</div>
+          </div>
+
+          <div class="friendly-res-card">
+            <div class="friendly-res-icon">🌲</div>
+            <div id="res-friendly-trees" class="friendly-res-number">4.500</div>
+            <div class="friendly-res-label">Árvores Equivalentes em Fumaça de Diesel Evitada</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ABA 7: Minigames & Desafios Duolingo
+         ==================================================================== -->
+    <section id="tab-games" class="tab-section">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 7 • Arena de Desafios</div>
+        <h2>Desafios Duolingo do Biometano!</h2>
+        <p>Chegou a hora de provar que você virou um verdadeiro especialista verde! Responda rápido, ganhe XP e desbloqueie conquistas:</p>
+      </div>
+
+      <!-- Quiz Estilo Duolingo -->
+      <div class="duo-quiz-card" id="duo-quiz-wrapper">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <span style="font-weight:800; text-transform:uppercase; font-size:0.8rem; color:var(--text-dim);">
+            Pergunta <span id="quiz-step-num">1</span> de 5
+          </span>
+          <span style="font-weight:800; color:var(--cp2b-lima); background:var(--cp2b-azul-petroleo); padding:0.25rem 0.65rem; border-radius:var(--radius-full); font-size:0.85rem;">
+            +20 XP por acerto
+          </span>
+        </div>
+
+        <h3 id="quiz-question-text" style="font-size:1.35rem; font-weight:800; margin-bottom:1.5rem; line-height:1.35;">
+          Carregando pergunta...
+        </h3>
+
+        <div id="quiz-options-container">
+          <!-- Opções geradas via JavaScript -->
+        </div>
+
+        <div id="quiz-feedback-box" style="display:none; margin-top:1.25rem; padding:1.25rem; border-radius:var(--radius-lg);">
+          <!-- Feedback imediato com botão verde para avançar -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ABA 8: Dicionário Descomplicado & O que é o CP2B
+         ==================================================================== -->
+    <section id="tab-glossary" class="tab-section">
+      <div class="section-headline">
+        <div class="section-badge-pill">Módulo 8 • Glossário & Quem Somos</div>
+        <h2>Dicionário Sem Complicação</h2>
+        <p>Toda vez que você ouvir uma palavra difícil no noticiário ou na universidade, consulte aqui em português fácil:</p>
+      </div>
+
+      <div class="duo-card" style="margin-bottom:2rem;">
+        <input type="text" id="easy-glossary-search" placeholder="🔍 Digite para pesquisar um termo (ex: vinhaça, digestato, metano)..." 
+               style="width:100%; padding:0.9rem 1.25rem; font-size:1rem; border:2px solid var(--border-default); border-radius:var(--radius-lg); outline:none; margin-bottom:1.25rem;">
+
+        <div id="easy-glossary-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
+          <!-- Termos fáceis via JS -->
+        </div>
+      </div>
+
+      <!-- Sobre o CP2B e PILAR-2b -->
+      <div class="duo-card" style="background:linear-gradient(135deg, var(--cp2b-azul-petroleo), #0f2733); color:#ffffff; border-color:var(--cp2b-verde);">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <img src="assets/logos/cp2b-avatar-gradient.svg" alt="CP2B Avatar" style="width:55px; height:55px;">
+          <div>
+            <h3 style="font-size:1.4rem; font-weight:800; color:#ffffff;">O que é o CP2B e a PILAR-2b?</h3>
+            <span style="color:var(--cp2b-lima); font-size:0.85rem; font-weight:700;">NIPE - UNICAMP / FAPESP</span>
+          </div>
+        </div>
+        <p style="font-size:1rem; line-height:1.6; color:rgba(255,255,255,0.9); margin-bottom:1.25rem;">
+          O <strong>CP2B (Centro Paulista de Estudos em Biogás e Bioprodutos)</strong> é o maior centro científico do Brasil dedicado a acelerar o biogás, biometano e a bioeconomia. Sediado na UNICAMP e financiado pela FAPESP, o CP2B desenvolveu a <strong>PILAR-2b</strong>: uma plataforma inteligente que mapeia cada um dos 645 municípios paulistas para transformar resíduos em energia limpa!
+        </p>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="https://cp2b.unicamp.br/pilar2b/pt-BR" target="_blank" rel="noopener noreferrer" class="btn-duo btn-duo-lime">
+            🌐 Visitar a Plataforma PILAR-2b
+          </a>
+          <a href="https://github.com/aikiesan/aprenda_sobre_biometano" target="_blank" rel="noopener noreferrer" class="btn-duo btn-duo-blue">
+            💻 Ver Código no GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       5. RODAPÉ INSTITUCIONAL CP2B
+       ======================================================================== -->
+  <footer class="site-footer-cp2b">
+    <div class="footer-inner">
+      <div class="footer-logos">
+        <img src="assets/logos/cp2b-logo-negative-white.svg" alt="Logo CP2B">
+      </div>
+      <div class="footer-slogan">
+        "Energia viva, ciência que transforma."
+      </div>
+      <div class="footer-copy">
+        Desenvolvido com carinho para popularizar o biogás e o biometano no Brasil e no Estado de São Paulo.<br>
+        Baseado nos estudos do <strong>CP2B / NIPE-UNICAMP</strong> e na ferramenta <strong>PILAR-2b</strong>.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Confetti script leve e autônomo via CDN confiável para comemorações -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Lógica da Aplicação -->
+  <script src="app.js"></script>
 </body>
 </html>
