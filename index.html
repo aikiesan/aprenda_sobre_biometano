@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>BioGames SP — Jogos do Biometano | CP2B</title>
-  <meta name="description" content="Mini-jogos diários e calculadora cidadã sobre biogás e biometano no Estado de São Paulo. Formato mobile nativo inspirado nos jogos do NY Times.">
+  <meta name="description" content="Mini-jogos e calculadora cidadã sobre biogás, agricultura e biomassa no Estado de São Paulo. Formato mobile com mini cruzadinha e conexões.">
   <meta name="theme-color" content="#1E3E4C">
 
   <!-- Favicon oficial CP2B -->
@@ -33,75 +33,77 @@
     </header>
 
     <!-- ====================================================================
-         TELA 1: HUB PRINCIPAL (Feed de Jogos Estilo NYT)
+         TELA 1: HUB EM GRADE DE CARDS COMPACTOS (Mobile Cards)
          ==================================================================== -->
     <main id="screen-hub" class="view-screen active">
       <div class="hub-masthead">
-        <div class="hub-date">Centro Paulista de Estudos em Biogás e Bioprodutos</div>
-        <h1 class="hub-main-headline">Jogos do Biometano</h1>
-        <div class="hub-sub">Mini-desafios diários sobre energia limpa e biomassa em São Paulo</div>
+        <div class="hub-date">CP2B • NIPE-UNICAMP</div>
+        <h1 class="hub-main-headline">Jogos da Biomassa</h1>
+        <div class="hub-sub">Toque em qualquer card para jogar ou calcular</div>
       </div>
 
-      <div class="nyt-games-grid">
-        <!-- 1. Destaque Especial: Calculadora Cidadã -->
-        <div class="nyt-card" onclick="showScreen('screen-calculator')">
-          <div class="nyt-card-icon" style="background:#ecfdf5; color:#059669;">🧮</div>
-          <div class="nyt-card-body">
-            <span class="nyt-card-badge">Simulador Cidadão</span>
-            <h2 class="nyt-card-title">E se Fosse na Sua Cidade?</h2>
-            <p class="nyt-card-desc">Calcule quantos ônibus e casas a biomassa da sua região abastece!</p>
+      <div class="hub-cards-grid">
+        <!-- 1. Card Hero: Calculadora Cidadã (O Destaque Favorito!) -->
+        <div class="hub-card-hero" onclick="showScreen('screen-calculator')">
+          <div class="hero-card-icon">🧮</div>
+          <div class="hero-card-body">
+            <h2>E se Fosse na Sua Cidade?</h2>
+            <p>Descubra quantos ônibus e casas os resíduos da sua região abastecem!</p>
           </div>
-          <div class="nyt-card-play">▶</div>
         </div>
 
-        <!-- 2. Conexões da Biomassa -->
-        <div class="nyt-card" onclick="openGame('screen-connections')">
-          <div class="nyt-card-icon" style="background:#fef3c7; color:#d97706;">🧩</div>
-          <div class="nyt-card-body">
-            <span class="nyt-card-badge">Inspirado no Connections</span>
-            <h2 class="nyt-card-title">Conexões da Biomassa</h2>
-            <p class="nyt-card-desc">Agrupe 16 palavras sobre cana, gases e refino em 4 temas.</p>
+        <!-- 2. Mini Cruzadinha da Biomassa (Substituindo o Termo) -->
+        <div class="hub-mini-card" onclick="openGame('screen-crossword')">
+          <div class="mini-card-top">
+            <span class="mini-card-icon">📰</span>
+            <span class="mini-card-badge">Mini</span>
           </div>
-          <div class="nyt-card-play">▶</div>
+          <div>
+            <h3 class="mini-card-title">Cruzadinha</h3>
+            <p class="mini-card-desc">Palavras cruzadas sobre agricultura e cana de SP com dicas.</p>
+          </div>
         </div>
 
-        <!-- 3. Termo do Biogás -->
-        <div class="nyt-card" onclick="openGame('screen-wordle')">
-          <div class="nyt-card-icon" style="background:#f0fdf4; color:#16a34a;">🔤</div>
-          <div class="nyt-card-body">
-            <span class="nyt-card-badge">Inspirado no Wordle</span>
-            <h2 class="nyt-card-title">Palavra Secreta (Termo)</h2>
-            <p class="nyt-card-desc">Descubra a palavra da energia limpa em 6 tentativas.</p>
+        <!-- 3. Conexões da Biomassa -->
+        <div class="hub-mini-card" onclick="openGame('screen-connections')">
+          <div class="mini-card-top">
+            <span class="mini-card-icon">🧩</span>
+            <span class="mini-card-badge">Grupos</span>
           </div>
-          <div class="nyt-card-play">▶</div>
+          <div>
+            <h3 class="mini-card-title">Conexões</h3>
+            <p class="mini-card-desc">Agrupe 16 palavras da cana, gases e refino em 4 temas.</p>
+          </div>
         </div>
 
         <!-- 4. Verdade ou Mentira -->
-        <div class="nyt-card" onclick="openGame('screen-myths')">
-          <div class="nyt-card-icon" style="background:#e0f2fe; color:#0284c7;">⚖️</div>
-          <div class="nyt-card-body">
-            <span class="nyt-card-badge">3 Rodadas Rápidas</span>
-            <h2 class="nyt-card-title">Verdade ou Mentira?</h2>
-            <p class="nyt-card-desc">Desvende mitos sobre o cheiro e o poder do biometano.</p>
+        <div class="hub-mini-card" onclick="openGame('screen-myths')">
+          <div class="mini-card-top">
+            <span class="mini-card-icon">⚖️</span>
+            <span class="mini-card-badge">Rápido</span>
           </div>
-          <div class="nyt-card-play">▶</div>
+          <div>
+            <h3 class="mini-card-title">Fato ou Mito?</h3>
+            <p class="mini-card-desc">Descubra se o biometano tem cheiro e se gera fumaça.</p>
+          </div>
         </div>
 
-        <!-- 5. Sobre o CP2B -->
-        <div class="nyt-card" onclick="showScreen('screen-about')">
-          <div class="nyt-card-icon" style="background:#f3f4f6; color:#4b5563;">🏛️</div>
-          <div class="nyt-card-body">
-            <span class="nyt-card-badge">Pesquisa & Ciência</span>
-            <h2 class="nyt-card-title">Conheça o CP2B</h2>
-            <p class="nyt-card-desc">A plataforma PILAR-2b e o mapa dos 645 municípios de SP.</p>
+        <!-- 5. Conheça o CP2B -->
+        <div class="hub-mini-card" onclick="showScreen('screen-about')">
+          <div class="mini-card-top">
+            <span class="mini-card-icon">🏛️</span>
+            <span class="mini-card-badge">Ciência</span>
           </div>
-          <div class="nyt-card-play">➔</div>
+          <div>
+            <h3 class="mini-card-title">Sobre o CP2B</h3>
+            <p class="mini-card-desc">A plataforma PILAR-2b e o mapa dos 645 municípios.</p>
+          </div>
         </div>
       </div>
     </main>
 
     <!-- ====================================================================
-         TELA 2: CALCULADORA CIDADÃ (O Destaque Adorado!)
+         TELA 2: CALCULADORA CIDADÃ (O Destaque Central!)
          ==================================================================== -->
     <section id="screen-calculator" class="view-screen">
       <div class="game-header-bar">
@@ -111,12 +113,12 @@
         <span class="game-header-title">CALCULADORA</span>
       </div>
 
-      <div style="margin-bottom:1rem;">
-        <h2 style="font-family:var(--font-nyt); font-size:1.4rem; font-weight:900; line-height:1.2;">
+      <div style="margin-bottom:0.85rem;">
+        <h2 style="font-family:var(--font-nyt); font-size:1.35rem; font-weight:900; line-height:1.2;">
           E se a Sua Cidade Produzisse Biometano?
         </h2>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">
-          Toque nos botões <strong>[-]</strong> e <strong>[+]</strong> ou arraste para ver o potencial diário:
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0.2rem;">
+          Toque nos botões <strong>[-]</strong> e <strong>[+]</strong> para ver o potencial de energia limpa:
         </p>
       </div>
 
@@ -137,7 +139,7 @@
         <!-- Vinhaça -->
         <div class="calc-stepper-card">
           <div class="calc-stepper-label">
-            <span>🌾 Vinhaça da Usina de Cana:</span>
+            <span>🌾 Vinhaça de Usina de Cana:</span>
             <span class="calc-stepper-val" id="calc-val-vinasse">50.000 L/dia</span>
           </div>
           <div class="calc-stepper-controls">
@@ -175,7 +177,7 @@
           <div class="result-row-icon">🏡</div>
           <div class="result-row-text">
             <span class="result-row-number" id="metric-houses">1.250</span>
-            <span class="result-row-desc">Casas iluminadas com energia elétrica renovável e limpa</span>
+            <span class="result-row-desc">Casas iluminadas com energia elétrica renovável contínua</span>
           </div>
         </div>
 
@@ -183,14 +185,52 @@
           <div class="result-row-icon">🌲</div>
           <div class="result-row-text">
             <span class="result-row-number" id="metric-trees">4.500</span>
-            <span class="result-row-desc">Árvores equivalentes em fumaça de diesel fóssil que não vai pro ar</span>
+            <span class="result-row-desc">Árvores equivalentes em fumaça de diesel fóssil evitada</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ====================================================================
-         JOGO 1: CONEXÕES DA BIOMASSA (NYT Connections)
+         JOGO: MINI CRUZADINHA DA BIOMASSA (NYT Mini Crossword)
+         ==================================================================== -->
+    <section id="screen-crossword" class="view-screen">
+      <div class="game-header-bar">
+        <button class="btn-game-back" onclick="showScreen('screen-hub')">
+          ← Todos os Jogos
+        </button>
+        <span class="game-header-title">MINI CRUZADINHA</span>
+      </div>
+
+      <!-- Banner de Dica Atual com Navegação < e > -->
+      <div class="crossword-clue-banner">
+        <button class="clue-nav-btn" onclick="prevClue()">‹</button>
+        <div class="clue-content" onclick="toggleClueOrientation()">
+          <div class="clue-number-label" id="cw-clue-label">1 HORIZONTAL • 4 LETRAS</div>
+          <div class="clue-text" id="cw-clue-text">Carregando dica...</div>
+        </div>
+        <button class="clue-nav-btn" onclick="nextClue()">›</button>
+      </div>
+
+      <!-- Grade da Cruzadinha 6x6 -->
+      <div class="crossword-board-wrapper">
+        <div id="crossword-grid" class="crossword-grid"></div>
+      </div>
+
+      <!-- Teclado Touch Mobile -->
+      <div class="crossword-keyboard" id="crossword-keyboard"></div>
+
+      <!-- Modal de Vitória da Cruzadinha -->
+      <div id="crossword-result-modal" class="nyt-result-modal">
+        <div style="font-size:2.8rem; margin-bottom:0.25rem;">🎉</div>
+        <h3>Cruzadinha Completa!</h3>
+        <p>Você dominou as palavras da cana, da vinhaça, do bagaço e do metano de São Paulo!</p>
+        <button class="btn-nyt-primary" onclick="restartCrossword()">Jogar Novamente</button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         JOGO: CONEXÕES DA BIOMASSA (NYT Connections)
          ==================================================================== -->
     <section id="screen-connections" class="view-screen">
       <div class="game-header-bar">
@@ -200,7 +240,7 @@
         <span class="game-header-title">CONEXÕES</span>
       </div>
 
-      <p class="conn-prompt">Encontre 4 grupos de 4 palavras que compartilham um tema científico comum.</p>
+      <p class="conn-prompt">Agrupe 4 palavras que compartilham o mesmo tema científico.</p>
 
       <div id="conn-solved-container" class="conn-solved-group"></div>
       <div id="conn-board" class="conn-board"></div>
@@ -216,48 +256,22 @@
       </div>
 
       <div id="conn-result-modal" class="nyt-result-modal">
-        <div style="font-size:3rem; margin-bottom:0.25rem;">🧩</div>
+        <div style="font-size:2.8rem; margin-bottom:0.25rem;">🧩</div>
         <h3>Conexões Resolvidas!</h3>
-        <p>Você dominou a cana, os gases da digestão, o refino e os destinos do biometano paulista!</p>
+        <p>Você descobriu os grupos da cana, gases da digestão, refino e destinos do biometano!</p>
         <button class="btn-nyt-primary" onclick="restartConnections()">Jogar Novamente</button>
       </div>
     </section>
 
     <!-- ====================================================================
-         JOGO 2: TERMO DO BIOGÁS (Wordle)
-         ==================================================================== -->
-    <section id="screen-wordle" class="view-screen">
-      <div class="game-header-bar">
-        <button class="btn-game-back" onclick="showScreen('screen-hub')">
-          ← Todos os Jogos
-        </button>
-        <span class="game-header-title">TERMO (6 LETRAS)</span>
-      </div>
-
-      <p class="conn-prompt">Descubra a palavra secreta da energia limpa em 6 tentativas.</p>
-
-      <div class="wordle-container">
-        <div id="wordle-grid" class="wordle-grid"></div>
-        <div id="wordle-keyboard" class="wordle-keyboard"></div>
-      </div>
-
-      <div id="wordle-result-modal" class="nyt-result-modal">
-        <div style="font-size:3rem; margin-bottom:0.25rem;">🟩</div>
-        <h3 id="wordle-result-title">Acertou!</h3>
-        <p id="wordle-result-desc">A palavra secreta era METANO!</p>
-        <button class="btn-nyt-primary" onclick="restartWordle()">Jogar Novamente</button>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         JOGO 3: VERDADE OU MENTIRA (Fato ou Mito)
+         JOGO: VERDADE OU MENTIRA (Fato ou Mito)
          ==================================================================== -->
     <section id="screen-myths" class="view-screen">
       <div class="game-header-bar">
         <button class="btn-game-back" onclick="showScreen('screen-hub')">
           ← Todos os Jogos
         </button>
-        <span class="game-header-title">VERDADE OU MENTIRA</span>
+        <span class="game-header-title">FATO OU MITO</span>
       </div>
 
       <div class="myths-flow">
@@ -267,7 +281,7 @@
             "O biometano tem cheiro ruim de lixo no escapamento do caminhão."
           </div>
           <div class="myth-answer-status" id="myth-status-msg">
-            Toque para responder:
+            Toque em um botão para responder:
           </div>
         </div>
 
@@ -282,15 +296,15 @@
       </div>
 
       <div id="myth-result-modal" class="nyt-result-modal">
-        <div style="font-size:3rem; margin-bottom:0.25rem;">🏆</div>
+        <div style="font-size:2.8rem; margin-bottom:0.25rem;">🏆</div>
         <h3>Desafio Concluído!</h3>
-        <p id="myth-score-summary">Você acertou todas as afirmativas!</p>
+        <p id="myth-score-summary">Você acertou todas as afirmativas científicas!</p>
         <button class="btn-nyt-primary" onclick="restartMyths()">Jogar Novamente</button>
       </div>
     </section>
 
     <!-- ====================================================================
-         TELA 4: SOBRE O CP2B
+         TELA: SOBRE O CP2B
          ==================================================================== -->
     <section id="screen-about" class="view-screen">
       <div class="game-header-bar">
@@ -300,9 +314,9 @@
         <span class="game-header-title">SOBRE O CP2B</span>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:1rem;">
+      <div style="display:flex; flex-direction:column; gap:0.85rem;">
         <div class="calc-stepper-card" style="background:var(--cp2b-petroleo); color:#ffffff;">
-          <img src="assets/logos/cp2b-logo-negative-white.svg" alt="CP2B" style="height:36px; margin-bottom:0.75rem;">
+          <img src="assets/logos/cp2b-logo-negative-white.svg" alt="CP2B" style="height:34px; margin-bottom:0.6rem;">
           <h2 style="font-size:1.15rem; font-weight:900; margin-bottom:0.35rem;">
             Centro Paulista de Estudos em Biogás e Bioprodutos
           </h2>
@@ -316,10 +330,10 @@
         </div>
 
         <div class="calc-stepper-card">
-          <h3 style="font-size:1.1rem; font-weight:900; margin-bottom:0.35rem; color:var(--cp2b-verde);">
-            O que é o PILAR-2b?
+          <h3 style="font-size:1.05rem; font-weight:900; margin-bottom:0.35rem; color:var(--cp2b-verde);">
+            O que é a PILAR-2b?
           </h3>
-          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.45;">
             É a ferramenta oficial que mapeia a biomassa e o potencial de biogás em todos os 645 municípios do Estado de São Paulo, integrando usinas, fazendas e gasodutos.
           </p>
         </div>

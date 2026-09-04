@@ -1,8 +1,8 @@
 /* ==========================================================================
    BioGames SP — Design System Mobile-First (Estilo New York Times Games)
    CP2B / NIPE-UNICAMP
-   Layout nativo para celular: 100% largura no smartphone, zero overflow,
-   botões táteis confortáveis e estética limpa, elegante e intuitiva.
+   Layout nativo para celular: Cards compactos em grade, sem botões de Play,
+   Mini Cruzadinha da Biomassa de SP e Calculadora Cidadã em destaque.
    ========================================================================== */
 
 :root {
@@ -35,9 +35,9 @@
   --text-muted: #4b5563;
   --text-dim: #9ca3af;
 
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
   --radius-full: 9999px;
 }
 
@@ -76,9 +76,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ==========================================================================
-   Container Mobile (Nativo no Celular, Centrado no Desktop)
-   ========================================================================== */
+/* Container Mobile (Nativo no Celular, Centrado no Desktop) */
 .mobile-app {
   width: 100%;
   max-width: 440px;
@@ -101,7 +99,7 @@ body {
 }
 
 /* ==========================================================================
-   Header Limpo e Elegante (Estilo NYT Games)
+   Header Limpo (Estilo NYT Games)
    ========================================================================== */
 .nyt-header {
   height: 56px;
@@ -171,17 +169,17 @@ body {
 }
 
 /* ==========================================================================
-   TELA INICIAL: HUB DE JOGOS DO JORNAL
+   TELA INICIAL: GRADE DE CARDS COMPACTOS (Mobile Grid 2 Colunas)
    ========================================================================== */
 .hub-masthead {
   text-align: center;
-  padding: 0.5rem 0 1.25rem;
+  padding: 0.5rem 0 1rem;
   border-bottom: 2px solid var(--border-dark);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .hub-date {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -190,117 +188,144 @@ body {
 
 .hub-main-headline {
   font-family: var(--font-nyt);
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   font-weight: 900;
   line-height: 1.15;
-  margin: 0.2rem 0;
+  margin: 0.15rem 0;
 }
 
 .hub-sub {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
 }
 
-/* Feed de Jogos em Cards Grandes e Táteis */
-.nyt-games-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
+/* Grade de Cards Pequenos */
+.hub-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.nyt-card {
-  background: var(--bg-card);
-  border: 1.5px solid var(--border-light);
+/* Card Hero (Calculadora Cidadã) ocupa 2 colunas */
+.hub-card-hero {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(92, 160, 50, 0.1), rgba(182, 224, 59, 0.18));
+  border: 2px solid var(--cp2b-verde);
   border-radius: var(--radius-md);
-  padding: 1.1rem;
+  padding: 1rem 1.15rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   cursor: pointer;
   user-select: none;
-  transition: border-color 0.15s ease, transform 0.1s ease;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
 }
 
-.nyt-card:active {
+.hub-card-hero:active {
   transform: scale(0.98);
+}
+
+.hero-card-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.hero-card-body h2 {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--cp2b-escuro);
+  line-height: 1.2;
+}
+
+body.dark-mode .hero-card-body h2 {
+  color: var(--cp2b-lima);
+}
+
+.hero-card-body p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+/* Cards Quadrados / Compactos (1 por coluna) */
+.hub-mini-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 125px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.hub-mini-card:active {
+  transform: scale(0.96);
   border-color: var(--cp2b-verde);
   background-color: var(--bg-input);
 }
 
-.nyt-card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-sm);
+.mini-card-top {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  flex-shrink: 0;
-  border: 1px solid var(--border-light);
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
 
-.nyt-card-body {
-  flex: 1;
+.mini-card-icon {
+  font-size: 1.7rem;
 }
 
-.nyt-card-badge {
-  font-size: 0.65rem;
+.mini-card-badge {
+  font-size: 0.62rem;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--cp2b-verde);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-input);
+  color: var(--text-muted);
 }
 
-.nyt-card-title {
-  font-size: 1.15rem;
+.mini-card-title {
+  font-size: 0.98rem;
   font-weight: 900;
   line-height: 1.2;
+  margin-bottom: 0.2rem;
 }
 
-.nyt-card-desc {
-  font-size: 0.8rem;
+.mini-card-desc {
+  font-size: 0.72rem;
   color: var(--text-muted);
-  margin-top: 0.15rem;
-  line-height: 1.3;
-}
-
-.nyt-card-play {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--cp2b-petroleo);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  font-weight: 900;
-  flex-shrink: 0;
+  line-height: 1.25;
 }
 
 /* ==========================================================================
-   Barra Superior de Cada Jogo (Botão Voltar)
+   Barra Superior de Cada Jogo
    ========================================================================== */
 .game-header-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 0.85rem;
-  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
   border-bottom: 1px solid var(--border-light);
 }
 
 .btn-game-back {
   border: none;
   background: transparent;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 800;
   color: var(--cp2b-petroleo);
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   cursor: pointer;
-  padding: 0.4rem 0;
+  padding: 0.3rem 0;
 }
 
 body.dark-mode .btn-game-back {
@@ -308,37 +333,195 @@ body.dark-mode .btn-game-back {
 }
 
 .game-header-title {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 900;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
 /* ==========================================================================
-   JOGO 1: CONEXÕES DA BIOMASSA (NYT Connections)
+   JOGO: MINI CRUZADINHA DA BIOMASSA (NYT Mini Crossword)
+   ========================================================================== */
+.crossword-clue-banner {
+  background: var(--cp2b-petroleo);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.clue-nav-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.clue-nav-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.clue-content {
+  flex: 1;
+  text-align: center;
+}
+
+.clue-number-label {
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--cp2b-lima);
+  letter-spacing: 0.5px;
+}
+
+.clue-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 0.15rem;
+}
+
+/* Grade da Cruzadinha */
+.crossword-board-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+}
+
+.crossword-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3px;
+  background: #111827;
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  max-width: 290px;
+  width: 100%;
+}
+
+.crossword-cell {
+  aspect-ratio: 1 / 1;
+  background: var(--bg-card);
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+
+.crossword-cell.black {
+  background: #111827;
+  cursor: default;
+}
+
+.crossword-cell.highlighted {
+  background: rgba(182, 224, 59, 0.35);
+}
+
+.crossword-cell.active-focus {
+  background: var(--cp2b-lima);
+  color: var(--cp2b-petroleo);
+}
+
+.crossword-cell.solved-word {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.cell-clue-num {
+  position: absolute;
+  top: 1px;
+  left: 3px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+/* Teclado Compacto da Cruzadinha */
+.crossword-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.cw-kb-row {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+.cw-key {
+  height: 44px;
+  flex: 1;
+  min-width: 26px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.cw-key:active {
+  background: var(--cp2b-lima);
+  color: var(--cp2b-petroleo);
+}
+
+.cw-key.wide {
+  flex: 1.5;
+  font-size: 0.8rem;
+  background: var(--border-light);
+}
+
+/* ==========================================================================
+   JOGO: CONEXÕES DA BIOMASSA (NYT Connections)
    ========================================================================== */
 .conn-prompt {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   font-weight: 600;
 }
 
 .conn-solved-group {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.4rem;
   margin-bottom: 0.75rem;
 }
 
 .conn-solved-box {
   border-radius: var(--radius-sm);
-  padding: 0.75rem;
+  padding: 0.65rem 0.85rem;
   text-align: center;
   color: #ffffff;
   font-weight: 900;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
 }
 
 .conn-solved-box.yellow { background: var(--conn-yellow); }
@@ -347,34 +530,33 @@ body.dark-mode .btn-game-back {
 .conn-solved-box.purple { background: var(--conn-purple); }
 
 .conn-solved-items {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   opacity: 0.95;
   margin-top: 0.15rem;
 }
 
-/* Grade 4x4 */
 .conn-board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  margin-bottom: 1.25rem;
+  gap: 5px;
+  margin-bottom: 1rem;
 }
 
 .conn-tile-btn {
   background: var(--bg-input);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
-  min-height: 64px;
+  min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
   line-height: 1.15;
-  padding: 4px;
+  padding: 3px;
   cursor: pointer;
   user-select: none;
   transition: all 0.1s ease;
@@ -392,10 +574,10 @@ body.dark-mode .btn-game-back {
 
 .conn-status-bar {
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .conn-actions-bar {
@@ -405,142 +587,64 @@ body.dark-mode .btn-game-back {
 }
 
 .btn-nyt-secondary {
-  height: 48px;
-  padding: 0 1.1rem;
+  height: 44px;
+  padding: 0 1rem;
   border-radius: var(--radius-full);
   border: 1.5px solid var(--border-dark);
   background: transparent;
   color: var(--text-main);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
 }
 
 .btn-nyt-primary {
-  height: 48px;
-  padding: 0 1.5rem;
+  height: 44px;
+  padding: 0 1.4rem;
   border-radius: var(--radius-full);
   border: none;
   background: var(--cp2b-petroleo);
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 900;
   cursor: pointer;
 }
 
 /* ==========================================================================
-   JOGO 2: TERMO DO BIOGÁS (Wordle)
-   ========================================================================== */
-.wordle-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.wordle-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.wordle-grid-row {
-  display: flex;
-  gap: 6px;
-}
-
-.wordle-box {
-  width: 46px;
-  height: 48px;
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.35rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.wordle-box.correct { background: var(--cp2b-verde); color: #fff; border-color: var(--cp2b-verde); }
-.wordle-box.present { background: var(--cp2b-ambar); color: #fff; border-color: var(--cp2b-ambar); }
-.wordle-box.absent { background: #6b7280; color: #fff; border-color: #6b7280; }
-
-.wordle-keyboard {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.kb-row {
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-}
-
-.kb-key {
-  height: 48px;
-  flex: 1;
-  min-width: 28px;
-  border: none;
-  border-radius: var(--radius-sm);
-  background: var(--bg-input);
-  color: var(--text-main);
-  font-size: 0.95rem;
-  font-weight: 800;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-}
-
-.kb-key:active {
-  background: var(--border-light);
-}
-
-.kb-key.wide {
-  flex: 1.5;
-  font-size: 0.8rem;
-}
-
-/* ==========================================================================
-   JOGO 3: VERDADE OU MENTIRA (Fato ou Mito)
+   JOGO: VERDADE OU MENTIRA (Fato ou Mito)
    ========================================================================== */
 .myths-flow {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .myth-box {
   background: var(--bg-input);
   border-radius: var(--radius-lg);
-  padding: 1.75rem 1.25rem;
+  padding: 1.5rem 1.15rem;
   text-align: center;
 }
 
 .myth-counter {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 900;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 
 .myth-text {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 900;
-  margin: 1rem 0;
+  margin: 0.85rem 0;
   line-height: 1.35;
 }
 
 .myth-answer-status {
   min-height: 48px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-muted);
 }
@@ -552,10 +656,10 @@ body.dark-mode .btn-game-back {
 }
 
 .btn-myth-action {
-  height: 58px;
+  height: 56px;
   border-radius: var(--radius-md);
   border: none;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 900;
   cursor: pointer;
 }
@@ -582,45 +686,45 @@ body.dark-mode .btn-game-back {
 .calc-card-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .calc-stepper-card {
   background: var(--bg-input);
   border-radius: var(--radius-md);
-  padding: 1.1rem;
+  padding: 1rem;
 }
 
 .calc-stepper-label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 800;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .calc-stepper-val {
   font-family: var(--font-mono);
   font-weight: 900;
   color: var(--cp2b-verde);
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 .calc-stepper-controls {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .btn-step-circle {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1.5px solid var(--border-light);
   background: var(--bg-card);
   color: var(--text-main);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 900;
   display: flex;
   align-items: center;
@@ -646,7 +750,7 @@ body.dark-mode .btn-game-back {
 .calc-results-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
   margin-top: 0.5rem;
 }
 
@@ -654,14 +758,14 @@ body.dark-mode .btn-game-back {
   background: var(--bg-card);
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 0.95rem 1rem;
+  padding: 0.85rem 0.95rem;
   display: flex;
   align-items: center;
   gap: 0.85rem;
 }
 
 .result-row-icon {
-  font-size: 2rem;
+  font-size: 1.8rem;
   flex-shrink: 0;
 }
 
@@ -671,7 +775,7 @@ body.dark-mode .btn-game-back {
 }
 
 .result-row-number {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 900;
   color: var(--cp2b-escuro);
   line-height: 1.1;
@@ -682,7 +786,7 @@ body.dark-mode .result-row-number {
 }
 
 .result-row-desc {
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   color: var(--text-muted);
   font-weight: 700;
   line-height: 1.25;
@@ -696,20 +800,20 @@ body.dark-mode .result-row-number {
   background: var(--bg-input);
   border: 2px solid var(--cp2b-verde);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 1.35rem;
   text-align: center;
   margin-top: 1rem;
 }
 
 .nyt-result-modal h3 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: var(--cp2b-verde);
   margin-bottom: 0.35rem;
 }
 
 .nyt-result-modal p {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }

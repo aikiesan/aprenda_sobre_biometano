@@ -1,7 +1,7 @@
 /**
  * BioGames SP — Motor Nativo Mobile (Estilo NY Times Games)
  * CP2B / NIPE-UNICAMP
- * Experiência limpa, sem travamentos, sem excessos e 100% responsiva.
+ * Mini Cruzadinha da Biomassa de SP, Conexões, Fato/Mito e Calculadora Cidadã.
  */
 
 // =============================================================================
@@ -114,13 +114,288 @@ function showScreen(screenId) {
 
 function openGame(gameId) {
   showScreen(gameId);
+  if (gameId === 'screen-crossword') initCrossword();
   if (gameId === 'screen-connections') initConnections();
-  if (gameId === 'screen-wordle') initWordle();
   if (gameId === 'screen-myths') initMyths();
 }
 
 // =============================================================================
-// 3. JOGO 1: CONEXÕES DA BIOMASSA (NYT Connections)
+// 3. JOGO: MINI CRUZADINHA DA BIOMASSA (NYT Mini Crossword)
+// =============================================================================
+const cwClues = [
+  {
+    id: "1",
+    num: 1,
+    dir: "HORIZONTAL",
+    word: "CANA",
+    label: "1 HORIZONTAL • 4 LETRAS",
+    text: "Planta dos canaviais de Ribeirão Preto e Piracicaba que gera etanol e biometano.",
+    cells: [[0,0], [0,1], [0,2], [0,3]]
+  },
+  {
+    id: "2",
+    num: 2,
+    dir: "HORIZONTAL",
+    word: "VINHACA", // normalizado sem cedilha para digitação fácil
+    displayWord: "VINHAÇA",
+    label: "2 HORIZONTAL • 7 LETRAS",
+    text: "Líquido escuro da cana que sobra do etanol e é o maior tesouro energético de SP.",
+    cells: [[1,0], [1,1], [1,2], [1,3], [1,4], [1,5], [1,6]]
+  },
+  {
+    id: "3",
+    num: 3,
+    dir: "HORIZONTAL",
+    word: "BAGLAN", // fallback
+    word: "BAGLAN",
+    word: "BAGLAN",
+    word: "BAGACO",
+    displayWord: "BAGAÇO",
+    label: "3 HORIZONTAL • 6 LETRAS",
+    text: "Resíduo fibroso da cana que é queimado na caldeira para gerar eletricidade.",
+    cells: [[2,0], [2,1], [2,2], [2,3], [2,4], [2,5]]
+  },
+  {
+    id: "4",
+    num: 4,
+    dir: "HORIZONTAL",
+    word: "METANO",
+    label: "4 HORIZONTAL • 6 LETRAS",
+    text: "Gás da energia limpa (CH₄) que substitui o diesel sem soltar fumaça preta.",
+    cells: [[3,0], [3,1], [3,2], [3,3], [3,4], [3,5]]
+  },
+  {
+    id: "5",
+    num: 5,
+    dir: "HORIZONTAL",
+    word: "ADUBO",
+    label: "5 HORIZONTAL • 5 LETRAS",
+    text: "O biofertilizante natural que sai do reator para nutrir as lavouras paulistas.",
+    cells: [[4,0], [4,1], [4,2], [4,3], [4,4]]
+  },
+  {
+    id: "6",
+    num: 6,
+    dir: "HORIZONTAL",
+    word: "LODO",
+    label: "6 HORIZONTAL • 4 LETRAS",
+    text: "Resíduo de esgoto tratado (Sabesp) que gera biometano para a rede.",
+    cells: [[5,0], [5,1], [5,2], [5,3]]
+  }
+];
+
+let cwCurrentClueIdx = 0;
+let cwUserGrid = {}; // key "r,c" -> letter
+let cwCellCursor = 0; // index in current clue cells
+
+function initCrossword() {
+  cwCurrentClueIdx = 0;
+  cwUserGrid = {};
+  cwCellCursor = 0;
+
+  const modal = document.getElementById('crossword-result-modal');
+  if (modal) modal.style.display = 'none';
+
+  renderCrosswordBoard();
+  renderCrosswordKeyboard();
+  updateClueBanner();
+}
+
+function updateClueBanner() {
+  const clue = cwClues[cwCurrentClueIdx];
+  const labelEl = document.getElementById('cw-clue-label');
+  const textEl = document.getElementById('cw-clue-text');
+
+  if (labelEl) labelEl.textContent = clue.label;
+  if (textEl) textEl.textContent = clue.text;
+
+  highlightCurrentClueCells();
+}
+
+function nextClue() {
+  cwCurrentClueIdx = (cwCurrentClueIdx + 1) % cwClues.length;
+  cwCellCursor = 0;
+  sfx.tap();
+  updateClueBanner();
+}
+
+function prevClue() {
+  cwCurrentClueIdx = (cwCurrentClueIdx - 1 + cwClues.length) % cwClues.length;
+  cwCellCursor = 0;
+  sfx.tap();
+  updateClueBanner();
+}
+
+function toggleClueOrientation() {
+  nextClue();
+}
+
+function renderCrosswordBoard() {
+  const container = document.getElementById('crossword-grid');
+  if (!container) return;
+
+  // Grade 6 linhas x 7 colunas (para caber VINHAÇA de 7 letras)
+  container.style.gridTemplateColumns = 'repeat(7, 1fr)';
+  container.innerHTML = '';
+
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 7; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'crossword-cell';
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+
+      // Verificar se essa célula pertence a alguma palavra
+      const clueOwner = cwClues.find(clue => clue.cells.some(([cr, cc]) => cr === r && cc === c));
+
+      if (!clueOwner) {
+        cell.classList.add('black');
+      } else {
+        // Célula ativa
+        const key = `${r},${c}`;
+        cell.textContent = cwUserGrid[key] || '';
+
+        // Número da dica se for a primeira letra
+        if (clueOwner.cells[0][0] === r && clueOwner.cells[0][1] === c) {
+          const numEl = document.createElement('span');
+          numEl.className = 'cell-clue-num';
+          numEl.textContent = clueOwner.num;
+          cell.appendChild(numEl);
+        }
+
+        cell.addEventListener('click', () => {
+          // Focar na dica dona dessa célula
+          const idx = cwClues.indexOf(clueOwner);
+          if (idx > -1) {
+            cwCurrentClueIdx = idx;
+            // cursor na célula clicada
+            const cellPos = clueOwner.cells.findIndex(([cr, cc]) => cr === r && cc === c);
+            cwCellCursor = Math.max(0, cellPos);
+            sfx.tap();
+            updateClueBanner();
+          }
+        });
+      }
+
+      container.appendChild(cell);
+    }
+  }
+
+  highlightCurrentClueCells();
+}
+
+function highlightCurrentClueCells() {
+  const clue = cwClues[cwCurrentClueIdx];
+  const allCells = document.querySelectorAll('.crossword-cell');
+
+  allCells.forEach(el => {
+    el.classList.remove('highlighted', 'active-focus');
+    const r = parseInt(el.dataset.r);
+    const c = parseInt(el.dataset.c);
+
+    // Checar se faz parte da dica atual
+    const isPartOfClue = clue.cells.some(([cr, cc]) => cr === r && cc === c);
+    if (isPartOfClue) {
+      el.classList.add('highlighted');
+    }
+
+    // Célula com foco cursor ativo
+    const activeCoord = clue.cells[cwCellCursor];
+    if (activeCoord && activeCoord[0] === r && activeCoord[1] === c) {
+      el.classList.add('active-focus');
+    }
+  });
+}
+
+function renderCrosswordKeyboard() {
+  const container = document.getElementById('crossword-keyboard');
+  if (!container) return;
+
+  const rows = [
+    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+    ["Z", "X", "C", "V", "B", "N", "M", "Ç", "⌫"]
+  ];
+
+  container.innerHTML = rows.map(r => `
+    <div class="cw-kb-row">
+      ${r.map(k => {
+        let cls = 'cw-key';
+        if (k === '⌫') cls += ' wide';
+        return `<button class="${cls}" onclick="pressCrosswordKey('${k}')">${k}</button>`;
+      }).join('')}
+    </div>
+  `).join('');
+}
+
+window.pressCrosswordKey = function(key) {
+  const clue = cwClues[cwCurrentClueIdx];
+  const targetCoord = clue.cells[cwCellCursor];
+  if (!targetCoord) return;
+
+  const keyCoord = `${targetCoord[0]},${targetCoord[1]}`;
+
+  if (key === '⌫') {
+    cwUserGrid[keyCoord] = '';
+    // Mover cursor para trás
+    if (cwCellCursor > 0) cwCellCursor--;
+    sfx.tap();
+  } else {
+    // Escrever letra
+    cwUserGrid[keyCoord] = key.toUpperCase();
+    sfx.tap();
+
+    // Avançar cursor
+    if (cwCellCursor < clue.cells.length - 1) {
+      cwCellCursor++;
+    } else {
+      // Checar se completou essa palavra
+      checkCrosswordWord(clue);
+    }
+  }
+
+  renderCrosswordBoard();
+};
+
+function checkCrosswordWord(clue) {
+  const userWord = clue.cells.map(([r, c]) => cwUserGrid[`${r},${c}`] || '').join('');
+  const cleanTarget = clue.word.replace(/Ç/g, 'Ç'); // aceita C ou Ç
+
+  if (userWord === clue.word || (clue.word === 'VINHACA' && userWord === 'VINHAÇA') || (clue.word === 'BAGACO' && userWord === 'BAGAÇO')) {
+    sfx.ding();
+    // Avançar para a próxima dica incompleta
+    setTimeout(() => {
+      checkEntireCrossword();
+    }, 300);
+  }
+}
+
+function checkEntireCrossword() {
+  let allDone = true;
+  cwClues.forEach(clue => {
+    const userWord = clue.cells.map(([r, c]) => cwUserGrid[`${r},${c}`] || '').join('');
+    const match = (userWord === clue.word) || 
+                  (clue.word === 'VINHACA' && userWord === 'VINHAÇA') ||
+                  (clue.word === 'BAGACO' && userWord === 'BAGAÇO');
+    if (!match) allDone = false;
+  });
+
+  if (allDone) {
+    sfx.fanfare();
+    if (window.confetti) window.confetti({ particleCount: 75, spread: 75, origin: { y: 0.6 } });
+    const modal = document.getElementById('crossword-result-modal');
+    if (modal) modal.style.display = 'block';
+  } else {
+    nextClue();
+  }
+}
+
+function restartCrossword() {
+  initCrossword();
+}
+
+// =============================================================================
+// 4. JOGO: CONEXÕES DA BIOMASSA (NYT Connections)
 // =============================================================================
 const connCategories = [
   {
@@ -187,7 +462,6 @@ function renderConnections() {
     mistakesSpan.textContent = '• '.repeat(connMistakes).trim() || 'Nenhuma';
   }
 
-  // Grupos resolvidos
   if (solved) {
     solved.innerHTML = connSolved.map(cat => `
       <div class="conn-solved-box ${cat.class}">
@@ -197,7 +471,6 @@ function renderConnections() {
     `).join('');
   }
 
-  // Grade 4x4
   if (grid) {
     grid.innerHTML = '';
     connTiles.forEach(tile => {
@@ -273,7 +546,6 @@ function submitConnections() {
     connMistakes--;
     sfx.error();
 
-    // Checar se faltava apenas 1
     const counts = {};
     connSelected.forEach(t => {
       const tile = connTiles.find(x => x.text === t);
@@ -298,143 +570,7 @@ function restartConnections() {
 }
 
 // =============================================================================
-// 4. JOGO 2: TERMO DO BIOGÁS (Wordle)
-// =============================================================================
-const wordleTarget = "METANO";
-const wordleTries = 6;
-let guesses = [];
-let currentGuess = "";
-let wordleDone = false;
-
-function initWordle() {
-  guesses = [];
-  currentGuess = "";
-  wordleDone = false;
-
-  const modal = document.getElementById('wordle-result-modal');
-  if (modal) modal.style.display = 'none';
-
-  renderWordle();
-  renderKeyboard();
-}
-
-function renderWordle() {
-  const grid = document.getElementById('wordle-grid');
-  if (!grid) return;
-
-  grid.innerHTML = '';
-  for (let r = 0; r < wordleTries; r++) {
-    const row = document.createElement('div');
-    row.className = 'wordle-grid-row';
-    const guess = guesses[r];
-    const isCurrent = (r === guesses.length);
-
-    for (let c = 0; c < 6; c++) {
-      const box = document.createElement('div');
-      box.className = 'wordle-box';
-
-      if (guess) {
-        const letter = guess[c];
-        box.textContent = letter;
-        if (letter === wordleTarget[c]) {
-          box.classList.add('correct');
-        } else if (wordleTarget.includes(letter)) {
-          box.classList.add('present');
-        } else {
-          box.classList.add('absent');
-        }
-      } else if (isCurrent) {
-        box.textContent = currentGuess[c] || '';
-      }
-
-      row.appendChild(box);
-    }
-    grid.appendChild(row);
-  }
-}
-
-function renderKeyboard() {
-  const container = document.getElementById('wordle-keyboard');
-  if (!container) return;
-
-  const layout = [
-    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"]
-  ];
-
-  container.innerHTML = layout.map(row => `
-    <div class="kb-row">
-      ${row.map(k => {
-        let cls = 'kb-key';
-        if (k === 'ENTER' || k === '⌫') cls += ' wide';
-        return `<button class="${cls}" onclick="pressKey('${k}')">${k}</button>`;
-      }).join('')}
-    </div>
-  `).join('');
-}
-
-window.pressKey = function(k) {
-  if (wordleDone) return;
-
-  if (k === '⌫') {
-    if (currentGuess.length > 0) {
-      currentGuess = currentGuess.slice(0, -1);
-      sfx.tap();
-      renderWordle();
-    }
-  } else if (k === 'ENTER') {
-    if (currentGuess.length === 6) {
-      submitWordle();
-    } else {
-      alert("A palavra precisa ter 6 letras!");
-    }
-  } else {
-    if (currentGuess.length < 6) {
-      currentGuess += k;
-      sfx.tap();
-      renderWordle();
-    }
-  }
-};
-
-function submitWordle() {
-  guesses.push(currentGuess);
-  const win = (currentGuess === wordleTarget);
-  currentGuess = "";
-
-  renderWordle();
-
-  if (win) {
-    wordleDone = true;
-    sfx.fanfare();
-    if (window.confetti) window.confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
-    const modal = document.getElementById('wordle-result-modal');
-    if (modal) {
-      document.getElementById('wordle-result-title').textContent = "Você Acertou! 🎯";
-      document.getElementById('wordle-result-desc').innerHTML = `A palavra era <strong>${wordleTarget}</strong> — a molécula CH₄ da energia limpa!`;
-      modal.style.display = 'block';
-    }
-  } else if (guesses.length >= wordleTries) {
-    wordleDone = true;
-    sfx.error();
-    const modal = document.getElementById('wordle-result-modal');
-    if (modal) {
-      document.getElementById('wordle-result-title').textContent = "Fim de Jogo!";
-      document.getElementById('wordle-result-desc').innerHTML = `A palavra era <strong>${wordleTarget}</strong>.`;
-      modal.style.display = 'block';
-    }
-  } else {
-    sfx.ding();
-  }
-}
-
-function restartWordle() {
-  initWordle();
-}
-
-// =============================================================================
-// 5. JOGO 3: VERDADE OU MENTIRA (Fato ou Mito)
+// 5. JOGO: VERDADE OU MENTIRA (Fato ou Mito)
 // =============================================================================
 const myths = [
   {
@@ -483,7 +619,7 @@ function renderMyth() {
 
   if (countEl) countEl.textContent = `Pergunta ${mythIdx + 1} de ${myths.length}`;
   if (textEl) textEl.textContent = `"${m.text}"`;
-  if (statusEl) statusEl.textContent = "Toque para responder:";
+  if (statusEl) statusEl.textContent = "Toque em um botão para responder:";
 }
 
 window.answerMyth = function(choice) {
