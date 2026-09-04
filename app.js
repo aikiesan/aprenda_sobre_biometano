@@ -596,16 +596,17 @@ let mythScore = 0;
 function initMyths() {
   mythIdx = 0;
   mythScore = 0;
-  const modal = document.getElementById('myth-result-modal');
+  const modal = document.getElementById('myths-result-modal') || document.getElementById('myth-result-modal');
   if (modal) modal.style.display = 'none';
   renderMyth();
 }
 
 function renderMyth() {
+  const modal = document.getElementById('myths-result-modal') || document.getElementById('myth-result-modal');
+  const summ = document.getElementById('myth-score-summary');
+
   if (mythIdx >= myths.length) {
-    const modal = document.getElementById('myth-result-modal');
-    const summ = document.getElementById('myth-score-summary');
-    if (summ) summ.textContent = `Você acertou ${mythScore} de ${myths.length} afirmativas!`;
+    if (summ) summ.textContent = `Você acertou ${mythScore} de ${myths.length} afirmativas científicas!`;
     if (modal) modal.style.display = 'block';
     sfx.fanfare();
     if (window.confetti) window.confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
@@ -613,38 +614,50 @@ function renderMyth() {
   }
 
   const m = myths[mythIdx];
-  const countEl = document.getElementById('myth-counter-text');
-  const textEl = document.getElementById('myth-text-content');
-  const statusEl = document.getElementById('myth-status-msg');
+  const countEl = document.getElementById('myth-counter') || document.getElementById('myth-counter-text');
+  const textEl = document.getElementById('myth-statement') || document.getElementById('myth-text-content');
+  const statusEl = document.getElementById('myth-status') || document.getElementById('myth-status-msg');
 
-  if (countEl) countEl.textContent = `Pergunta ${mythIdx + 1} de ${myths.length}`;
+  if (countEl) countEl.textContent = `RODADA ${mythIdx + 1} DE ${myths.length}`;
   if (textEl) textEl.textContent = `"${m.text}"`;
-  if (statusEl) statusEl.textContent = "Toque em um botão para responder:";
+  if (statusEl) statusEl.innerHTML = `Toque em <strong>Mentira</strong> ou <strong>Verdade</strong> abaixo:`;
 }
 
 window.answerMyth = function(choice) {
   if (mythIdx >= myths.length) return;
   const m = myths[mythIdx];
-  const statusEl = document.getElementById('myth-status-msg');
+  const statusEl = document.getElementById('myth-status') || document.getElementById('myth-status-msg');
 
   if (choice === m.isFact) {
     mythScore++;
     sfx.ding();
-    if (statusEl) statusEl.innerHTML = `<span style="color:#16a34a; font-weight:900;">✅ Certo!</span> ${m.reason}`;
+    if (statusEl) statusEl.innerHTML = `<span style="color:#16a34a; font-weight:700;">✅ Certo!</span> ${m.reason}`;
   } else {
     sfx.error();
-    if (statusEl) statusEl.innerHTML = `<span style="color:#dc2626; font-weight:900;">❌ Incorreto!</span> ${m.reason}`;
+    if (statusEl) statusEl.innerHTML = `<span style="color:#dc2626; font-weight:700;">❌ Incorreto!</span> ${m.reason}`;
   }
 
   setTimeout(() => {
     mythIdx++;
     renderMyth();
-  }, 2800);
+  }, 2600);
 };
 
 function restartMyths() {
   initMyths();
 }
+
+// Aliases globais para chamadas inline do HTML
+window.showScreen = showScreen;
+window.openGame = openGame;
+window.shuffleTiles = shuffleConnections;
+window.submitConnectionGuess = submitConnections;
+window.shuffleConnections = shuffleConnections;
+window.submitConnections = submitConnections;
+window.restartCrossword = initCrossword;
+window.restartConnections = restartConnections;
+window.restartMyths = restartMyths;
+
 
 // =============================================================================
 // 6. CALCULADORA CIDADÃ (Favorita!)
