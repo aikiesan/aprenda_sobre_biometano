@@ -1,110 +1,79 @@
-# 🌱 Aprenda Biometano — O Guia Divertido da Energia Limpa
+# 📱 BioGames SP — O Hub Mobile do Biometano | CP2B
 
-Uma plataforma educativa, moderna e interativa em Português (PT-BR) para ensinar o público geral sobre **Biogás e Biometano**, com foco especial na transição energética do **Estado de São Paulo e do Brasil**.
+Um aplicativo web interativo, **100% Mobile-First**, inspirado na elegância e simplicidade dos jogos do **The New York Times (Connections, Wordle/Termo)** e na consagrada **Calculadora Cidadã**, para ensinar o público geral sobre **Biogás, Biometano e Resíduos de Biomassa** no Estado de São Paulo e no Brasil.
 
-Construído com uma experiência gamificada e amigável inspirada no **Duolingo** (XP, ofensiva, sons e micro-missões) e visualmente alinhado ao **Design System do CP2B (Centro Paulista de Estudos em Biogás e Bioprodutos - NIPE/UNICAMP)** e à plataforma **PILAR-2b**.
-
----
-
-## 🚀 Acesse Online (GitHub Pages)
-
-🔗 **https://aikiesan.github.io/aprenda_sobre_biometano/**
+Desenvolvido em parceria visual e científica com o **CP2B (Centro Paulista de Estudos em Biogás e Bioprodutos - NIPE/UNICAMP)** e a plataforma **PILAR-2b**.
 
 ---
 
-## 🌟 O Que Você Vai Encontrar?
+## 🔗 Acesse Online (GitHub Pages)
 
-A plataforma é dividida em **8 módulos em abas interativas**, projetadas para serem consumidas em 1 a 2 minutos cada:
+👉 **https://aikiesan.github.io/aprenda_sobre_biometano/**
 
-1. 💡 **O Que é Esse Tal de Biogás?**
-   - Mini-jogo interativo: *Estoure as Bolhas de Biogás* para ganhar XP e descobrir a composição molecular (60% Metano, 40% CO₂).
-   - Duelo de Cards: *Biometano Campeão Verde* vs. *Diesel Fóssil Poluente*.
-2. 🚀 **O Super Poder de São Paulo (CP2B & PILAR-2b)**
-   - Por que São Paulo é chamado de a "Arábia Saudita Verde"?
-   - Mapa dos 3 Grandes Polos: **Corredor da Cana** (Ribeirão Preto / Piracicaba), **Cinturão das Cidades** (Sabesp / Aterros) e **Interior Pecuário**.
-3. 🦠 **A Cozinha das Bactérias Invisíveis**
-   - As 4 etapas da biodigestão explicadas sem complicação: *Picadinho (Hidrólise)*, *O Caldinho (Acidogênese)*, *O Vinagrete (Acetogênese)* e *A Fábrica de Gás (Metanogênese)*.
-   - Botão tátil 3D: *Alimente as Bactérias* e veja o gás borbulhar!
-4. 🧪 **O Filtro Mágico (Biogás ➔ Biometano)**
-   - Alavanca interativa de refino (*upgrading*): arraste a pureza de 50% até 98% e veja a chama mudar de amarelo fuliginoso para o azul cristalino de alta temperatura aprovado pela ANP 886.
-5. 🚛 **O Caminhão Verde na Rodovia**
-   - Adeus fumaça preta na Rodovia Anhanguera! Inspecione os cilindros a 200 bar, o motor ciclo Otto silencioso e o tesouro do **Biofertilizante (Digestato NPK)**.
-6. 🧮 **E na Sua Cidade? (Calculadora Cidadã)**
-   - Ajuste os sliders com a população da sua cidade ou animais da fazenda e descubra quantos ônibus rodam a gás e quantas casas ganham luz.
-7. 🎮 **Desafios Duolingo do Biometano**
-   - Quiz interativo de 5 perguntas com feedback instantâneo, som de acerto "ding!", barra de corações ❤️ e comemoração com confetes!
-8. 📚 **Dicionário Fácil & Quem Somos**
-   - Glossário descomplicado para o dia a dia e apresentação institucional do **CP2B / PILAR-2b (UNICAMP)**.
+*(Dica: Abra diretamente no seu celular ou no navegador com o modo de inspeção mobile ativado para a melhor experiência!)*
 
 ---
 
-## 🎨 Identidade Visual (CP2B Design System)
+## 🌟 O Que o Aplicativo Oferece?
 
-- **Azul Petróleo (`#1E3E4C`)**: Identidade institucional e tecnológica.
-- **Verde Escuro (`#00573A`)** e **Verde CP2B (`#5CA032`)**: Sustentabilidade e bioprodutos.
-- **Lima Vibrante (`#B6E03B`)**: Cor de acento de alta energia, usada nos botões e na barra de progresso.
-- **Âmbar Energia (`#D37402`)**: A chama e o poder calorífico do gás.
-- **Mascote Biozinho**: A simpática gotinha/chama de biometano que interage e compartilha dicas com o usuário.
+### 1. 🧮 A Calculadora Cidadã ("E se a Sua Cidade Produzisse Biometano?")
+- **Destaque central**: Ajuste sliders simples com o tamanho da sua cidade (habitantes), usinas de cana (litros de vinhaça) e animais em fazendas.
+- **Resultados imediatos em linguagem do dia a dia**:
+  - 🚌 Ônibus e caminhões pesados rodando 100% a gás verde todo dia.
+  - 🏡 Casas iluminadas com eletricidade renovável contínua.
+  - 🌲 Árvores equivalentes em fumaça de diesel fóssil evitada.
+
+### 2. 🧩 Conexões da Biomassa (*Inspirado no NYT Connections*)
+- Grade 4x4 com 16 cartões para agrupar em 4 categorias científicas:
+  - 🟨 **Resíduos da Cana em SP** (Vinhaça, Torta de filtro, Bagaço, Palha).
+  - 🟩 **Gases da Biodigestão** (Metano, Dióxido de carbono, Gás sulfídrico, Vapor d'água).
+  - 🟦 **Tecnologias de Refino (Upgrading)** (Membranas, PSA, Lavagem com água, Aminas).
+  - 🟪 **Destinos do Biometano** (Caminhões pesados, Gasoduto Comgás, Caldeiras, Tratores).
+
+### 3. 🟩 Termo do Biogás (*Inspirado no Wordle / Termo*)
+- Adivinhe a palavra secreta de 6 letras sobre a energia limpa em até 6 tentativas com teclado virtual mobile dedicado.
+
+### 4. ⚖️ Fato ou Mito? (*3 Rodadas Rápidas*)
+- Desmistifique os preconceitos sobre o biogás com botões táteis grandes (Ex: "O biometano cheira mal como lixo?" ➔ MITO!).
+
+### 5. 🎛️ Equilíbrio do Reator (*Desafio 20s*)
+- Ajuste temperatura, pH e agitação mecânica em menos de 20 segundos para estabilizar a metanogênese e evitar acidose.
+
+### 6. 🏛️ Hub Científico CP2B & PILAR-2b
+- Apresentação institucional do CP2B (NIPE-UNICAMP / FAPESP) e link direto para o mapa dos 645 municípios da plataforma PILAR-2b.
 
 ---
 
-## 🔊 Sintetizador de Áudio Procedural (Web Audio API)
+## 🎨 Design System Oficial CP2B
 
-Não utiliza arquivos de áudio externos pesados ou que possam expirar. Todos os efeitos sonoros (plops de bolhas, dings festivos, chiados de gás e fanfarras) são gerados em tempo real matematicamente no navegador via **Web Audio API**.
-
----
-
-## 💻 Como Rodar Localmente
-
-Basta clonar o repositório e abrir o `index.html` em qualquer navegador:
-
-```bash
-# Clone o repositório
-git clone https://github.com/aikiesan/aprenda_sobre_biometano.git
-
-# Acesse a pasta
-cd aprenda_sobre_biometano
-
-# Abra o index.html diretamente no seu navegador ou use um servidor local simples:
-# Com Python 3:
-python -m http.server 8000
-```
-
-Abra no navegador em `http://localhost:8000`.
+- **Azul Petróleo (`#1E3E4C`)**: Fundo institucional e botões de destaque.
+- **Verde Escuro (`#00573A`)** e **Verde (`#5CA032`)**: Cores principais de sustentabilidade.
+- **Lima Vibrante (`#B6E03B`)**: Acentos visuais e barras de navegação.
+- **Âmbar (`#D37402`)**: Energia e calor da combustão limpa.
+- **Ergonomia Mobile**: Todos os botões e áreas de toque com no mínimo `48px` a `56px` de altura, facilitando o uso com uma mão só (polegar).
 
 ---
 
 ## 🚀 Como Publicar no GitHub Pages
 
-Para publicar este projeto no seu novo repositório `aprenda_sobre_biometano`:
+Para enviar para o seu novo repositório `aikiesan/aprenda_sobre_biometano`:
 
 ```bash
-# 1. Configurar o remote do novo repositório
+# 1. Acessar a pasta local
+cd "C:\Users\Lucas\OneDrive - Sociedade Campineira de Educação e Instrução\Documentos\happy_birthday_jess"
+
+# 2. Apontar o remote para o novo repositório
 git remote set-url origin https://github.com/aikiesan/aprenda_sobre_biometano.git
 
-# 2. Adicionar e commitar todos os arquivos
+# 3. Adicionar os arquivos e commitar
 git add .
-git commit -m "feat: lancamento do Aprenda Biometano gamificado estilo Duolingo com CP2B Design System"
+git commit -m "feat: lancamento do BioGames SP mobile-first estilo NYT com Calculadora Cidada e CP2B"
 
-# 3. Enviar para a branch principal
-git branch -M main
+# 4. Enviar para a branch principal
 git push -u origin main
 ```
 
 No GitHub:
 1. Vá em **Settings** > **Pages**.
-2. Em **Source**, selecione `Deploy from a branch` e escolha a branch `main` e pasta `/ (root)`.
-3. Salve e em poucos segundos seu site estará no ar!
-
----
-
-## 🔬 Referências Científicas e Institucionais
-
-- **CP2B** — Centro Paulista de Estudos em Biogás e Bioprodutos (NIPE/UNICAMP - FAPESP).
-- **PILAR-2b** — Plataforma Inteligente de Localização e Aproveitamento de Resíduos para Biogás e Bioprodutos.
-- **ANP nº 886/2022** — Especificação do Biometano para uso veicular e residencial.
-- **CIBiogás & ABiogás** — Associação Brasileira do Biogás.
-
----
-
-Feito com 💚 pela transição energética sustentável de São Paulo e do Brasil!
+2. Em **Branch**, selecione `main` e pasta `/ (root)`.
+3. Salve e em poucos segundos o site estará online no GitHub Pages!

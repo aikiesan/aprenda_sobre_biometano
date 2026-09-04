@@ -2,605 +2,406 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aprenda Biometano — O Guia Divertido da Energia Limpa | CP2B & PILAR-2b</title>
-  <meta name="description" content="Aprenda sobre Biogás e Biometano de forma simples, interativa e divertida no estilo Duolingo. Conheça o poder da transição energética no Estado de São Paulo com o CP2B e PILAR-2b.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>BioGames SP — O Hub de Jogos do Biometano | CP2B</title>
+  <meta name="description" content="Mini-jogos diários e calculadora cidadã sobre biogás e biometano no Estado de São Paulo. Formato mobile-first inspirado nos jogos do NY Times.">
   <meta name="theme-color" content="#1E3E4C">
 
   <!-- Favicon SVG oficial CP2B -->
   <link rel="icon" type="image/svg+xml" href="assets/logos/cp2b-avatar-gradient.svg">
 
-  <!-- Fonte Inter do Google Fonts -->
+  <!-- Fonte Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 
-  <!-- Estilos CP2B + Duolingo -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- ========================================================================
-       1. TOPO DE GAMIFICAÇÃO (HUD Estilo Duolingo)
-       ======================================================================== -->
-  <header class="gamified-topbar">
-    <div class="topbar-content">
-      <div class="brand-section" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <img src="assets/logos/cp2b-logo-gradient.svg" alt="CP2B Logo" class="brand-logo-img">
-        <div class="brand-text-box">
-          <div class="brand-title">Aprenda <span>Biometano</span></div>
-          <div class="brand-subtitle">Edição Paulista • CP2B / PILAR-2b</div>
+  <!-- Viewport Estilo App Mobile (450px) -->
+  <div class="mobile-viewport">
+
+    <!-- Header do App -->
+    <header class="app-header">
+      <div class="header-brand" onclick="navigateTo('screen-hub')">
+        <img src="assets/logos/cp2b-avatar-gradient.svg" alt="CP2B" class="header-logo">
+        <div class="header-title-box">
+          <div class="header-title">Bio<span>Games</span></div>
+          <div class="header-sub">CP2B • UNICAMP</div>
         </div>
       </div>
 
-      <!-- Placar de Gamificação -->
-      <div class="hud-stats">
-        <div class="hud-pill streak-pill" title="Sua ofensiva de aprendizado!">
-          <span>🔥</span> <span id="hud-streak">1 dia</span>
-        </div>
-        <div class="hud-pill xp-pill" title="Pontos de Energia Limpa acumulados">
-          <span>⚡</span> <span id="hud-xp">0 XP</span>
-        </div>
-        <div class="hud-pill hearts-pill" title="Vidas para os desafios">
-          <span>❤️</span> <span id="hud-hearts">5/5</span>
-        </div>
-      </div>
-
-      <!-- Controles de Áudio e Tema -->
-      <div class="topbar-actions">
-        <button id="toggle-sound" class="btn-icon-hud" title="Ligar ou desligar som">
-          <span id="sound-icon">🔊</span> <span class="hide-mobile">Som</span>
+      <div class="header-tools">
+        <button id="btn-sound" class="icon-btn-header" title="Alternar som">
+          <span id="sound-icon">🔊</span>
         </button>
-        <button id="toggle-theme" class="btn-icon-hud" title="Alternar Modo Escuro / Claro">
+        <button id="btn-theme" class="icon-btn-header" title="Alternar tema">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Barra de Progresso Geral do Conhecimento -->
-  <div class="course-progress-bar">
-    <div id="main-progress-fill" class="course-progress-fill" style="width: 15%;"></div>
-  </div>
+    <!-- Área de Conteúdo / Telas -->
+    <main class="content-area">
 
-  <!-- ========================================================================
-       2. MASCOTE INTERATIVO: BIOZINHO!
-       ======================================================================== -->
-  <div class="mascot-banner">
-    <div class="mascot-card">
-      <div class="mascot-avatar" id="mascot-trigger" title="Clique no Biozinho para ouvir uma dica!">
-        <!-- SVG Mascote Biozinho: Chaminha verde simpática -->
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-          <defs>
-            <linearGradient id="bioFlameGrad" x1="0%" y1="100%" x2="50%" y2="0%">
-              <stop offset="0%" stop-color="#1E3E4C" />
-              <stop offset="35%" stop-color="#5CA032" />
-              <stop offset="75%" stop-color="#B6E03B" />
-              <stop offset="100%" stop-color="#ffffff" />
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          <!-- Corpo de chama/gota amiga -->
-          <path d="M50,8 C50,8 80,48 80,70 A30,30 0 0,1 20,70 C20,48 50,8 50,8 Z" fill="url(#bioFlameGrad)" filter="url(#glow)" />
-          <!-- Olhos piscantes -->
-          <circle cx="42" cy="62" r="5" fill="#1E3E4C" />
-          <circle cx="58" cy="62" r="5" fill="#1E3E4C" />
-          <circle cx="40.5" cy="60" r="2" fill="#ffffff" />
-          <circle cx="56.5" cy="60" r="2" fill="#ffffff" />
-          <!-- Sorriso amigável -->
-          <path d="M42,72 Q50,80 58,72" stroke="#1E3E4C" stroke-width="3" stroke-linecap="round" fill="none" />
-          <!-- Folhinha verde no topo -->
-          <path d="M50,15 Q62,10 65,2 C56,4 52,10 50,15 Z" fill="#B6E03B" />
-        </svg>
-      </div>
-      <div class="mascot-speech">
-        <span class="mascot-tag">Dica do Biozinho</span>
-        <div class="mascot-text" id="mascot-quote">
-          "E aí, futuro mestre da energia limpa! Sabia que <strong>São Paulo tem o maior potencial de biometano do Brasil</strong>? Bora descobrir como cascas de cana e lixo viram combustível limpinho!"
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================
-       3. NAVEGAÇÃO DE ABAS / TRILHAS DE CONHECIMENTO
-       ======================================================================== -->
-  <nav class="tabs-wrapper" aria-label="Navegação de Módulos">
-    <div class="tabs-track">
-      <button class="tab-pill-btn active" data-tab="tab-intro">
-        <span>💡</span> O que é Biogás?
-      </button>
-      <button class="tab-pill-btn" data-tab="tab-sp">
-        <span>🚀</span> O Poder de SP
-      </button>
-      <button class="tab-pill-btn" data-tab="tab-bacteria">
-        <span>🦠</span> A Cozinha das Bactérias
-      </button>
-      <button class="tab-pill-btn" data-tab="tab-filter">
-        <span>🧪</span> O Filtro Mágico
-      </button>
-      <button class="tab-pill-btn" data-tab="tab-truck">
-        <span>🚛</span> Caminhão a Gás
-      </button>
-      <button class="tab-pill-btn" data-tab="tab-calc">
-        <span>🧮</span> E na Sua Cidade?
-      </button>
-      <button class="tab-pill-btn" data-tab="tab-games">
-        <span>🎮</span> Desafios Duolingo
-      </button>
-      <button class="tab-pill-btn" data-tab="tab-glossary">
-        <span>📚</span> Dicionário Fácil
-      </button>
-    </div>
-  </nav>
-
-  <!-- ========================================================================
-       4. CONTEÚDO PRINCIPAL (MÓDULOS DE APRENDIZADO)
-       ======================================================================== -->
-  <main class="main-wrapper">
-
-    <!-- ====================================================================
-         ABA 1: O Que é Esse Tal de Biogás?
-         ==================================================================== -->
-    <section id="tab-intro" class="tab-section active">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 1 • Conceito Básico</div>
-        <h2>O Que é Esse Tal de Biogás?</h2>
-        <p>Parece mágica, mas é pura natureza: restos de comida, esterco de fazenda e caldo de cana virando combustível limpo que substitui a gasolina e o diesel!</p>
-      </div>
-
-      <!-- Mini-Interação: Estourar as bolhas -->
-      <div class="duo-card" style="margin-bottom: 2rem;">
-        <div class="duo-card-header">
-          <div class="duo-card-icon">🫧</div>
-          <div>
-            <h3 class="duo-card-title">Micro-Missão: Estoure as Bolhas de Biogás!</h3>
-            <p style="color:var(--text-muted); font-size: 0.95rem;">Clique nas bolhinhas de gás saindo do biodigestor para ver o que tem dentro delas e faturar XP!</p>
-          </div>
+      <!-- ====================================================================
+           TELA 1: HUB DE JOGOS (Estilo NY Times Games)
+           ==================================================================== -->
+      <section id="screen-hub" class="view-screen active">
+        <div class="hub-greeting">
+          <span class="hub-greeting-tag">Mini-Jogos Científicos</span>
+          <h1 class="hub-title">Jogos do Biometano</h1>
+          <p class="hub-desc">Desafios curtos, fechados e divertidos sobre a transição energética em São Paulo.</p>
         </div>
 
-        <div class="bubble-arena" id="bubble-arena">
-          <div style="color:var(--text-dim); font-weight:700; pointer-events:none;">
-            👆 Toque nas bolhas para estourar! (+5 XP cada)
+        <div class="games-feed">
+          <!-- Jogo 1: Conexões -->
+          <div class="game-card-nyt" onclick="openGame('screen-connections')">
+            <div class="game-card-info">
+              <span class="game-card-badge" style="color:var(--cp2b-ambar);">Inspirado no Connections</span>
+              <h2 class="game-card-title">Conexões da Biomassa</h2>
+              <span class="game-card-sub">Encontre 4 grupos de 4 palavras com ligação científica.</span>
+            </div>
+            <button class="game-play-btn" aria-label="Jogar Conexões">▶</button>
+          </div>
+
+          <!-- Jogo 2: Termo / Wordle -->
+          <div class="game-card-nyt" onclick="openGame('screen-wordle')">
+            <div class="game-card-info">
+              <span class="game-card-badge" style="color:var(--cp2b-verde);">Inspirado no Termo / Wordle</span>
+              <h2 class="game-card-title">Termo do Biogás</h2>
+              <span class="game-card-sub">Descubra a palavra secreta de 6 letras da energia limpa.</span>
+            </div>
+            <button class="game-play-btn" aria-label="Jogar Termo">▶</button>
+          </div>
+
+          <!-- Jogo 3: Fato ou Mito -->
+          <div class="game-card-nyt" onclick="openGame('screen-myths')">
+            <div class="game-card-info">
+              <span class="game-card-badge" style="color:var(--cp2b-azul-petroleo);">3 Rodadas Rápidas</span>
+              <h2 class="game-card-title">Fato ou Mito?</h2>
+              <span class="game-card-sub">Será que você sabe tudo sobre biometano e cana em SP?</span>
+            </div>
+            <button class="game-play-btn" aria-label="Jogar Fato ou Mito">▶</button>
+          </div>
+
+          <!-- Jogo 4: Desafio do Reator -->
+          <div class="game-card-nyt" onclick="openGame('screen-reactor')">
+            <div class="game-card-info">
+              <span class="game-card-badge" style="color:#0284c7;">Desafio de 20s</span>
+              <h2 class="game-card-title">Equilíbrio do Reator</h2>
+              <span class="game-card-sub">Ajuste os 3 controles para gerar o biometano no tempo.</span>
+            </div>
+            <button class="game-play-btn" aria-label="Jogar Desafio do Reator">▶</button>
           </div>
         </div>
+      </section>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-          <div style="font-size: 0.9rem; font-weight:700;">
-            Bolhas estouradas: <span id="popped-count" style="color:var(--cp2b-verde); font-size:1.2rem;">0</span>
-          </div>
-          <button class="btn-duo btn-duo-green" id="btn-spawn-bubbles">
-            🫧 Soltar Mais Bolhas
+      <!-- ====================================================================
+           JOGO 1: CONEXÕES DA BIOMASSA
+           ==================================================================== -->
+      <section id="screen-connections" class="view-screen">
+        <div class="game-top-bar">
+          <button class="btn-back-hub" onclick="navigateTo('screen-hub')">
+            ← Voltar ao Hub
           </button>
-        </div>
-      </div>
-
-      <!-- Duelo de Cards: Biometano vs Diesel Fóssil -->
-      <div class="section-headline" style="margin-top: 2.5rem;">
-        <h3>Quem Vence o Duelo dos Combustíveis?</h3>
-        <p>Veja a disputa direta entre o novo Biometano verde e o velho Diesel fóssil:</p>
-      </div>
-
-      <div class="battle-grid">
-        <!-- Card Biometano -->
-        <div class="battle-card winner">
-          <span class="battle-badge badge-win">🏆 Campeão Verde</span>
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌱</div>
-          <h4 style="font-size: 1.4rem; font-weight: 800; color: var(--cp2b-verde);">Biometano Paulista</h4>
-          <p style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Feito de vinhaça de cana e lixo orgânico em São Paulo.</p>
-
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Fumaça Preta no Ar:</span>
-            <span style="color:var(--cp2b-verde); font-weight:800;">ZERO (100% limpo)</span>
-          </div>
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Impacto Climático:</span>
-            <span style="color:var(--cp2b-verde); font-weight:800;">Negativo ou Neutro</span>
-          </div>
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Origem:</span>
-            <span style="font-weight:700;">100% Paulista / Renovável</span>
-          </div>
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Barulho no Motor:</span>
-            <span style="color:var(--cp2b-verde); font-weight:800;">50% Mais Silencioso</span>
-          </div>
+          <span style="font-weight:800; font-size:0.85rem; color:var(--text-dim);">CONEXÕES</span>
         </div>
 
-        <!-- Card Diesel Fóssil -->
-        <div class="battle-card">
-          <span class="battle-badge badge-lose">❌ Poluente</span>
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛢️</div>
-          <h4 style="font-size: 1.4rem; font-weight: 800; color: #b91c1c;">Diesel Tradicional</h4>
-          <p style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Extraído do petróleo fóssil do subsolo marinho.</p>
+        <p class="connections-instruction">Crie 4 grupos de 4 palavras com uma ligação científica em comum!</p>
 
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Fumaça Preta no Ar:</span>
-            <span style="color:#b91c1c; font-weight:800;">Pesada (fuligem tóxica)</span>
-          </div>
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Impacto Climático:</span>
-            <span style="color:#b91c1c; font-weight:800;">Altas emissões de CO₂</span>
-          </div>
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Origem:</span>
-            <span style="font-weight:700;">Fóssil e Importado</span>
-          </div>
-          <div class="battle-metric-row">
-            <span style="font-weight:700;">Barulho no Motor:</span>
-            <span style="color:#b91c1c; font-weight:800;">Ruidoso e vibratório</span>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- Grupos já resolvidos -->
+        <div id="conn-solved-container" class="solved-categories"></div>
 
-    <!-- ====================================================================
-         ABA 2: O Super Poder de São Paulo (PILAR-2b)
-         ==================================================================== -->
-    <section id="tab-sp" class="tab-section">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 2 • Dados de São Paulo (CP2B)</div>
-        <h2>Por Que São Paulo é a "Arábia Saudita Verde"?</h2>
-        <p>São Paulo produz a maior quantidade de cana-de-açúcar do mundo. Mas você sabia que a sobra do etanol é um oceano de energia para abastecer caminhões?</p>
-      </div>
+        <!-- Grade 4x4 de 16 peças -->
+        <div id="conn-grid" class="connections-grid"></div>
 
-      <div class="sp-map-interactive">
-        <div class="duo-card-header">
-          <div class="duo-card-icon">🗺️</div>
-          <div>
-            <h3 class="duo-card-title">Explore os 3 Grandes Polos de Energia de SP</h3>
-            <p style="color:var(--text-muted); font-size: 0.95rem;">Clique em um polo paulista para ver de onde vem o gás e quanto combustível ele gera:</p>
-          </div>
+        <!-- Indicador de Erros Restantes -->
+        <div class="conn-mistakes">
+          Tentativas restantes:
+          <span class="mistake-dots">
+            <span class="dot" id="dot-1"></span>
+            <span class="dot" id="dot-2"></span>
+            <span class="dot" id="dot-3"></span>
+            <span class="dot" id="dot-4"></span>
+          </span>
         </div>
 
-        <div class="sp-poles-grid">
-          <div class="sp-pole-card active" data-pole="cana">
-            <span class="pole-sector-badge badge-agricola">Agrícola • Cana</span>
-            <h4 style="font-weight:800; font-size:1.15rem; margin-bottom:0.25rem;">Corredor da Cana</h4>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Ribeirão Preto, Sertãozinho, Piracicaba e Araçatuba.</p>
-          </div>
-
-          <div class="sp-pole-card" data-pole="urbano">
-            <span class="pole-sector-badge badge-urbano">Urbano • Cidades</span>
-            <h4 style="font-weight:800; font-size:1.15rem; margin-bottom:0.25rem;">Cinturão das Cidades</h4>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Grande SP, Campinas, Sorocaba e Vale do Paraíba.</p>
-          </div>
-
-          <div class="sp-pole-card" data-pole="pecuaria">
-            <span class="pole-sector-badge badge-pecuaria">Pecuária • Animais</span>
-            <h4 style="font-weight:800; font-size:1.15rem; margin-bottom:0.25rem;">Interior Produtor</h4>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Presidente Prudente, Barretos, São José do Rio Preto.</p>
-          </div>
+        <!-- Botões de Controle -->
+        <div class="conn-controls">
+          <button class="btn-mobile-secondary" onclick="shuffleConnections()">Embaralhar</button>
+          <button class="btn-mobile-secondary" onclick="deselectAllConnections()">Desmarcar</button>
+          <button class="btn-mobile-primary" id="btn-submit-conn" onclick="submitConnections()">Enviar</button>
         </div>
 
-        <!-- Painel Detalhado do Polo Selecionado -->
-        <div id="sp-pole-detail" class="duo-card" style="margin-top:1.5rem; background:var(--bg-surface);">
-          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
-            <span id="pole-icon" style="font-size: 2rem;">🌾</span>
-            <div>
-              <h4 id="pole-title" style="font-size:1.3rem; font-weight:800; color:var(--cp2b-verde);">Corredor da Cana e Vinhaça</h4>
-              <span id="pole-tagline" style="font-size:0.85rem; color:var(--text-muted);">O maior tesouro energético do interior paulista</span>
+        <!-- Modal de Vitória do Connections -->
+        <div id="conn-result-modal" class="game-result-modal">
+          <div class="result-trophy">🧩</div>
+          <h3 style="font-size:1.3rem; font-weight:900; color:var(--cp2b-verde); margin-bottom:0.35rem;">Você desvendou as Conexões!</h3>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            Você dominou os resíduos da cana, gases da biodigestão, tecnologias de refino e os destinos do biometano em São Paulo!
+          </p>
+          <button class="btn-mobile-primary" onclick="restartConnections()">Jogar Novamente</button>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           JOGO 2: TERMO DO BIOGÁS
+           ==================================================================== -->
+      <section id="screen-wordle" class="view-screen">
+        <div class="game-top-bar">
+          <button class="btn-back-hub" onclick="navigateTo('screen-hub')">
+            ← Voltar ao Hub
+          </button>
+          <span style="font-weight:800; font-size:0.85rem; color:var(--text-dim);">TERMO (6 LETRAS)</span>
+        </div>
+
+        <p class="connections-instruction">Descubra a palavra secreta da energia limpa em 6 tentativas.</p>
+
+        <!-- Grade do Wordle (6 linhas x 6 letras) -->
+        <div id="wordle-board" class="wordle-board"></div>
+
+        <!-- Teclado Virtual Mobile -->
+        <div class="keyboard-mobile" id="keyboard-mobile"></div>
+
+        <!-- Modal de Vitória do Termo -->
+        <div id="wordle-result-modal" class="game-result-modal">
+          <div class="result-trophy">🟩</div>
+          <h3 id="wordle-result-title" style="font-size:1.3rem; font-weight:900; color:var(--cp2b-verde); margin-bottom:0.35rem;">Parabéns!</h3>
+          <p id="wordle-result-desc" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            A palavra secreta era <strong>METANO</strong> — a molécula que move a transição energética!
+          </p>
+          <button class="btn-mobile-primary" onclick="restartWordle()">Nova Partida</button>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           JOGO 3: FATO OU MITO?
+           ==================================================================== -->
+      <section id="screen-myths" class="view-screen">
+        <div class="game-top-bar">
+          <button class="btn-back-hub" onclick="navigateTo('screen-hub')">
+            ← Voltar ao Hub
+          </button>
+          <span style="font-weight:800; font-size:0.85rem; color:var(--text-dim);">FATO OU MITO</span>
+        </div>
+
+        <div class="myth-card-container">
+          <div class="myth-question-card">
+            <span class="myth-card-step" id="myth-step-text">Afirmação 1 de 3</span>
+            <div class="myth-statement" id="myth-statement-text">
+              "O biometano tem cheiro ruim de lixo no escapamento do caminhão."
+            </div>
+            <div id="myth-feedback-text" style="font-size:0.9rem; color:var(--text-muted); min-height:48px; line-height:1.4;">
+              Toque em uma das opções abaixo para responder!
             </div>
           </div>
-          <p id="pole-desc" style="font-size:1rem; margin-bottom:1rem; line-height:1.5;">
-            Para cada 1 litro de etanol produzido para abastecer carros, sobram <strong>12 litros de vinhaça líquida</strong>. Em vez de descartar, as usinas paulistas colocam a vinhaça em biodigestores gigantes para produzir biometano e rodar suas próprias frotas de caminhões pesados!
+
+          <div class="myth-actions">
+            <button class="btn-myth-choice btn-choice-false" onclick="answerMyth(false)">
+              ❌ MITO
+            </button>
+            <button class="btn-myth-choice btn-choice-true" onclick="answerMyth(true)">
+              ✅ FATO
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal de Vitória Fato/Mito -->
+        <div id="myth-result-modal" class="game-result-modal">
+          <div class="result-trophy">🧠</div>
+          <h3 style="font-size:1.3rem; font-weight:900; color:var(--cp2b-verde); margin-bottom:0.35rem;">Desafio Concluído!</h3>
+          <p id="myth-final-score" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            Você acertou 3 de 3 afirmativas sobre a ciência do biometano!
           </p>
-          <div style="background:var(--cp2b-lima-light); border-left:4px solid var(--cp2b-verde); padding:0.85rem 1.25rem; border-radius:var(--radius-sm);">
-            <strong style="color:var(--cp2b-azul-petroleo);">💡 Fato PILAR-2b / CP2B:</strong>
-            <span id="pole-fact" style="font-size:0.9rem; color:var(--text-main);">O potencial de biometano da cana em SP equivale a quase 40% de todo o diesel que os caminhões consomem no Estado!</span>
-          </div>
+          <button class="btn-mobile-primary" onclick="restartMyths()">Jogar Novamente</button>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ====================================================================
-         ABA 3: A Cozinha das Bactérias (4 Passos Fáceis)
-         ==================================================================== -->
-    <section id="tab-bacteria" class="tab-section">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 3 • Ciência Descomplicada</div>
-        <h2>A Cozinha das Bactérias Invisíveis</h2>
-        <p>Não precisa ser cientista para entender! O biodigestor funciona exatamente como uma cozinha super eficiente que trabalha sem oxigênio em 4 passos:</p>
-      </div>
-
-      <div class="duo-card" style="margin-bottom: 2rem;">
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">
-          <div class="duo-card" style="border-color:var(--biomass-urbano);">
-            <div style="font-size:2rem; margin-bottom:0.4rem;">✂️ 1. Picadinho</div>
-            <h4 style="font-weight:800;">Hidrólise</h4>
-            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">Bactérias cozinheiras cortam pedaços grandes de comida em pedacinhos microscópicos fáceis de mastigar.</p>
-          </div>
-
-          <div class="duo-card" style="border-color:var(--cp2b-ambar);">
-            <div style="font-size:2rem; margin-bottom:0.4rem;">🍋 2. O Caldinho</div>
-            <h4 style="font-weight:800;">Acidogênese</h4>
-            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">Outro grupo de bactérias transforma os pedacinhos num caldo ácido cheio de energia fermentada.</p>
-          </div>
-
-          <div class="duo-card" style="border-color:var(--biomass-pecuaria);">
-            <div style="font-size:2rem; margin-bottom:0.4rem;">🥗 3. O Vinagrete</div>
-            <h4 style="font-weight:800;">Acetogênese</h4>
-            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">O caldinho vira acetato — que tem a mesma base do vinagre da sua salada! Agora a mesa está posta.</p>
-          </div>
-
-          <div class="duo-card" style="border-color:var(--cp2b-verde);">
-            <div style="font-size:2rem; margin-bottom:0.4rem;">🫧 4. A Fábrica de Gás</div>
-            <h4 style="font-weight:800;">Metanogênese</h4>
-            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.3rem;">As arqueias devoram o banquete e liberam as preciosas bolhas de gás Metano (CH₄)!</p>
-          </div>
-        </div>
-
-        <div style="text-align:center; margin-top: 2rem; padding:1.5rem; background:var(--bg-input); border-radius:var(--radius-lg);">
-          <h4 style="font-size:1.2rem; font-weight:800; margin-bottom:0.5rem;">🍽️ Que tal alimentar as bactérias agora?</h4>
-          <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1rem;">Clique no botão abaixo para dosar comida orgânica no biodigestor e gerar gás!</p>
-          
-          <button class="btn-duo btn-duo-lime" id="btn-feed-bacteria" style="font-size:1.1rem; padding:1rem 2rem;">
-            🥕 Alimentar o Biodigestor! (+10 XP)
+      <!-- ====================================================================
+           JOGO 4: EQUILÍBRIO DO REATOR
+           ==================================================================== -->
+      <section id="screen-reactor" class="view-screen">
+        <div class="game-top-bar">
+          <button class="btn-back-hub" onclick="navigateTo('screen-hub')">
+            ← Voltar ao Hub
           </button>
-
-          <div id="feed-feedback" style="margin-top:1rem; font-weight:700; color:var(--cp2b-verde); min-height:24px;"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         ABA 4: O Filtro Mágico (Biogás ➔ Biometano)
-         ==================================================================== -->
-    <section id="tab-filter" class="tab-section">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 4 • A Mágica da Tecnologia</div>
-        <h2>O Filtro Mágico: Do Biogás ao Biometano</h2>
-        <p>Sabe quando você coa o café para a borra não passar? No biogás é parecido: tiramos o CO₂ e a umidade para sobrar apenas o <strong>Biometano 97% puro</strong>!</p>
-      </div>
-
-      <div class="purify-slider-box">
-        <h3 style="font-size:1.4rem; font-weight:800;">🎛️ Deslize para Purificar o Gás</h3>
-        <p style="color:var(--text-muted); font-size:0.95rem;">Arraste a alavanca e observe como a chama do fogão muda de cor e fica mais quente e limpa:</p>
-
-        <!-- Visualização da Chama -->
-        <div class="flame-container-duo">
-          <div id="duo-flame" class="duo-flame flame-dirty"></div>
+          <span style="font-weight:800; font-size:0.85rem; color:var(--text-dim);">DESAFIO 20s</span>
         </div>
 
-        <div style="max-width:500px; margin: 0 auto 1.5rem;">
-          <input type="range" id="duo-purify-range" min="50" max="98" value="60" class="duo-range">
-          <div style="display:flex; justify-content:space-between; margin-top:0.5rem; font-weight:800;">
-            <span style="color:#b91c1c;">50% (Biogás Bruto)</span>
-            <span id="duo-ch4-display" style="color:var(--cp2b-verde); font-size:1.4rem;">60% Metano</span>
-            <span style="color:var(--cp2b-verde);">98% (Biometano Puro)</span>
+        <p class="connections-instruction">Ajuste os 3 parâmetros para a faixa ideal antes do tempo zerar!</p>
+
+        <div class="calc-card-mobile">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <span style="font-weight:800; font-size:0.9rem;">Tempo Restante:</span>
+            <span id="reactor-timer" style="font-family:var(--font-mono); font-size:1.4rem; font-weight:900; color:#ef4444;">20s</span>
+          </div>
+
+          <!-- Controle 1: Temp -->
+          <div class="slider-group-mobile">
+            <div class="slider-label-row">
+              <span>🌡️ Temperatura:</span>
+              <span class="slider-live-value" id="val-reactor-temp">24°C</span>
+            </div>
+            <input type="range" id="slider-reactor-temp" min="15" max="60" value="24" class="mobile-slider">
+          </div>
+
+          <!-- Controle 2: pH -->
+          <div class="slider-group-mobile">
+            <div class="slider-label-row">
+              <span>🧪 Equilíbrio do pH:</span>
+              <span class="slider-live-value" id="val-reactor-ph">5.8</span>
+            </div>
+            <input type="range" id="slider-reactor-ph" min="5.0" max="9.0" step="0.1" value="5.8" class="mobile-slider">
+          </div>
+
+          <!-- Controle 3: Carga -->
+          <div class="slider-group-mobile">
+            <div class="slider-label-row">
+              <span>🌾 Agitação Mecânica:</span>
+              <span class="slider-live-value" id="val-reactor-mix">30%</span>
+            </div>
+            <input type="range" id="slider-reactor-mix" min="0" max="100" value="30" class="mobile-slider">
           </div>
         </div>
 
-        <div id="duo-flame-status" class="duo-card" style="display:inline-block; max-width:600px; padding:1rem 1.5rem; background:var(--bg-input);">
-          <strong style="color:var(--cp2b-ambar);">🔥 Biogás Cru:</strong>
-          <span id="duo-status-text">Chama fraca e alaranjada, cheia de gás carbônico. Ainda não pode ir para os caminhões!</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         ABA 5: O Caminhão a Gás na Rodovia
-         ==================================================================== -->
-    <section id="tab-truck" class="tab-section">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 5 • Mobilidade Sustentável</div>
-        <h2>O Caminhão Verde na Rodovia Anhanguera</h2>
-        <p>Caminhões gigantes da Scania, Iveco e Volvo já rodam pelas estradas paulistas usando Biometano no lugar do diesel!</p>
-      </div>
-
-      <div class="duo-card">
-        <div class="duo-card-header">
-          <div class="duo-card-icon">🚛</div>
-          <div>
-            <h3 class="duo-card-title">Clique nas partes do caminhão para inspecionar:</h3>
-            <p style="color:var(--text-muted); font-size:0.95rem;">Descubra como a tecnologia substitui o diesel sem perder força:</p>
-          </div>
+        <div id="reactor-status-box" style="text-align:center; font-size:0.9rem; font-weight:700; color:var(--text-dim); margin-top:0.5rem;">
+          Ajuste: Temp em ~37°C, pH em ~7.2 e Agitação em ~70%
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin-top:1.5rem;">
-          <!-- Cilindros -->
-          <div class="duo-card" onclick="playTruckSound('tank')" style="cursor:pointer;">
-            <div style="font-size:2rem; margin-bottom:0.3rem;">🛢️ Cilindros a 200 bar</div>
-            <h4 style="font-weight:800; color:var(--cp2b-verde);">Tanques de Alta Pressão</h4>
-            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.4rem;">Tubos super seguros de aço e fibra de carbono embaixo do caminhão guardam biometano para rodar até 500 km direto!</p>
-          </div>
-
-          <!-- Motor -->
-          <div class="duo-card" onclick="playTruckSound('engine')" style="cursor:pointer;">
-            <div style="font-size:2rem; margin-bottom:0.3rem;">⚙️ Motor Ciclo Otto</div>
-            <h4 style="font-weight:800; color:var(--cp2b-verde);">Potência com Silêncio</h4>
-            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.4rem;">Até 460 cavalos de força! Tem a mesma força para puxar 50 toneladas, mas com metade do barulho de um motor a diesel.</p>
-          </div>
-
-          <!-- Escapamento -->
-          <div class="duo-card" onclick="playTruckSound('exhaust')" style="cursor:pointer;">
-            <div style="font-size:2rem; margin-bottom:0.3rem;">💨 Escapamento Limpinho</div>
-            <h4 style="font-weight:800; color:var(--cp2b-verde);">Zero Fumaça Preta</h4>
-            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.4rem;">Não solta aquela fumaça preta sufocante nas cidades. Reduz em 90% os gases que atacam a saúde humana!</p>
-          </div>
+        <div id="reactor-result-modal" class="game-result-modal">
+          <div class="result-trophy">⚡</div>
+          <h3 id="reactor-result-title" style="font-size:1.3rem; font-weight:900; color:var(--cp2b-verde); margin-bottom:0.35rem;">Reator Estabilizado!</h3>
+          <p id="reactor-result-desc" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            Você evitou a acidose e produziu biometano de alta pureza a pleno vapor!
+          </p>
+          <button class="btn-mobile-primary" onclick="restartReactorGame()">Tentar Novamente</button>
         </div>
+      </section>
 
-        <!-- E o outro presente: Biofertilizante -->
-        <div style="margin-top:2rem; padding:1.5rem; background:linear-gradient(135deg, rgba(92, 160, 50, 0.1), rgba(182, 224, 59, 0.15)); border:2px solid var(--cp2b-verde); border-radius:var(--radius-lg);">
-          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
-            <span style="font-size:2rem;">🌱</span>
-            <h4 style="font-size:1.25rem; font-weight:800; color:var(--cp2b-verde-escuro);">E tem mais: O Tesouro do Biofertilizante!</h4>
-          </div>
-          <p style="font-size:0.95rem; color:var(--text-main); line-height:1.5;">
-            Quando o biogás sai pelo topo do biodigestor, o que sobra no fundo é o <strong>Digestato</strong>: um adubo orgânico de primeira linha, cheio de Nitrogênio, Fósforo e Potássio (NPK) para voltar para a terra e alimentar a próxima safra sem precisar de agrotóxicos químicos caros!
+      <!-- ====================================================================
+           TELA 2: CALCULADORA CIDADÃ (O Destaque Favorito!)
+           ==================================================================== -->
+      <section id="screen-calculator" class="view-screen">
+        <div class="calc-screen-header">
+          <span class="hub-greeting-tag" style="background:rgba(92, 160, 50, 0.2); color:var(--cp2b-verde);">Módulo Cidadão</span>
+          <h2 style="font-size:1.45rem; font-weight:900; line-height:1.2;">E se a Sua Cidade Produzisse Biometano?</h2>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">
+            Mova as barras abaixo com o tamanho da sua cidade ou fazenda e veja quanta energia limpa daria para gerar todo santo dia!
           </p>
         </div>
-      </div>
-    </section>
 
-    <!-- ====================================================================
-         ABA 6: E se Fosse na Sua Cidade? (Simulador Rápido)
-         ==================================================================== -->
-    <section id="tab-calc" class="tab-section">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 6 • Calculadora Cidadã</div>
-        <h2>E se a Sua Cidade Produzisse Biometano?</h2>
-        <p>Mova as barras abaixo com o tamanho da sua cidade ou fazenda e veja quanta energia limpa daria para gerar todo santo dia!</p>
-      </div>
-
-      <div class="calc-friendly-box">
-        <!-- Habitantes da Cidade -->
-        <div class="calc-slider-item">
-          <div class="calc-slider-header">
-            <span>🏙️ População da Sua Cidade:</span>
-            <span id="display-pop" style="color:var(--cp2b-verde); font-family:var(--font-mono);">50.000 habitantes</span>
-          </div>
-          <input type="range" id="slider-pop" min="5000" max="1000000" step="5000" value="50000" class="duo-range">
-        </div>
-
-        <!-- Cana ou Fazenda -->
-        <div class="calc-slider-item">
-          <div class="calc-slider-header">
-            <span>🌾 Usina de Cana da Região (litros de vinhaça/dia):</span>
-            <span id="display-vinasse" style="color:var(--cp2b-verde); font-family:var(--font-mono);">50.000 litros</span>
-          </div>
-          <input type="range" id="slider-vinasse" min="0" max="500000" step="10000" value="50000" class="duo-range">
-        </div>
-
-        <!-- Animais / Bovinos -->
-        <div class="calc-slider-item">
-          <div class="calc-slider-header">
-            <span>🐄 Cabeças de Gado ou Suínos nas Fazendas:</span>
-            <span id="display-cattle" style="color:var(--cp2b-verde); font-family:var(--font-mono);">2.000 animais</span>
-          </div>
-          <input type="range" id="slider-cattle" min="0" max="20000" step="500" value="2000" class="duo-range">
-        </div>
-
-        <!-- Resultados Amigáveis -->
-        <div class="friendly-results-grid">
-          <div class="friendly-res-card">
-            <div class="friendly-res-icon">🚌</div>
-            <div id="res-friendly-buses" class="friendly-res-number">18</div>
-            <div class="friendly-res-label">Ônibus ou Caminhões Rodando 100% a Gás Verde Todo Dia</div>
+        <div class="calc-card-mobile">
+          <!-- População -->
+          <div class="slider-group-mobile">
+            <div class="slider-label-row">
+              <span>🏙️ População da Cidade:</span>
+              <span class="slider-live-value" id="calc-val-pop">50.000 hab</span>
+            </div>
+            <input type="range" id="calc-slider-pop" min="5000" max="800000" step="5000" value="50000" class="mobile-slider">
           </div>
 
-          <div class="friendly-res-card">
-            <div class="friendly-res-icon">🏡</div>
-            <div id="res-friendly-houses" class="friendly-res-number">1.250</div>
-            <div class="friendly-res-label">Casas Iluminadas com Energia Elétrica Renovável</div>
+          <!-- Vinhaça / Usina -->
+          <div class="slider-group-mobile">
+            <div class="slider-label-row">
+              <span>🌾 Usina de Cana (Vinhaça):</span>
+              <span class="slider-live-value" id="calc-val-vinasse">50.000 L/dia</span>
+            </div>
+            <input type="range" id="calc-slider-vinasse" min="0" max="400000" step="10000" value="50000" class="mobile-slider">
           </div>
 
-          <div class="friendly-res-card">
-            <div class="friendly-res-icon">🌲</div>
-            <div id="res-friendly-trees" class="friendly-res-number">4.500</div>
-            <div class="friendly-res-label">Árvores Equivalentes em Fumaça de Diesel Evitada</div>
+          <!-- Animais -->
+          <div class="slider-group-mobile">
+            <div class="slider-label-row">
+              <span>🐄 Fazenda de Gado/Suínos:</span>
+              <span class="slider-live-value" id="calc-val-cattle">2.000 animais</span>
+            </div>
+            <input type="range" id="calc-slider-cattle" min="0" max="20000" step="500" value="2000" class="mobile-slider">
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ====================================================================
-         ABA 7: Minigames & Desafios Duolingo
-         ==================================================================== -->
-    <section id="tab-games" class="tab-section">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 7 • Arena de Desafios</div>
-        <h2>Desafios Duolingo do Biometano!</h2>
-        <p>Chegou a hora de provar que você virou um verdadeiro especialista verde! Responda rápido, ganhe XP e desbloqueie conquistas:</p>
-      </div>
+        <!-- Cards de Resultados -->
+        <div class="calc-metrics-grid">
+          <div class="metric-pill-card">
+            <div class="metric-pill-icon">🚌</div>
+            <div class="metric-pill-text">
+              <span class="metric-pill-number" id="metric-buses">18</span>
+              <span class="metric-pill-desc">Ônibus ou Caminhões pesados rodando 100% a gás verde todo dia</span>
+            </div>
+          </div>
 
-      <!-- Quiz Estilo Duolingo -->
-      <div class="duo-quiz-card" id="duo-quiz-wrapper">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-          <span style="font-weight:800; text-transform:uppercase; font-size:0.8rem; color:var(--text-dim);">
-            Pergunta <span id="quiz-step-num">1</span> de 5
-          </span>
-          <span style="font-weight:800; color:var(--cp2b-lima); background:var(--cp2b-azul-petroleo); padding:0.25rem 0.65rem; border-radius:var(--radius-full); font-size:0.85rem;">
-            +20 XP por acerto
-          </span>
-        </div>
+          <div class="metric-pill-card">
+            <div class="metric-pill-icon">🏡</div>
+            <div class="metric-pill-text">
+              <span class="metric-pill-number" id="metric-houses">1.250</span>
+              <span class="metric-pill-desc">Casas iluminadas com eletricidade renovável contínua</span>
+            </div>
+          </div>
 
-        <h3 id="quiz-question-text" style="font-size:1.35rem; font-weight:800; margin-bottom:1.5rem; line-height:1.35;">
-          Carregando pergunta...
-        </h3>
-
-        <div id="quiz-options-container">
-          <!-- Opções geradas via JavaScript -->
-        </div>
-
-        <div id="quiz-feedback-box" style="display:none; margin-top:1.25rem; padding:1.25rem; border-radius:var(--radius-lg);">
-          <!-- Feedback imediato com botão verde para avançar -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         ABA 8: Dicionário Descomplicado & O que é o CP2B
-         ==================================================================== -->
-    <section id="tab-glossary" class="tab-section">
-      <div class="section-headline">
-        <div class="section-badge-pill">Módulo 8 • Glossário & Quem Somos</div>
-        <h2>Dicionário Sem Complicação</h2>
-        <p>Toda vez que você ouvir uma palavra difícil no noticiário ou na universidade, consulte aqui em português fácil:</p>
-      </div>
-
-      <div class="duo-card" style="margin-bottom:2rem;">
-        <input type="text" id="easy-glossary-search" placeholder="🔍 Digite para pesquisar um termo (ex: vinhaça, digestato, metano)..." 
-               style="width:100%; padding:0.9rem 1.25rem; font-size:1rem; border:2px solid var(--border-default); border-radius:var(--radius-lg); outline:none; margin-bottom:1.25rem;">
-
-        <div id="easy-glossary-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
-          <!-- Termos fáceis via JS -->
-        </div>
-      </div>
-
-      <!-- Sobre o CP2B e PILAR-2b -->
-      <div class="duo-card" style="background:linear-gradient(135deg, var(--cp2b-azul-petroleo), #0f2733); color:#ffffff; border-color:var(--cp2b-verde);">
-        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-          <img src="assets/logos/cp2b-avatar-gradient.svg" alt="CP2B Avatar" style="width:55px; height:55px;">
-          <div>
-            <h3 style="font-size:1.4rem; font-weight:800; color:#ffffff;">O que é o CP2B e a PILAR-2b?</h3>
-            <span style="color:var(--cp2b-lima); font-size:0.85rem; font-weight:700;">NIPE - UNICAMP / FAPESP</span>
+          <div class="metric-pill-card">
+            <div class="metric-pill-icon">🌲</div>
+            <div class="metric-pill-text">
+              <span class="metric-pill-number" id="metric-trees">4.500</span>
+              <span class="metric-pill-desc">Árvores equivalentes em fumaça de diesel fóssil evitada</span>
+            </div>
           </div>
         </div>
-        <p style="font-size:1rem; line-height:1.6; color:rgba(255,255,255,0.9); margin-bottom:1.25rem;">
-          O <strong>CP2B (Centro Paulista de Estudos em Biogás e Bioprodutos)</strong> é o maior centro científico do Brasil dedicado a acelerar o biogás, biometano e a bioeconomia. Sediado na UNICAMP e financiado pela FAPESP, o CP2B desenvolveu a <strong>PILAR-2b</strong>: uma plataforma inteligente que mapeia cada um dos 645 municípios paulistas para transformar resíduos em energia limpa!
-        </p>
-        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-          <a href="https://cp2b.unicamp.br/pilar2b/pt-BR" target="_blank" rel="noopener noreferrer" class="btn-duo btn-duo-lime">
-            🌐 Visitar a Plataforma PILAR-2b
-          </a>
-          <a href="https://github.com/aikiesan/aprenda_sobre_biometano" target="_blank" rel="noopener noreferrer" class="btn-duo btn-duo-blue">
-            💻 Ver Código no GitHub
-          </a>
+      </section>
+
+      <!-- ====================================================================
+           TELA 3: SOBRE O CP2B & PILAR-2b
+           ==================================================================== -->
+      <section id="screen-about" class="view-screen">
+        <div class="cp2b-info-screen">
+          <div class="cp2b-hero-card">
+            <img src="assets/logos/cp2b-logo-negative-white.svg" alt="CP2B Logo" class="cp2b-hero-logo">
+            <h2 style="font-size:1.25rem; font-weight:900; margin-bottom:0.4rem;">Centro Paulista de Estudos em Biogás e Bioprodutos</h2>
+            <p style="font-size:0.85rem; line-height:1.5; opacity:0.9;">
+              Criado pela <strong>FAPESP</strong> e sediado no <strong>NIPE - UNICAMP</strong>, o CP2B é o principal centro de inteligência e pesquisa científica sobre biogás, biometano e bioeconomia no Brasil.
+            </p>
+
+            <a href="https://cp2b.unicamp.br/pilar2b/pt-BR" target="_blank" rel="noopener noreferrer" class="btn-external-link">
+              🌐 Conhecer a Plataforma PILAR-2b
+            </a>
+          </div>
+
+          <div class="calc-card-mobile">
+            <h3 style="font-size:1.1rem; font-weight:800; color:var(--cp2b-verde); margin-bottom:0.5rem;">O que é a PILAR-2b?</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.75rem;">
+              É a plataforma inteligente que mapeia o potencial de biogás e bioprodutos em <strong>todos os 645 municípios paulistas</strong>, ligando usinas de cana, produtores rurais e cidades à malha de gasodutos.
+            </p>
+            <div style="font-size:0.8rem; font-weight:700; color:var(--cp2b-azul-petroleo); background:var(--bg-muted); padding:0.6rem 0.8rem; border-radius:var(--radius-sm);">
+              📍 Slogan Oficial: "Energia viva, ciência que transforma."
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-  </main>
+    </main>
 
-  <!-- ========================================================================
-       5. RODAPÉ INSTITUCIONAL CP2B
-       ======================================================================== -->
-  <footer class="site-footer-cp2b">
-    <div class="footer-inner">
-      <div class="footer-logos">
-        <img src="assets/logos/cp2b-logo-negative-white.svg" alt="Logo CP2B">
-      </div>
-      <div class="footer-slogan">
-        "Energia viva, ciência que transforma."
-      </div>
-      <div class="footer-copy">
-        Desenvolvido com carinho para popularizar o biogás e o biometano no Brasil e no Estado de São Paulo.<br>
-        Baseado nos estudos do <strong>CP2B / NIPE-UNICAMP</strong> e na ferramenta <strong>PILAR-2b</strong>.
-      </div>
-    </div>
-  </footer>
+    <!-- Barra de Navegação Inferior Mobile -->
+    <nav class="bottom-nav">
+      <button class="nav-tab-btn active" onclick="navigateTo('screen-hub')">
+        <span class="tab-icon">🎮</span>
+        <span>Jogos</span>
+      </button>
+      <button class="nav-tab-btn" onclick="navigateTo('screen-calculator')">
+        <span class="tab-icon">🧮</span>
+        <span>Calculadora</span>
+      </button>
+      <button class="nav-tab-btn" onclick="navigateTo('screen-about')">
+        <span class="tab-icon">🏛️</span>
+        <span>CP2B</span>
+      </button>
+    </nav>
 
-  <!-- Confetti script leve e autônomo via CDN confiável para comemorações -->
+  </div>
+
+  <!-- Confetti para tela de vitória -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <!-- Lógica da Aplicação -->
+  <!-- Lógica dos Mini-Jogos Mobile e Calculadora -->
   <script src="app.js"></script>
 </body>
 </html>
