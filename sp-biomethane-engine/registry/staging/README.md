@@ -1,0 +1,11 @@
+# Registry staging — proposed rows NOT yet merged
+
+`projects_capex_proposed_R07.csv` holds 13 projects (ids 21–33) from research sweep R07 (`research_notes/R07_projects_costs_update_2026.md`).
+- Every row is **S** (a search snippet or secondary news). No primary document could be opened, because the egress proxy blocked them.
+- The adversarial verification pass did not run, because the session hit its usage limit.
+- Merge a row into `../projects_capex.csv` only after checking its source. The MME REIDI portarias are the best primary source for paired capacity and CAPEX.
+- Then run `make registry`.
+
+`inventory_raw_2026-10-04.csv` (one row per dataset, per-file sha256) and `inventory_raw_folders_2026-10-04.csv` (one row per `data/raw/<source_id>/`, folder digest from `engine.ingest.inventory.sha256_tree`) record the first import from `A:/Pilar-2b` (git `1d24ada5+dirty`).
+- The folder digests are the `sha256` values in `../sources.yaml`.
+- These are records, not proposals: re-run the inventory and compare to detect any change in `data/raw/`.
